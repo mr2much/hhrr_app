@@ -1,0 +1,4 @@
+{"cedula":"223-0064964-1","nombres":"Natasha","apellidos":"Reinoso","dob":"1988-07-02","job_actual":"Fancy Details","exp_salario":"> 10000","_id":"GaD6JoRt7eCGtMF5"}
+{"cedula":"001-1686342-4","nombres":"Anubis","apellidos":"Lockward","dob":"1982-03-07","job_actual":"BanReservas","exp_salario":"< 5000","_id":"ebbYI5MMILc9suoC"}
+{"cedula":"123-4567890-1","nombres":"Natasha","apellidos":"Doe","dob":"2022-12-09","job_actual":"","exp_salario":"< 5000","_id":"l5AOYKEmoTW6FMV9"}
+{"$$indexCreated":{"fieldName":"cedula","unique":true,"sparse":false}}
