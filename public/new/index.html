@@ -37,11 +37,9 @@
 
       <div class="d-flex mt-5 p-2 justify-content-center">
         <form class="bg-light p-3 rounded bg-opacity-10">
-          <div class="row mb-3">
-            <label for="cedula" class="col-sm-6 col-form-label-lg my-auto"
-              >Cedula: <span class="text-danger">*</span></label
-            >
-            <div class="col-sm-6">
+          <fieldset>
+            <label for="cedula"
+              >Cedula: <span class="text-danger">*</span>
               <input
                 id="cedula"
                 class="form-control"
@@ -50,15 +48,10 @@
                 placeholder="000-0000000-0"
                 pattern="^[0-9]{3}-?[0-9]{7}-?[0-9]{1}$"
                 required
-              />
-            </div>
-          </div>
+            /></label>
 
-          <div class="row mb-3">
-            <label for="nombres" class="col-sm-6 col-form-label-lg my-auto"
-              >Nombre: <span class="text-danger">*</span></label
-            >
-            <div class="col-sm-6">
+            <label for="nombres"
+              >Nombre: <span class="text-danger">*</span>
               <input
                 id="nombres"
                 class="form-control"
@@ -66,15 +59,10 @@
                 type="text"
                 placeholder="John"
                 required
-              />
-            </div>
-          </div>
+            /></label>
 
-          <div class="row mb-3">
-            <label for="apellidos" class="col-form-label-lg col-sm-6 my-auto"
-              >Apellidos: <span class="text-danger">*</span></label
-            >
-            <div class="col-sm-6">
+            <label for="apellidos"
+              >Apellidos: <span class="text-danger">*</span>
               <input
                 id="apellidos"
                 class="form-control"
@@ -82,56 +70,129 @@
                 type="text"
                 placeholder="Doe"
                 required
-              />
-            </div>
-          </div>
+            /></label>
 
-          <div class="row mb-3">
-            <label for="dob" class="col-form-label col-sm-6 my-auto"
-              >Fecha de Nacimiento: <span class="text-danger">*</span></label
-            >
-            <div class="col-sm-6 input-with-post-icon">
+            <label for="email"
+              >Introduzca su correo: <span class="text-danger">*</span>
               <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="correo@dominio.com"
+                required
+            /></label>
+            <label for="dob" class="col-form-label col-sm-6 my-auto"
+              >Fecha de Nacimiento: <span class="text-danger">*</span
+              ><input
                 type="date"
                 class="form-control"
                 name="dob"
                 id="dob"
                 required
               />
-              <i class="fas fa-calendar input-prefix"></i>
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label for="job_actual" class="form-label col-sm-6 my-auto"
-              >Lugar de Trabajo Actual:</label
+              <!-- <i class="fas fa-calendar input-prefix"></i> -->
+            </label>
+          </fieldset>
+          <fieldset>
+            <label for="inexperienced-candidate">
+              <input
+                id="inexperienced-candidate"
+                type="radio"
+                name="tipo-candidato"
+              />
+              Candidato Sin Experiencia
+            </label>
+            <label for="experienced-candidate">
+              <input
+                id="experienced-candidate"
+                type="radio"
+                name="tipo-candidato"
+              />
+              Candidato Con Experiencia
+            </label>
+            <label for="candidato-empleado"
+              ><input
+                id="candidato-empleado"
+                type="checkbox"
+                name="trabajo-actual"
+              />
+              Empleado se encuentra laborando actualmente?</label
             >
-            <div class="col-md-6">
+            <label for="job_actual" class="form-label col-sm-6 my-auto"
+              >Lugar de Trabajo Actual:
               <input
                 id="job_actual"
                 class="form-control"
                 name="job_actual"
                 type="text"
+                disabled
                 placeholder="EX: Nombre empresa"
-              />
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label for="salary_exp" class="form-label col-sm-6 my-auto"
-              >Expectativa Salarial:</label
+            /></label>
+            <label for="expectativa-salarial"
+              >Expectativa Salarial:
+              <input
+                type="number"
+                id="expectativa-salarial"
+                class="form-control"
+                placeholder="1,000.00"
+            /></label>
+            <label for="perfil-candidato"
+              >Perfil del candidato:
+              <select
+                name="perfil-candidato"
+                id="perfil-candidato"
+                class="form-select"
+              >
+                <option value="">--Seleccionar Perfil--</option>
+                <option value="1">IT</option>
+                <option value="2">Desarrollo</option>
+                <option value="3">DBA</option>
+                <option value="4">Telecomunicaciones</option>
+                <option value="5">Contabilidad</option>
+                <option value="6">Servicio al Cliente</option>
+              </select></label
             >
-            <div class="col-md-6">
-              <select name="exp_salario" id="salary_exp" class="form-select">
+          </fieldset>
+
+          <fieldset>
+            <label for="foto-perfil"
+              >Agregar foto de perfil:
+              <input
+                type="file"
+                id="foto-perfil"
+                class="form-control"
+                name="foto-perfil"
+            /></label>
+            <label for="nivel-academico"
+              >Nivel academico:
+              <select
+                name="nivel-academico"
+                id="nivel-academico"
+                name="nivel-academico"
+                class="form-select"
+              >
                 <option value="">--Elegir opcion--</option>
-                <option value="< 1000">< US$ 1,000</option>
-                <option value="< 5000">< US$ 5,000</option>
-                <option value="< 10000">< US$ 10,000</option>
-                <option value="10000">US$ 10,000</option>
-                <option value="> 10000">> US$ 10,000</option>
-              </select>
-            </div>
-          </div>
+                <option value="1">Estudiante</option>
+                <option value="2">Nivel Tecnico</option>
+                <option value="3">Licenciatura</option>
+                <option value="4">Ingenieria</option>
+                <option value="5">Maestria</option>
+                <option value="6">Doctorado</option>
+              </select></label
+            >
+            <label for="notas"
+              >Informacion adicional:
+              <textarea
+                name="notas"
+                id="notas"
+                class="form-control"
+                cols="30"
+                rows="5"
+                placeholder="Candidato da muy buena impresion..."
+              ></textarea>
+            </label>
+          </fieldset>
 
           <div
             class="btn-group col-12"
