@@ -82,7 +82,7 @@
                 placeholder="correo@dominio.com"
                 required
             /></label>
-            <label for="dob" class="col-form-label col-sm-6 my-auto"
+            <label for="dob"
               >Fecha de Nacimiento: <span class="text-danger">*</span
               ><input
                 type="date"
@@ -100,6 +100,7 @@
                 id="inexperienced-candidate"
                 type="radio"
                 name="tipo-candidato"
+                class="inline"
               />
               Candidato Sin Experiencia
             </label>
@@ -108,6 +109,7 @@
                 id="experienced-candidate"
                 type="radio"
                 name="tipo-candidato"
+                class="inline"
               />
               Candidato Con Experiencia
             </label>
@@ -116,10 +118,11 @@
                 id="candidato-empleado"
                 type="checkbox"
                 name="trabajo-actual"
+                class="inline"
               />
               Empleado se encuentra laborando actualmente?</label
             >
-            <label for="job_actual" class="form-label col-sm-6 my-auto"
+            <label for="job_actual"
               >Lugar de Trabajo Actual:
               <input
                 id="job_actual"
