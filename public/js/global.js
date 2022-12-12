@@ -1,3 +1,5 @@
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable no-plusplus */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable comma-dangle */
 /* eslint-disable function-paren-newline */
@@ -72,6 +74,25 @@ function validaCedula(cedula) {
   );
 }
 
+function calculateAgeFromDOB(dob) {
+  // Date difference in milliseconds
+  const dateToday = new Date();
+  const birthDate = new Date(dob);
+  let age = dateToday.getFullYear() - birthDate.getFullYear();
+
+  // Check month difference to improve age precision a little bit
+  const monthDifference = dateToday.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && dateToday.getDate() < birthDate.getDate())
+  ) {
+    age--; // subtract one year
+  }
+
+  return age;
+}
+
 function validateFormGetCandidato(form, message) {
   const formData = new FormData(form);
 
@@ -79,6 +100,11 @@ function validateFormGetCandidato(form, message) {
   const nombres = formData.get('nombres');
   const apellidos = formData.get('apellidos');
   const dob = formData.get('dob');
+  const age = calculateAgeFromDOB(dob);
+  const candidateExp = formData.get('tipo-candidato');
+  const currentlyWorking = formData.get('trabajo-actual') ? true : false;
+
+  console.log(`Current Job: ${currentlyWorking}`);
 
   // should validate that the cedula has a valid format
   if (!validaCedula(cedula)) {
@@ -110,6 +136,9 @@ function validateFormGetCandidato(form, message) {
     nombres,
     apellidos,
     dob,
+    age,
+    candidateExp,
+    currentlyWorking,
     job_actual: formData.get('job_actual'),
     exp_salario: formData.get('exp_salario'),
   };

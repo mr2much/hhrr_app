@@ -29,14 +29,14 @@ form.addEventListener('submit', (e) => {
 
   const newCandidato = validateFormGetCandidato(form, errorMessage);
 
-  if (newCandidato) {
-    createNewCandidato(newCandidato).then((result) => {
-      if (result.status === 500) {
-        errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
-        errorMessage.style.display = '';
-      } else {
-        window.location = `/candidato.html?id=${result._id}`;
-      }
-    });
-  }
+  // if (newCandidato) {
+  //   createNewCandidato(newCandidato).then((result) => {
+  //     if (result.status === 500) {
+  //       errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
+  //       errorMessage.style.display = '';
+  //     } else {
+  //       window.location = `/candidato.html?id=${result._id}`;
+  //     }
+  //   });
+  // }
 });

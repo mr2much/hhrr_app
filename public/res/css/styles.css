@@ -49,3 +49,7 @@ textarea {
 input[type='file'] {
   padding: 1px 2px;
 }
+
+input[type='text']:disabled {
+  background-color: #ccc;
+}
