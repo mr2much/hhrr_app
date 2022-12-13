@@ -9,6 +9,14 @@ btnCancel.addEventListener('click', (e) => {
   window.location = '/';
 });
 
+const checkboxHasJob = document.querySelector('#candidato-empleado');
+
+checkboxHasJob.addEventListener('change', (e) => {
+  const inputCurrentJob = document.querySelector('#job_actual');
+
+  inputCurrentJob.toggleAttribute('disabled');
+});
+
 const form = document.querySelector('form');
 
 async function createNewCandidato(candidato) {
@@ -28,6 +36,8 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const newCandidato = validateFormGetCandidato(form, errorMessage);
+
+  console.log(newCandidato);
 
   // if (newCandidato) {
   //   createNewCandidato(newCandidato).then((result) => {

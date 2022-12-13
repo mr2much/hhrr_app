@@ -5,6 +5,24 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable linebreak-style */
 
+const perfiles = [
+  'IT',
+  'Desarrollo',
+  'DBA',
+  'Telecomunicaciones',
+  'Contabilidad',
+  'Servicio al Cliente',
+];
+
+const academicLevels = [
+  'Estudiante',
+  'Nivel Tecnico',
+  'Licenciatura',
+  'Ingenieria',
+  'Maestria',
+  'Doctorado',
+];
+
 const API_URL =
   window.location.hostname === 'localhost'
     ? 'http://localhost:5000/api/v1/candidatos'
@@ -103,8 +121,11 @@ function validateFormGetCandidato(form, message) {
   const age = calculateAgeFromDOB(dob);
   const candidateExp = formData.get('tipo-candidato');
   const currentlyWorking = formData.get('trabajo-actual') ? true : false;
-
-  console.log(`Current Job: ${currentlyWorking}`);
+  const exp_salario = Number(formData.get('expectativa-salarial'));
+  const perfilCandidato = formData.get('perfil-candidato');
+  const imgUrl = '../res/img/user.png';
+  const nivelAcademico = formData.get('nivel-academico');
+  const notas = formData.get('notas');
 
   // should validate that the cedula has a valid format
   if (!validaCedula(cedula)) {
@@ -129,6 +150,13 @@ function validateFormGetCandidato(form, message) {
     return;
   }
 
+  if (Number.isNaN(exp_salario)) {
+    message.textContent =
+      'Debe introducir un valor númerico para la Expectativa Salarial';
+    message.style.display = '';
+    return;
+  }
+
   // should also convert dob from YYYY-MM-DD to valid database date format
 
   const candidato = {
@@ -139,8 +167,12 @@ function validateFormGetCandidato(form, message) {
     age,
     candidateExp,
     currentlyWorking,
-    job_actual: formData.get('job_actual'),
-    exp_salario: formData.get('exp_salario'),
+    job_actual: formData.get('job_actual') ? formData.get('job_actual') : '',
+    exp_salario,
+    perfilCandidato,
+    imgUrl,
+    nivelAcademico,
+    notas,
   };
 
   return candidato;

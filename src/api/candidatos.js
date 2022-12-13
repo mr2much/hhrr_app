@@ -3,9 +3,9 @@
 /* eslint-disable linebreak-style */
 const express = require('express');
 const monk = require('monk');
-const url = process.env.MONGO_URI || 'localhost/candidatos';
+const url = process.env.MONGO_URI || 'localhost:27017/candidatos';
 
-const db = monk(url, { useCreateIndex: true, useNewUrlParser: true });
+const db = monk(url);
 const candidatos = db.get('candidato');
 
 candidatos.createIndex({ cedula: 1 }, { unique: true });
@@ -68,7 +68,8 @@ function validCandidato(candidato) {
     typeof candidato.apellidos === 'string' &&
     validaCedula(candidato.cedula) &&
     typeof candidato.dob === 'string' &&
-    candidato.dob.match('^[0-9]{4}-?[0-9]{2}-?[0-9]{2}$')
+    candidato.dob.match('^[0-9]{4}-?[0-9]{2}-?[0-9]{2}$') &&
+    !Number.isNaN(candidato.exp_salario)
   );
 }
 
