@@ -117,6 +117,7 @@ function validateFormGetCandidato(form, message) {
   const cedula = formData.get('cedula');
   const nombres = formData.get('nombres');
   const apellidos = formData.get('apellidos');
+  const email = formData.get('email');
   const dob = formData.get('dob');
   const age = calculateAgeFromDOB(dob);
   const candidateExp = formData.get('tipo-candidato');
@@ -163,6 +164,7 @@ function validateFormGetCandidato(form, message) {
     cedula,
     nombres,
     apellidos,
+    email,
     dob,
     age,
     candidateExp,

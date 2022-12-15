@@ -16,7 +16,7 @@ function showCandidatos(listaCandidatos) {
     const newRowCandidato = document.createElement('tr');
     tableCandidatos.appendChild(newRowCandidato);
 
-    newRowCandidato.outerHTML = `<tr">
+    newRowCandidato.outerHTML = `<tr>
     <th scope="row">${++rowCount}</th>
     <td>
       ${candidato.cedula}

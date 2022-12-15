@@ -47,6 +47,8 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
 
+  console.log(`GET request with ID: ${id}`);
+
   candidatos.findOne({ _id: id }).then((candidato) => {
     res.status(200);
     res.json(candidato);
@@ -84,15 +86,38 @@ function candidatoValidator(req, res, next) {
 }
 
 function getCandidatoFromBody(body) {
-  const { cedula, nombres, apellidos, dob, job_actual, exp_salario } = body;
+  const {
+    cedula,
+    nombres,
+    apellidos,
+    email,
+    dob,
+    age,
+    candidateExp,
+    currentlyWorking,
+    job_actual,
+    exp_salario,
+    perfilCandidato,
+    imgUrl,
+    nivelAcademico,
+    notas,
+  } = body;
 
   const candidato = {
     cedula,
     nombres,
     apellidos,
+    email,
     dob,
+    age,
+    candidateExp,
+    currentlyWorking,
     job_actual,
     exp_salario,
+    perfilCandidato,
+    imgUrl,
+    nivelAcademico,
+    notas,
   };
 
   return candidato;
