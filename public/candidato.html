@@ -107,8 +107,7 @@
                 <div class="tab-pane active" id="datos-personales">
                   <h4 class="cart-title">${candidato.nombres} ${
           candidato.apellidos
-        }</h4>
-                  <h5 class="card-title">Datos Personales</h5>
+        }</h4>                  
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">Cedula: ${candidato.cedula}</li>
                     <li class="list-group-item">Email: ${candidato.email}</li>
@@ -121,8 +120,7 @@
                 </div>
               </div>
               <div class="card-body tab-content col-md-10 mx-auto">
-                <div class="tab-pane" id="datos-laborales">
-                  <h5 class="card-title">Datos Laborales</h5>
+                <div class="tab-pane" id="datos-laborales">                  
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">Candidato labora actualmente? ${
                       candidato.currentlyWorking ? 'Si' : 'No'
@@ -140,8 +138,7 @@
                 </div>
               </div>
               <div class="card-body tab-content col-md-10 mx-auto">
-                <div class="tab-pane" id="informacion-adicional">
-                  <h5 class="card-title">Informacion Adicional</h5>
+                <div class="tab-pane" id="informacion-adicional">                  
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">Nivel Academico: ${
                       academicLevels[candidato.nivelAcademico - 1]
