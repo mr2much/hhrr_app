@@ -62,31 +62,6 @@
       const candidato_id = parseIDFromURL();
 
       function showCandidato(candidato) {
-        //   candidatoSection.outerHTML = `
-        //   <div class="card">
-        //       <div class="card-header">
-        //           <h5 class="card-title">Network Settings</h5>
-        //           <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
-        //               <li class="nav-item">
-        //                   <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#dhcp">DHCP</a>
-        //               </li>
-        //               <li class="nav-item">
-        //                   <a class="nav-link" data-bs-toggle="tab" href="#static">Static</a>
-        //               </li>
-        //           </ul>
-        //       </div>
-        //       <form class="card-body tab-content">
-        //           <div class="tab-pane active" id="dhcp">
-        //               <p class="card-text">Change DHCP Network settings.</p>
-        //           </div>
-        //           <div class="tab-pane" id="static">
-        //               <p class=" card-text">Change Static Network settings.</p>
-        //           </div>
-        //           <button class="btn btn-primary" type="submit">Save</button>
-        //       </form>
-        //  </div>
-        //   `;
-
         candidatoSection.outerHTML = `
         <div class="card mb-3">
           <div class="row g-0">
@@ -105,9 +80,9 @@
               </div>
               <div class="card-body tab-content col-md-10 mx-auto">
                 <div class="tab-pane active" id="datos-personales">
-                  <h4 class="cart-title">${candidato.nombres} ${
+                  <h5 class="cart-title">${candidato.nombres} ${
           candidato.apellidos
-        }</h4>                  
+        }</h5>                  
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">Cedula: ${candidato.cedula}</li>
                     <li class="list-group-item">Email: ${candidato.email}</li>

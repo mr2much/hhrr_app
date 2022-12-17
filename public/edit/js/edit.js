@@ -17,9 +17,26 @@ function prepopulateFormWithCandidatoInfo(candidato) {
   document.querySelector('#cedula').value = candidato.cedula;
   document.querySelector('#nombres').value = candidato.nombres;
   document.querySelector('#apellidos').value = candidato.apellidos;
+  document.querySelector('#email').value = candidato.email;
   document.querySelector('#dob').value = candidato.dob;
+
+  const age = calculateAgeFromDOB(dob);
+
   document.querySelector('#job_actual').value = candidato.job_actual;
-  document.querySelector('#salary_exp').value = candidato.exp_salario;
+
+  // Select checkbox matching the value saved, set it to true (checked)
+  document.querySelector(
+    `input[value="${candidato.candidateExp}"]`
+  ).checked = true;
+  document.querySelector('#candidato-empleado').checked =
+    candidato.currentlyWorking;
+  document.querySelector('#job_actual').value = candidato.job_actual;
+  document.querySelector('#expectativa-salarial').value = candidato.exp_salario;
+
+  document.querySelector('#perfil-candidato').value = candidato.perfilCandidato;
+  // document.querySelector('#foto-perfil').value = candidato.imgUrl;
+  document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
+  document.querySelector('#notas').value = candidato.notas;
 }
 
 getCandidato(idCandidato).then(prepopulateFormWithCandidatoInfo);
