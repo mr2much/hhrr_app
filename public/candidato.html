@@ -82,7 +82,7 @@
                 <div class="tab-pane active" id="datos-personales">
                   <h5 class="cart-title">${candidato.nombres} ${
           candidato.apellidos
-        }</h5>                  
+        }</h5>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">Cedula: ${candidato.cedula}</li>
                     <li class="list-group-item">Email: ${candidato.email}</li>
@@ -95,7 +95,7 @@
                 </div>
               </div>
               <div class="card-body tab-content col-md-10 mx-auto">
-                <div class="tab-pane" id="datos-laborales">                  
+                <div class="tab-pane" id="datos-laborales">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">Candidato labora actualmente? ${
                       candidato.currentlyWorking ? 'Si' : 'No'
@@ -108,15 +108,19 @@
                     }</li>
                     <li class="list-group-item">Perfil del Candidato: ${
                       perfiles[candidato.perfilCandidato - 1]
+                        ? perfiles[candidato.perfilCandidato - 1]
+                        : 'No definido'
                     }</li>
                   </ul>
                 </div>
               </div>
               <div class="card-body tab-content col-md-10 mx-auto">
-                <div class="tab-pane" id="informacion-adicional">                  
+                <div class="tab-pane" id="informacion-adicional">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">Nivel Academico: ${
                       academicLevels[candidato.nivelAcademico - 1]
+                        ? academicLevels[candidato.nivelAcademico - 1]
+                        : 'No definido'
                     }</li>
                     <li class="list-group-item">Nota: ${candidato.notas}</li>
                   </ul>
