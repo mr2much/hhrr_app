@@ -103,9 +103,9 @@
                     <li class="list-group-item">Empleo Actual: ${
                       candidato.job_actual
                     }</li>
-                    <li class="list-group-item">Expectativa Salarial: ${
+                    <li class="list-group-item">Expectativa Salarial: ${parseAmountToDominicanPesos(
                       candidato.exp_salario
-                    }</li>
+                    )}</li>
                     <li class="list-group-item">Perfil del Candidato: ${
                       perfiles[candidato.perfilCandidato - 1]
                         ? perfiles[candidato.perfilCandidato - 1]

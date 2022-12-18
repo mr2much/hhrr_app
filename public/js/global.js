@@ -79,6 +79,13 @@ function parseIDFromURL() {
   return parts[1].trim();
 }
 
+function parseAmountToDominicanPesos(amount) {
+  return Intl.NumberFormat('es-DO', {
+    style: 'currency',
+    currency: 'DOP',
+  }).format(amount);
+}
+
 function getCandidato(id) {
   return fetch(`${API_URL}/${id}`).then((res) => res.json());
 }

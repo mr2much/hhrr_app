@@ -34,7 +34,7 @@ function showCandidatos(listaCandidatos) {
       ${candidato.job_actual}
     </td>
     <td>
-      ${candidato.exp_salario}
+      ${parseAmountToDominicanPesos(candidato.exp_salario)}
     </td>
     <td>
       <div>      
