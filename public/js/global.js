@@ -6,6 +6,7 @@
 /* eslint-disable linebreak-style */
 
 const perfiles = [
+  'No definido',
   'IT',
   'Desarrollo',
   'DBA',
@@ -123,10 +124,16 @@ function validateFormGetCandidato(form, message) {
   const candidateExp = formData.get('tipo-candidato');
   const currentlyWorking = formData.get('trabajo-actual') ? true : false;
   const exp_salario = Number(formData.get('expectativa-salarial'));
-  const perfilCandidato = formData.get('perfil-candidato');
+  const perfilCandidato =
+    formData.get('perfil-candidato') === ''
+      ? '1'
+      : formData.get('perfil-candidato');
   const imgUrl = '../res/img/user.png';
   const nivelAcademico = formData.get('nivel-academico');
   const notas = formData.get('notas');
+
+  console.log(`Valor perfil candidato: ${formData.get('perfil-candidato')}`);
+  console.log(`Valor perfil candidato: ${perfilCandidato}`);
 
   // should validate that the cedula has a valid format
   if (!validaCedula(cedula)) {
