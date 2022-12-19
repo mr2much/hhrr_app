@@ -1,4 +1,7 @@
 /* eslint-disable linebreak-style */
+let p5Canvas;
+let imgInput;
+
 const errorMessage = document.querySelector('#errorMessage');
 
 errorMessage.style.display = 'none';
@@ -50,3 +53,22 @@ form.addEventListener('submit', (e) => {
     });
   }
 });
+
+function imageFileHandler(file) {
+  console.log('Inside imageFileHandler()');
+}
+
+function setup() {
+  const profileFieldset = document.querySelector('#profile-pic');
+  p5Canvas = createCanvas(1, 1);
+
+  imgInput = createFileInput(imageFileHandler);
+  imgInput.id('foto-perfil');
+  imgInput.class('form-control');
+  imgInput.elt.name = 'foto-perfil';
+
+  imgInput.parent(profileFieldset);
+
+  pixelDensity(1);
+  background(0);
+}
