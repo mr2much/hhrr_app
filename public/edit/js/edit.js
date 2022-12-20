@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+let p5Canvas;
+let imgInput;
+let imgProfile;
+
 const idCandidato = parseIDFromURL();
 const form = document.querySelector('form');
 
@@ -7,6 +11,32 @@ const errorMessage = document.querySelector('#errorMessage');
 errorMessage.style.display = 'none';
 
 const btnCancel = document.querySelector('form #cancel-btn');
+
+function imageFileHandler(file) {
+  if (file.type.includes('image')) {
+    imgProfile = createImg(file.data, '');
+    imgProfile.hide();
+  } else {
+    console.log(file.type);
+  }
+}
+
+function setup() {
+  const profileFieldset = document.querySelector('#profile-pic');
+  p5Canvas = createCanvas(1, 1);
+
+  imgInput = createFileInput(imageFileHandler);
+  imgInput.id('foto-perfil');
+  imgInput.class('form-control');
+  imgInput.elt.name = 'foto-perfil';
+
+  imgInput.parent(profileFieldset);
+
+  pixelDensity(1);
+  background(0);
+
+  getCandidato(idCandidato).then(prepopulateFormWithCandidatoInfo);
+}
 
 btnCancel.addEventListener('click', (e) => {
   window.location = `/candidato.html?id=${idCandidato}`;
@@ -34,17 +64,46 @@ function prepopulateFormWithCandidatoInfo(candidato) {
   document.querySelector('#expectativa-salarial').value = candidato.exp_salario;
 
   document.querySelector('#perfil-candidato').value = candidato.perfilCandidato;
-  // document.querySelector('#foto-perfil').value = candidato.imgUrl;
+  // document.querySelector('#foto-perfil').filename = candidato.imgUrl;
+  // imgInput.elt.files = new DataTransfer().items.add(candidato.imgUrl);
+
   document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
   document.querySelector('#notas').value = candidato.notas;
 }
 
-getCandidato(idCandidato).then(prepopulateFormWithCandidatoInfo);
-
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
+  p5Canvas.loadPixels();
+
   const modifiedCandidato = validateFormGetCandidato(form, errorMessage);
+
+  if (imgInput.elt.files[0]) {
+    const imgName = imgInput.elt.files[0].name;
+
+    // convert image data to Encode 64
+    const encode64 = imgProfile.elt.src.split(';base64,');
+
+    // from data:image/format, split by :, then take the second
+    // argument which should be image/format
+    const type = encode64[0].split(':')[1];
+    const imgTo64 = encode64[1];
+
+    const { width, height } = imgProfile;
+
+    // Create an image object with the encoded base 64 data
+    const image = {
+      type,
+      width,
+      height,
+      imgName,
+      imgTo64,
+    };
+
+    console.log(image);
+
+    modifiedCandidato.image = image;
+  }
 
   if (modifiedCandidato) {
     updateCandidato(modifiedCandidato).then((result) => {

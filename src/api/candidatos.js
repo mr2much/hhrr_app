@@ -5,9 +5,10 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const monk = require('monk');
+
 const url = process.env.MONGO_URI || 'localhost:27017/candidatos';
 
-const _dir = '../res/img';
+const _dir = 'res/img';
 
 const db = monk(url);
 const candidatos = db.get('candidato');
@@ -89,27 +90,22 @@ function candidatoValidator(req, res, next) {
   }
 }
 
-function imageBase64ToImageFile(image) {
+function imageBase64ToImageFile(imagePath, image) {
   const asciiToBinary = Buffer.from(image.imgTo64, 'base64');
 
-  fs.writeFile(image.imgName, asciiToBinary, (err) => {
+  fs.writeFile(imagePath, asciiToBinary, (err) => {
     if (err) {
       return new Error(
         `There was a problem saving when trying to write ${image.imgName}`
       );
-    } else {
-      console.log(`File saved at ${image.imgName}`);
     }
   });
 }
 
 function handleImageData(image) {
-  const imagePath = path.join(_dir, image.imgName);
-  image.imgName = imagePath;
+  imageBase64ToImageFile(path.join(`public/${_dir}/${image.imgName}`), image);
 
-  imageBase64ToImageFile(image);
-
-  return image.imgName;
+  return `${_dir}/${image.imgName}`;
 }
 
 function getCandidatoFromBody(body) {
@@ -135,8 +131,6 @@ function getCandidatoFromBody(body) {
   if (image) {
     imgUrl = handleImageData(image);
   }
-
-  console.log(`imgUrl: ${imgUrl}`);
 
   const candidato = {
     cedula,
@@ -169,7 +163,9 @@ router.post('/', candidatoValidator, (req, res, next) => {
         res.status(200);
         res.json(createdCandidato);
       })
-      .catch((err) => {
+      .catch(async (err) => {
+        const idxs = await candidatos.indexes();
+        console.log(idxs);
         next(err);
       });
   } else {
