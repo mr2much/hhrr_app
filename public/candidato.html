@@ -64,15 +64,15 @@
       function showCandidato(candidato) {
         candidatoSection.outerHTML = `
         <div class="card mb-3">
-          <div class="row g-0">
+          <div class="d-flex row g-0">
             <div class="col-md-4">
-              <img id="image-candidato" src="${
+              <img id="image-candidato" style="width: 512px" src="${
                 candidato.imgUrl
               }" class="img-fluid rounded-start" alt="Imagen candidato">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 flex-grow-2">
               <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+                <ul class="d-flex nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
                   <li class="nav-item"><a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#datos-personales">Datos Personales</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#datos-laborales">Datos Laborales</a></li>
                   <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#informacion-adicional">Informacion Adicional</a></li>

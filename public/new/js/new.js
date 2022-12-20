@@ -38,32 +38,35 @@ async function createNewCandidato(candidato) {
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
+
+  const newCandidato = validateFormGetCandidato(form, errorMessage);
+
   p5Canvas.loadPixels();
 
-  const imgName = imgInput.elt.files[0].name;
+  if (imgInput.elt.files[0]) {
+    const imgName = imgInput.elt.files[0].name;
 
-  // convert image data to Encode 64
-  const encode64 = imgProfile.elt.src.split(';base64,');
+    // convert image data to Encode 64
+    const encode64 = imgProfile.elt.src.split(';base64,');
 
-  // from data:image/format, split by :, then take the second
-  // argument which should be image/format
-  const type = encode64[0].split(':')[1];
-  const imgTo64 = encode64[1];
+    // from data:image/format, split by :, then take the second
+    // argument which should be image/format
+    const type = encode64[0].split(':')[1];
+    const imgTo64 = encode64[1];
 
-  const width = imgProfile.width;
-  const height = imgProfile.height;
+    const { width, height } = imgProfile;
 
-  // Create an image object with the encoded base 64 data
-  const image = {
-    type,
-    width,
-    height,
-    imgName,
-    imgTo64,
-  };
+    // Create an image object with the encoded base 64 data
+    const image = {
+      type,
+      width,
+      height,
+      imgName,
+      imgTo64,
+    };
 
-  let newCandidato = validateFormGetCandidato(form, errorMessage);
-  newCandidato.image = image;
+    newCandidato.image = image;
+  }
 
   if (newCandidato) {
     createNewCandidato(newCandidato).then((result) => {

@@ -2,8 +2,12 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable linebreak-style */
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const monk = require('monk');
 const url = process.env.MONGO_URI || 'localhost:27017/candidatos';
+
+const _dir = '../res/img';
 
 const db = monk(url);
 const candidatos = db.get('candidato');
@@ -85,6 +89,29 @@ function candidatoValidator(req, res, next) {
   }
 }
 
+function imageBase64ToImageFile(image) {
+  const asciiToBinary = Buffer.from(image.imgTo64, 'base64');
+
+  fs.writeFile(image.imgName, asciiToBinary, (err) => {
+    if (err) {
+      return new Error(
+        `There was a problem saving when trying to write ${image.imgName}`
+      );
+    } else {
+      console.log(`File saved at ${image.imgName}`);
+    }
+  });
+}
+
+function handleImageData(image) {
+  const imagePath = path.join(_dir, image.imgName);
+  image.imgName = imagePath;
+
+  imageBase64ToImageFile(image);
+
+  return image.imgName;
+}
+
 function getCandidatoFromBody(body) {
   const {
     cedula,
@@ -98,10 +125,18 @@ function getCandidatoFromBody(body) {
     job_actual,
     exp_salario,
     perfilCandidato,
-    imgUrl,
+    image,
     nivelAcademico,
     notas,
   } = body;
+
+  let { imgUrl } = body;
+
+  if (image) {
+    imgUrl = handleImageData(image);
+  }
+
+  console.log(`imgUrl: ${imgUrl}`);
 
   const candidato = {
     cedula,
@@ -131,7 +166,6 @@ router.post('/', candidatoValidator, (req, res, next) => {
     candidatos
       .insert(candidato)
       .then((createdCandidato) => {
-        console.log('Error');
         res.status(200);
         res.json(createdCandidato);
       })
