@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 let p5Canvas;
 let imgInput;
+let imgProfile;
 
 const errorMessage = document.querySelector('#errorMessage');
 
@@ -37,10 +38,32 @@ async function createNewCandidato(candidato) {
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
+  p5Canvas.loadPixels();
 
-  const newCandidato = validateFormGetCandidato(form, errorMessage);
+  const imgName = imgInput.elt.files[0].name;
 
-  console.log(newCandidato);
+  // convert image data to Encode 64
+  const encode64 = imgProfile.elt.src.split(';base64,');
+
+  // from data:image/format, split by :, then take the second
+  // argument which should be image/format
+  const type = encode64[0].split(':')[1];
+  const imgTo64 = encode64[1];
+
+  const width = imgProfile.width;
+  const height = imgProfile.height;
+
+  // Create an image object with the encoded base 64 data
+  const image = {
+    type,
+    width,
+    height,
+    imgName,
+    imgTo64,
+  };
+
+  let newCandidato = validateFormGetCandidato(form, errorMessage);
+  newCandidato.image = image;
 
   if (newCandidato) {
     createNewCandidato(newCandidato).then((result) => {
@@ -55,7 +78,12 @@ form.addEventListener('submit', (e) => {
 });
 
 function imageFileHandler(file) {
-  console.log('Inside imageFileHandler()');
+  if (file.type.includes('image')) {
+    imgProfile = createImg(file.data, '');
+    imgProfile.hide();
+  } else {
+    console.log(file.type);
+  }
 }
 
 function setup() {
