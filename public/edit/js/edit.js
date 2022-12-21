@@ -69,6 +69,18 @@ function prepopulateFormWithCandidatoInfo(candidato) {
 
   document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
   document.querySelector('#notas').value = candidato.notas;
+
+  // If the checkbox for currently employed is checked, enable the
+  // textbox for Trabajo Actual
+  const checkboxHasJob = document.querySelector('#candidato-empleado');
+
+  document.querySelector('#job_actual').disabled = !checkboxHasJob.checked;
+
+  checkboxHasJob.addEventListener('change', (e) => {
+    const inputCurrentJob = document.querySelector('#job_actual');
+
+    inputCurrentJob.toggleAttribute('disabled');
+  });
 }
 
 form.addEventListener('submit', (e) => {
