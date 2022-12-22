@@ -64,8 +64,6 @@ function prepopulateFormWithCandidatoInfo(candidato) {
   document.querySelector('#expectativa-salarial').value = candidato.exp_salario;
 
   document.querySelector('#perfil-candidato').value = candidato.perfilCandidato;
-  // document.querySelector('#foto-perfil').filename = candidato.imgUrl;
-  // imgInput.elt.files = new DataTransfer().items.add(candidato.imgUrl);
 
   document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
   document.querySelector('#notas').value = candidato.notas;

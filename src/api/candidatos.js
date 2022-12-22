@@ -15,29 +15,6 @@ const candidatos = db.get('candidato');
 
 candidatos.createIndex({ cedula: 1 }, { unique: true });
 
-// const queries = require('../../db/queries');
-
-// const Datastore = require('nedb');
-// const monk = require('monk');
-// const Joi = require('@hapi/joi');
-
-// const db = new Datastore({ autoload: true, filename: process.env.NEDB_URI });
-
-// db.ensureIndex({ fieldName: 'cedula', unique: true }, (err) => {
-//   if (err) throw err;
-// });
-
-// db.loadDatabase();
-
-// const schema = Joi.object({
-//   cedula: Joi.string().trim().required(),
-//   nombre: Joi.string().trim().required(),
-//   apellidos: Joi.string().trim().required(),
-//   dob: Joi.date().required(),
-//   job_actual: Joi.string().trim(),
-//   exp_salario: Joi.number().integer(),
-// });
-
 const router = express.Router();
 
 // Lee todos los candidatos

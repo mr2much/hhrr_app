@@ -135,39 +135,6 @@
           </div>
         </div>`;
 
-        // candidatoSection.outerHTML += `
-        // <div class="card col-md-4">
-        //     <div class="card-header display-6">${candidato.nombres} ${
-        //   candidato.apellidos
-        // }</div>
-        //     <div class="card-body col-md-10 mx-auto">
-        //         <h5 class="card-title">Datos Personales</h5>
-        //         <ul class="list-group list-group-flush">
-        //             <li class="list-group-item">Cedula: ${candidato.cedula}</li>
-        //             <li class="list-group-item">Fecha de Nacimiento: ${fixDateFormat(
-        //               candidato.dob,
-        //               '-'
-        //             )}</li>
-        //         </ul>
-        //     </div>
-        //     <div class="card-body col-md-10 mx-auto">
-        //         <h5 class="card-title">Datos Laborales</h5>
-        //         <ul class="list-group list-group-flush">
-        //             <li class="list-group-item">Empleo Actual: ${
-        //               candidato.job_actual
-        //             }</li>
-        //             <li class="list-group-item">Expectativa Salarial: ${
-        //               candidato.exp_salario
-        //             }</li>
-        //         </ul>
-        //     </div>
-        //     <div class="btn-group col-md-12 p-3" role="group" aria-label="Controles de Candidato">
-        //         <a href="/edit/index.html?id=${
-        //           candidato._id
-        //         }" class="btn  btn-success mt-2 col-md-5"><span class="pe-2"><i class="fas fa-user-edit"></i></span>Editar</a><button id="deleteBtn" class="btn btn-danger mt-2 col-md-5"><span class="pe-2"><i class="fas fa-trash-alt"></i></span>Eliminar</button>
-        //     </div>
-        // </div>`;
-
         const deleteBtn = document.querySelector('#deleteBtn');
 
         deleteBtn.addEventListener('click', (e) => {
