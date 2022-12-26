@@ -66,6 +66,18 @@ function prepopulateFormWithCandidatoInfo(candidato) {
   document.querySelector('#perfil-candidato').value = candidato.perfilCandidato;
 
   document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
+  const countryInput = document.querySelector('input[name="countries"]');
+
+  countryInput.value = candidato.country ? candidato.country : '';
+
+  const regionInput = document.querySelector('#gds-cr-region');
+  regionInput.value = candidato.region ? candidato.region : '';
+
+  // If country of origin changes, clear region value
+  countryInput.addEventListener('input', () => {
+    regionInput.value = '';
+  });
+
   document.querySelector('#notas').value = candidato.notas;
 
   // If the checkbox for currently employed is checked, enable the
