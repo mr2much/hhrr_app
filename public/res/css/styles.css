@@ -65,3 +65,8 @@ input[type='text']:disabled {
 #image-candidato {
   background-color: #ddd;
 }
+
+#map {
+  width: 70%;
+  height: 85vh;
+}
