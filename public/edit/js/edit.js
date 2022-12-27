@@ -66,7 +66,7 @@ function prepopulateFormWithCandidatoInfo(candidato) {
   document.querySelector('#perfil-candidato').value = candidato.perfilCandidato;
 
   document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
-  const countryInput = document.querySelector('input[name="countries"]');
+  const countryInput = document.querySelector('#countries');
 
   countryInput.value = candidato.country_region_data.country
     ? candidato.country_region_data.country

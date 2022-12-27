@@ -6,86 +6,55 @@ window.addEventListener('DOMContentLoaded', (e) => {
   // }).addTo(map);
 
   //Display amchart map when country and region being selected
-  function showCountryRegion(candidato) {
-    const { country, selectedIndex, selectedRegion } =
-      candidato.country_region_data;
+  function showCountryRegion(candidatos) {
+    const candidatoCountryData = [];
 
-    //Get selected country code and region name from dropdown menu
-    var selectedCountryCode = country_region[selectedIndex][0];
-    // var selectedCountryCode =
-    //   country_region[countryRegionData.selectedCountryIndex][0];
-    // var selectedRegion = regionElement.options[regionElement.selectedIndex].value;
+    candidatos.forEach((candidato) => {
+      const { country, selectedIndex, selectedRegion } =
+        candidato.country_region_data;
 
-    // Implement amChart Map function -- US will be demonstrate as an example
-    var countryMaps = {
-      //   US: ['usaHigh'],
-      DO: ['dominicanRepublicHigh'],
-      //You may add other countries as below based on SVG filename in amChart
-      //"AF": ["afghanistanHigh"],
-      //"AL": ["albaniaHigh"]
-    };
+      let selectedCountryCode = country_region[selectedIndex][0];
+      selectedCountryCode = selectedCountryCode.replace('1', '');
 
-    var titles = [];
-    var amchart_id;
-    if (countryMaps[selectedCountryCode] !== undefined) {
-      var currentMap = countryMaps[selectedCountryCode][0];
-    }
+      $.getJSON(
+        '../crddm/plugins/amcharts/gds-amchart-mapping.json',
+        function (json) {
+          for (let i = 0; i < json.length; i++) {
+            let country_code = json[i].geodatasource_country;
+            let region_name = json[i].geodatasource_region;
+            let region_code = json[i].amchart_id;
 
-    //Use mapping file
-    $.getJSON(
-      '../crddm/plugins/amcharts/gds-amchart-mapping.json',
-      function (json) {
-        for (var i = 0; i < json.length; i++) {
-          //Get data from mapping file
-          var country_code = json[i].geodatasource_country;
-          var region_name = json[i].geodatasource_region;
-          var region_code = json[i].amchart_id;
-
-          //   console.log(`country_code: ${country_code}`);
-          //   console.log(`region_name: ${region_name}`);
-          //   console.log(`region_code: ${region_code}`);
-
-          if (
-            selectedCountryCode === country_code &&
-            selectedRegion === region_name
-          ) {
-            amchart_id = region_code;
-
-            console.log(
-              `amchart_id: ${amchart_id} for region_code: ${region_code}`
-            );
-
-            //Set up amChart map
-            var map = AmCharts.makeChart('chartdiv', {
-              type: 'map',
-              theme: 'none',
-              dataProvider: {
-                mapURL:
-                  'https://www.amcharts.com/lib/3/maps/svg/' +
-                  currentMap +
-                  '.svg',
-                zoomLevel: 0.9,
-                areas: [
-                  {
-                    id: amchart_id,
-                    showAsSelected: true,
-                  },
-                ],
-              },
-              areasSettings: {
-                autoZoom: true,
-                balloonText: '<strong>[[title]]</strong>',
-                selectedColor: '#397ea8',
-              },
-              zoomControl: {
-                minZoomLevel: 0.9,
-              },
-              titles: titles,
-            });
+            if (
+              selectedCountryCode === country_code &&
+              selectedRegion === region_name
+            ) {
+              candidatoCountryData.push({
+                id: country_code,
+                name: country,
+                selected: true,
+                fill: am4core.color('#F05C5C'),
+              });
+            }
           }
         }
-      }
-    );
+      );
+    });
+
+    const chart = am4core.create('chartdiv', am4maps.MapChart);
+
+    chart.geodata = am4geodata_worldHigh;
+
+    chart.projection = new am4maps.projections.Miller();
+
+    const polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+    polygonSeries.exclude = ['AQ'];
+    polygonSeries.useGeodata = true;
+    polygonSeries.data = candidatoCountryData;
+
+    const polygonTemplate = polygonSeries.mapPolygons.template;
+    polygonTemplate.tooltipText = '{name}';
+    polygonTemplate.fill = am4core.color('#74b266');
+    polygonTemplate.propertyFields.fill = 'fill';
   }
 
   async function showCandidatosInMap() {
@@ -94,9 +63,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     //   dataLayer.addTo(map);
 
-    allCandidatos.forEach((candidato) => {
-      showCountryRegion(candidato);
-    });
+    showCountryRegion(allCandidatos);
   }
 
   async function loadEntries() {

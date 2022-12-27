@@ -12,18 +12,18 @@
       href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     />
 
-    <script src="../crddm/assets/js/geodatasource-cr.min.js"></script>
+    <script src="../crddm/assets/js/geodatasource-cr.js"></script>
 
     <link
       rel="gettext"
       type="application/x-po"
       href="../crddm/languages/en/LC_MESSAGES/en.po"
     />
-    <link
+    <!-- <link
       rel="gettext"
       type="application/x-po"
       href="../crddm/languages/es/LC_MESSAGES/es.po"
-    />
+    /> -->
     <!-- <link
       rel="gettext"
       type="application/x-po"
@@ -289,22 +289,29 @@
             >
             <label for="countries"
               >Indicar Pais de Origen:
-              <input
+              <select
+                name="countries"
+                id="countries"
+                class="gds-cr"
+                country-data-region-id="gds-cr-region"
+                data-language="en"
+              ></select>
+              <!-- <input
                 id="countries"
                 class="form-control gds-cr-autocomplete"
                 country-data-region-id="gds-cr-region"
                 data-language="es"
                 name="countries"
-              />
+              /> -->
             </label>
-            <label for="gds-cr-region"
-              >Region:
-              <input
+
+            <select name="region" id="gds-cr-region"></select>
+            <!-- <input
                 class="form-control gds-cr-region-autocomplete"
                 id="gds-cr-region"
                 name="region"
-              />
-            </label>
+              /> -->
+
             <label for="notas"
               >Informacion adicional:
               <textarea

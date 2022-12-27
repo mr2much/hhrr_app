@@ -118,10 +118,6 @@ function calculateAgeFromDOB(dob) {
   return age;
 }
 
-function getRegionData(selectedIndex) {
-  return country_region[selectedIndex];
-}
-
 function validateFormGetCandidato(form, message) {
   const formData = new FormData(form);
 
@@ -146,6 +142,13 @@ function validateFormGetCandidato(form, message) {
     selectedIndex: countrySelector.selectedIndex - 1,
     selectedRegion: regionSelector.value,
   };
+
+  console.log(`Country: ${countrySelector.value}`);
+  console.log(`Index: ${countrySelector.selectedIndex - 1}`);
+  console.log(`Region: ${regionSelector.value}`);
+  console.log(
+    `Country_Region: ${country_region[countrySelector.selectedIndex - 1][0]}`
+  );
 
   // should validate that the cedula has a valid format
   if (!validaCedula(cedula)) {
