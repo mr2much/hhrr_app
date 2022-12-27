@@ -16,12 +16,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-      crossorigin=""
-    />
 
     <script src="../crddm/assets/js/geodatasource-cr.js"></script>
 
@@ -161,6 +155,22 @@
       </div>
     </nav>
 
+    <input
+      style="display: none"
+      id="countries"
+      class="form-control gds-cr-autocomplete"
+      country-data-region-id="gds-cr-region"
+      data-language="es"
+      name="countries"
+    />
+
+    <input
+      style="display: none"
+      class="form-control gds-cr-region-autocomplete"
+      id="gds-cr-region"
+      name="region"
+    />
+
     <!-- <div id="map"></div> -->
     <div id="chartdiv"></div>
 
@@ -180,10 +190,5 @@
     </footer>
   </body>
   <script src="../js/global.js" charset="utf-8"></script>
-  <script
-    src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin=""
-  ></script>
-  <script src="./js/map.js" charset="utf-8"></script>
+  <script type="module" src="./js/map.js" charset="utf-8"></script>
 </html>

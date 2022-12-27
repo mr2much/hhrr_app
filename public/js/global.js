@@ -118,6 +118,10 @@ function calculateAgeFromDOB(dob) {
   return age;
 }
 
+function getRegionData(selectedIndex) {
+  return country_region[selectedIndex];
+}
+
 function validateFormGetCandidato(form, message) {
   const formData = new FormData(form);
 
@@ -139,7 +143,7 @@ function validateFormGetCandidato(form, message) {
 
   const country_region_data = {
     country: countrySelector.value,
-    selectedIndex: countrySelector.selectedIndex,
+    selectedIndex: countrySelector.selectedIndex - 1,
     selectedRegion: regionSelector.value,
   };
 
