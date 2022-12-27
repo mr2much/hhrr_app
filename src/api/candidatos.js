@@ -15,6 +15,18 @@ const candidatos = db.get('candidato');
 
 candidatos.createIndex({ cedula: 1 }, { unique: true });
 
+// Para agregar un Field que no existe a todos los documentos de la DB, quizas probar con $rename?
+// candidatos.bulkWrite([
+//   {
+//     updateMany: {
+//       filter: {},
+//       update: {
+//         $set: { country_region_data: { country: '', selectedRegion: '' } },
+//       },
+//     },
+//   },
+// ]);
+
 const router = express.Router();
 
 // Lee todos los candidatos
@@ -100,8 +112,7 @@ function getCandidatoFromBody(body) {
     perfilCandidato,
     image,
     nivelAcademico,
-    country,
-    region,
+    country_region_data,
     notas,
   } = body;
 
@@ -125,8 +136,7 @@ function getCandidatoFromBody(body) {
     perfilCandidato,
     imgUrl,
     nivelAcademico,
-    country,
-    region,
+    country_region_data,
     notas,
   };
 

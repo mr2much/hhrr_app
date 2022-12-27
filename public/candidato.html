@@ -122,8 +122,12 @@
                         ? academicLevels[candidato.nivelAcademico - 1]
                         : 'No definido'
                     }</li>
-                    <li class="list-group-item">País: ${candidato.country}</li>
-                    <li class="list-group-item">Región: ${candidato.region}</li>
+                    <li class="list-group-item">País: ${
+                      candidato.country_region_data.country
+                    }</li>
+                    <li class="list-group-item">Región: ${
+                      candidato.country_region_data.selectedRegion
+                    }</li>
                     <li class="list-group-item">Nota: ${candidato.notas}</li>
                   </ul>
                 </div>

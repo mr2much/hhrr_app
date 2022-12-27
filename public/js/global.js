@@ -133,11 +133,15 @@ function validateFormGetCandidato(form, message) {
   const perfilCandidato = formData.get('perfil-candidato');
   const imgUrl = '../res/img/user.png';
   const nivelAcademico = formData.get('nivel-academico');
-  const country = formData.get('countries');
-  const region = formData.get('region');
+  const countrySelector = document.querySelector('#countries');
+  const regionSelector = document.querySelector('#gds-cr-region');
   const notas = formData.get('notas');
 
-  console.log(`You selected: Country: ${country} > Region: ${region}`);
+  const country_region_data = {
+    country: countrySelector.value,
+    selectedIndex: countrySelector.selectedIndex,
+    selectedRegion: regionSelector.value,
+  };
 
   // should validate that the cedula has a valid format
   if (!validaCedula(cedula)) {
@@ -185,8 +189,7 @@ function validateFormGetCandidato(form, message) {
     perfilCandidato,
     imgUrl,
     nivelAcademico,
-    country,
-    region,
+    country_region_data,
     notas,
   };
 

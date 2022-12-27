@@ -68,10 +68,14 @@ function prepopulateFormWithCandidatoInfo(candidato) {
   document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
   const countryInput = document.querySelector('input[name="countries"]');
 
-  countryInput.value = candidato.country ? candidato.country : '';
+  countryInput.value = candidato.country_region_data.country
+    ? candidato.country_region_data.country
+    : '';
 
   const regionInput = document.querySelector('#gds-cr-region');
-  regionInput.value = candidato.region ? candidato.region : '';
+  regionInput.value = candidato.country_region_data.selectedRegion
+    ? candidato.country_region_data.selectedRegion
+    : '';
 
   // If country of origin changes, clear region value
   countryInput.addEventListener('input', () => {
