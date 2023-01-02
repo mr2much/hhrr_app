@@ -112,7 +112,8 @@ function getCandidatoFromBody(body) {
     perfilCandidato,
     image,
     nivelAcademico,
-    country_region_data,
+    country,
+    region,
     notas,
   } = body;
 
@@ -136,7 +137,8 @@ function getCandidatoFromBody(body) {
     perfilCandidato,
     imgUrl,
     nivelAcademico,
-    country_region_data,
+    country,
+    region,
     notas,
   };
 

@@ -40,6 +40,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
       );
     });
 
+    console.log(candidatoCountryData);
+
     const chart = am4core.create('chartdiv', am4maps.MapChart);
 
     chart.geodata = am4geodata_worldHigh;
@@ -53,15 +55,17 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     const polygonTemplate = polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = '{name}';
-    polygonTemplate.fill = am4core.color('#74b266');
+    polygonTemplate.interactive = true;
+    polygonTemplate.strokeWidth = 2;
+    // polygonTemplate.fill = am4core.color('#74b266');
     polygonTemplate.propertyFields.fill = 'fill';
+
+    const hs = polygonTemplate.states.create('hover');
+    hs.properties.fill = am4core.color('#f0fb25');
   }
 
   async function showCandidatosInMap() {
     const allCandidatos = await loadEntries();
-    //   var dataLayer = L.geoJson({ features: [{ name: 'Samana' }] });
-
-    //   dataLayer.addTo(map);
 
     showCountryRegion(allCandidatos);
   }
