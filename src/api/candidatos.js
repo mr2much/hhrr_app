@@ -5,37 +5,27 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const monk = require('monk');
+
 const url = process.env.MONGO_URI || 'localhost:27017/candidatos';
 
-const _dir = '../res/img';
+const _dir = 'res/img';
 
 const db = monk(url);
 const candidatos = db.get('candidato');
 
 candidatos.createIndex({ cedula: 1 }, { unique: true });
 
-// const queries = require('../../db/queries');
-
-// const Datastore = require('nedb');
-// const monk = require('monk');
-// const Joi = require('@hapi/joi');
-
-// const db = new Datastore({ autoload: true, filename: process.env.NEDB_URI });
-
-// db.ensureIndex({ fieldName: 'cedula', unique: true }, (err) => {
-//   if (err) throw err;
-// });
-
-// db.loadDatabase();
-
-// const schema = Joi.object({
-//   cedula: Joi.string().trim().required(),
-//   nombre: Joi.string().trim().required(),
-//   apellidos: Joi.string().trim().required(),
-//   dob: Joi.date().required(),
-//   job_actual: Joi.string().trim(),
-//   exp_salario: Joi.number().integer(),
-// });
+// Para agregar un Field que no existe a todos los documentos de la DB, quizas probar con $rename?
+// candidatos.bulkWrite([
+//   {
+//     updateMany: {
+//       filter: {},
+//       update: {
+//         $set: { country_region_data: { country: '', selectedRegion: '' } },
+//       },
+//     },
+//   },
+// ]);
 
 const router = express.Router();
 
@@ -89,27 +79,22 @@ function candidatoValidator(req, res, next) {
   }
 }
 
-function imageBase64ToImageFile(image) {
+function imageBase64ToImageFile(imagePath, image) {
   const asciiToBinary = Buffer.from(image.imgTo64, 'base64');
 
-  fs.writeFile(image.imgName, asciiToBinary, (err) => {
+  fs.writeFile(imagePath, asciiToBinary, (err) => {
     if (err) {
       return new Error(
         `There was a problem saving when trying to write ${image.imgName}`
       );
-    } else {
-      console.log(`File saved at ${image.imgName}`);
     }
   });
 }
 
 function handleImageData(image) {
-  const imagePath = path.join(_dir, image.imgName);
-  image.imgName = imagePath;
+  imageBase64ToImageFile(path.join(`public/${_dir}/${image.imgName}`), image);
 
-  imageBase64ToImageFile(image);
-
-  return image.imgName;
+  return `${_dir}/${image.imgName}`;
 }
 
 function getCandidatoFromBody(body) {
@@ -127,6 +112,8 @@ function getCandidatoFromBody(body) {
     perfilCandidato,
     image,
     nivelAcademico,
+    country,
+    region,
     notas,
   } = body;
 
@@ -135,8 +122,6 @@ function getCandidatoFromBody(body) {
   if (image) {
     imgUrl = handleImageData(image);
   }
-
-  console.log(`imgUrl: ${imgUrl}`);
 
   const candidato = {
     cedula,
@@ -152,6 +137,8 @@ function getCandidatoFromBody(body) {
     perfilCandidato,
     imgUrl,
     nivelAcademico,
+    country,
+    region,
     notas,
   };
 
@@ -169,7 +156,9 @@ router.post('/', candidatoValidator, (req, res, next) => {
         res.status(200);
         res.json(createdCandidato);
       })
-      .catch((err) => {
+      .catch(async (err) => {
+        const idxs = await candidatos.indexes();
+        console.log(idxs);
         next(err);
       });
   } else {

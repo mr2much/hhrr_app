@@ -2,7 +2,6 @@
 
 /* eslint-disable no-restricted-syntax */
 
-// darkMode.style.display = 'none';
 const tableCandidatos = document.querySelector('table tbody');
 
 async function loadEntries() {
