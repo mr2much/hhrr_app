@@ -47,12 +47,14 @@ if (isDark) {
 }
 
 function activateLightTheme() {
+  styleSheetLink.setAttribute('crossorigin', 'anonymous');
   styleSheetLink.setAttribute('href', lightThemePath);
   darkMode.style.display = '';
   lightMode.style.display = 'none';
 }
 
 function activateDarkTheme() {
+  styleSheetLink.setAttribute('crossorigin', 'anonymous');
   styleSheetLink.setAttribute('href', darkThemePath);
   lightMode.style.display = '';
   darkMode.style.display = 'none';

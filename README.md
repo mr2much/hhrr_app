@@ -73,3 +73,4 @@ npm run dev
     - TODO: create route to query one candidato
     - TODO: create route to update one candidato
     - TODO: create route to delete one candidato
+- TODO: Install method-override

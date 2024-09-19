@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const methodOverride = require('method-override');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -9,13 +11,17 @@ const middlewares = require('./middlewares');
 const api = require('./api');
 
 const app = express();
-app.use(express.static('public'));
-app.use(express.json({ limit: '1mb' }));
+app
+  .use(express.json({ limig: '1mb' }))
+  .use(express.urlencoded({ extended: true }))
+  .use(express.static(path.join(__dirname, '../public')))
+  .use(cors())
+  .use(morgan('dev'))
+  .use(helmet())
+  .use(methodOverride('_method'));
 
-app.use(morgan('dev'));
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views'));
 
 app.get('/', (req, res) => {
   res.json({
