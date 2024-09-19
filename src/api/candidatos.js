@@ -31,23 +31,21 @@ const db = require('./db/candidatos_db');
 
 const router = express.Router();
 
+// // Lee todos los candidatos
 router.get('/', async (req, res, next) => {
   const candidatos = await db.findAll();
-
-  console.log(candidatos);
 
   res.render('candidatos/home', { candidatos });
 });
 
-// // Lee todos los candidatos
-// router.get('/', async (req, res, next) => {
-//   candidatos.find().then((candidates) => {
-//     res.status(200);
-//     res.json(candidates);
-//   });
-// });
-
 // // Lee un candidato con ID
+router.get('/:id', async (req, res, next) => {
+  const { id } = req.params;
+
+  const candidato = await db.findOneById(id);
+
+  res.render('candidatos/details', { candidato });
+});
 // router.get('/:id', async (req, res, next) => {
 //   const { id } = req.params;
 

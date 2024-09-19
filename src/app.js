@@ -18,6 +18,14 @@ app
   .use(cors())
   .use(morgan('dev'))
   .use(helmet())
+  .use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+      },
+    })
+  )
   .use(methodOverride('_method'));
 
 app.set('view engine', 'ejs');

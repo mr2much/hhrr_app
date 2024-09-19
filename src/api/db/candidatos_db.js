@@ -28,7 +28,7 @@ const candidatoSchema = new mongoose.Schema(
     job_actual: { type: String },
     exp_salario: { type: Number, default: 0 },
     perfilCandidato: { type: String },
-    imgUrl: { type: String, default: '../res/img/user.png' },
+    imgUrl: { type: String, default: '/res/img/user.png' },
     nivelAcademico: { type: String },
     country: { type: String, default: 'República Dominicana' },
     region: { type: String },
@@ -37,8 +37,14 @@ const candidatoSchema = new mongoose.Schema(
   { collection: 'candidato' }
 );
 
+candidatoSchema.virtual('fullName').get(function () {
+  return `${this.nombres} ${this.apellidos}`;
+});
+
 const Candidato = mongoose.model('Candidato', candidatoSchema);
 
-findAll = async () => Candidato.find({});
+findAll = () => Candidato.find({});
 
-module.exports = { findAll };
+findOneById = (id) => Candidato.findById(id);
+
+module.exports = { findAll, findOneById };
