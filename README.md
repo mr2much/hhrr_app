@@ -54,23 +54,25 @@ npm run dev
 
 ## TODO
 
-- TODO: Install EJS
-  - TODO: Create Views folder
-    - TODO: Create view for home
+- TODO: On `edit.js` fix code to extract image from image input
+- TODO: On server side, add code to extract and save image on `/res/img/` folder, and store image path for candidato.
+- [x]: Install EJS
+  - [x]: Create Views folder
+    - [x]: Create view for home
     - TODO: Create view for new candidato
-    - TODO: create view for view candidato
+    - [x]: create view for view candidato
     - TODO: create view to edit candidato
-  - TODO: Create folders to serve static files `css, js`
+  - [x]: Create folders to serve static files `css, js`
   - TODO: Create Partials folder
     - TODO: Create partial for navbar
     - TODO: create partial for <head>
-- TODO: Install Mongoose
-  - TODO: create schema for candidato
-  - TODO: create model for candidato
+- [x]: Install Mongoose
+  - [x]: create schema for candidato
+  - [x]: create model for candidato
   - TODO: create route for candidato CRUD
     - TODO: create route for insert new candidato
-    - TODO: create route to query all candidatos
-    - TODO: create route to query one candidato
+    - [x]: create route to query all candidatos
+    - [x]: create route to query one candidato
     - TODO: create route to update one candidato
     - TODO: create route to delete one candidato
-- TODO: Install method-override
+- [x]: Install method-override
