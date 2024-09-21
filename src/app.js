@@ -22,7 +22,14 @@ app
     helmet.contentSecurityPolicy({
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          'https://cdn.jsdelivr.net',
+          'https://cdnjs.cloudflare.com',
+          'https://ajax.googleapis.com',
+        ],
       },
     })
   )

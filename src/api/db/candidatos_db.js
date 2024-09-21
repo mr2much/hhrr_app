@@ -47,4 +47,10 @@ findAll = () => Candidato.find({});
 
 findOneById = (id) => Candidato.findById(id);
 
-module.exports = { findAll, findOneById };
+findByIdAndUpdate = (id, newCandidato) =>
+  Candidato.findByIdAndUpdate(id, newCandidato, {
+    runValidators: true,
+    new: true,
+  });
+
+module.exports = { findAll, findOneById, findByIdAndUpdate };

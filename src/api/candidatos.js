@@ -3,6 +3,7 @@
 /* eslint-disable linebreak-style */
 const express = require('express');
 
+const values = require('@hapi/joi/lib/values');
 const db = require('./db/candidatos_db');
 // const fs = require('fs');
 // const path = require('path');
@@ -31,14 +32,14 @@ const db = require('./db/candidatos_db');
 
 const router = express.Router();
 
-// // Lee todos los candidatos
+// Lee todos los candidatos
 router.get('/', async (req, res, next) => {
   const candidatos = await db.findAll();
 
   res.render('candidatos/home', { candidatos });
 });
 
-// // Lee un candidato con ID
+// Lee un candidato con ID
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
 
@@ -46,15 +47,70 @@ router.get('/:id', async (req, res, next) => {
 
   res.render('candidatos/details', { candidato });
 });
-// router.get('/:id', async (req, res, next) => {
-//   const { id } = req.params;
 
-//   console.log(`GET request with ID: ${id}`);
+const experiencia = [
+  { id: 'inexperienced', value: 'Sin experiencia' },
+  { id: 'experienced', value: 'Con experiencia' },
+];
 
-//   candidatos.findOne({ _id: id }).then((candidato) => {
-//     res.status(200);
-//     res.json(candidato);
-//   });
+const perfiles = [
+  { value: '', text: '--Seleccionar Perfil--' },
+  { value: 'IT', text: 'IT' },
+  { value: 'Desarrollo', text: 'Desarrollo' },
+  { value: 'DBA', text: 'DBA' },
+  { value: 'Telecomunicaciones', text: 'Telecomunicaciones' },
+  { value: 'Contabilidad', text: 'Contabilidad' },
+  { value: 'Servicio al Cliente', text: 'Servicio al Cliente' },
+];
+
+const nivelesAcademicos = [
+  { value: '', text: '--Elegir opcion--' },
+  { value: 'Estudiante', text: 'Estudiante' },
+  { value: 'Nivel Tecnico', text: 'Nivel Tecnico' },
+  { value: 'Licenciatura', text: 'Licenciatura' },
+  { value: 'Ingenieria', text: 'Ingenieria' },
+  { value: 'Maestria', text: 'Maestria' },
+  { value: 'Doctorado', text: 'Doctorado' },
+];
+
+// Redirecciona a Edit Form
+router.get('/:id/edit', async (req, res, next) => {
+  const { id } = req.params;
+
+  const candidato = await db.findOneById(id);
+  res.render('candidatos/edit', {
+    candidato,
+    experiencia,
+    perfiles,
+    nivelesAcademicos,
+  });
+});
+
+// // Actualizar un candidato
+router.patch('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  const newCandidato = req.body;
+
+  console.log(newCandidato);
+
+  // const newCandidato = req.body;
+  // console.log(newCandidato.imgUrl);
+  res.json(newCandidato);
+  // const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
+
+  // if (updatedCandidato) {
+  //   res.redirect(`/api/v1/candidatos/${id}`);
+  // }
+});
+// router.put('/:id', candidatoValidator, (req, res, next) => {
+//   const replaceCandidato = getCandidatoFromBody(req.body);
+
+//   candidatos
+//     .update({ _id: req.params.id }, { $set: replaceCandidato })
+//     .then((updatedCandidato) => {
+//       res.status(200);
+//       res.json(updatedCandidato);
+//     });
 // });
 
 // function validaCedula(cedula) {

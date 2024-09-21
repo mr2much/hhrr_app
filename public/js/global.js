@@ -77,7 +77,7 @@ toggleMode.addEventListener('click', (e) => {
 });
 
 function parseIDFromURL() {
-  const parts = window.location.search.match(/\?id\=(.*)/);
+  const parts = window.location.href.match(/\/candidatos\/(.*)\/edit/);
   return parts[1].trim();
 }
 
@@ -129,13 +129,13 @@ function validateFormGetCandidato(form, message) {
   const email = formData.get('email');
   const dob = formData.get('dob');
   const age = calculateAgeFromDOB(dob);
-  const candidateExp = formData.get('tipo-candidato');
-  const currentlyWorking = formData.get('trabajo-actual') ? true : false;
-  const exp_salario = Number(formData.get('expectativa-salarial'));
-  const perfilCandidato = formData.get('perfil-candidato');
-  const imgUrl = '../res/img/user.png';
-  const nivelAcademico = formData.get('nivel-academico');
-  const country = formData.get('countries');
+  const candidateExp = formData.get('candidateExp');
+  const currentlyWorking = formData.get('currentlyWorking') ? true : false;
+  const exp_salario = Number(formData.get('exp_salario'));
+  const perfilCandidato = formData.get('perfilCandidato');
+  const imgUrl = '/res/img/user.png';
+  const nivelAcademico = formData.get('nivelAcademico');
+  const country = formData.get('country');
   const region = formData.get('region');
   const notas = formData.get('notas');
 

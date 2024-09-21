@@ -1,150 +1,150 @@
-/* eslint-disable linebreak-style */
-let p5Canvas;
-let imgInput;
-let imgProfile;
+// /* eslint-disable linebreak-style */
+// let p5Canvas;
+// let imgInput;
+// let imgProfile;
 
-const idCandidato = parseIDFromURL();
-const form = document.querySelector('form');
+// const idCandidato = parseIDFromURL();
+// const form = document.querySelector('form');
 
-const errorMessage = document.querySelector('#errorMessage');
+// const errorMessage = document.querySelector('#errorMessage');
 
-errorMessage.style.display = 'none';
+// errorMessage.style.display = 'none';
 
-const btnCancel = document.querySelector('form #cancel-btn');
+// const btnCancel = document.querySelector('form #cancel-btn');
 
-function imageFileHandler(file) {
-  if (file.type.includes('image')) {
-    imgProfile = createImg(file.data, '');
-    imgProfile.hide();
-  } else {
-    console.log(file.type);
-  }
-}
+// function imageFileHandler(file) {
+//   if (file.type.includes('image')) {
+//     imgProfile = createImg(file.data, '');
+//     imgProfile.hide();
+//   } else {
+//     console.log(file.type);
+//   }
+// }
 
-function setup() {
-  const profileFieldset = document.querySelector('#profile-pic');
-  p5Canvas = createCanvas(1, 1);
+// function setup() {
+//   const profileFieldset = document.querySelector('#profile-pic');
+//   p5Canvas = createCanvas(1, 1);
 
-  imgInput = createFileInput(imageFileHandler);
-  imgInput.id('foto-perfil');
-  imgInput.class('form-control');
-  imgInput.elt.name = 'foto-perfil';
+//   imgInput = createFileInput(imageFileHandler);
+//   imgInput.id('foto-perfil');
+//   imgInput.class('form-control');
+//   imgInput.elt.name = 'foto-perfil';
 
-  imgInput.parent(profileFieldset);
+//   imgInput.parent(profileFieldset);
 
-  pixelDensity(1);
-  background(0);
+//   pixelDensity(1);
+//   background(0);
 
-  getCandidato(idCandidato).then(prepopulateFormWithCandidatoInfo);
-}
+//   getCandidato(idCandidato).then(prepopulateFormWithCandidatoInfo);
+// }
 
-btnCancel.addEventListener('click', (e) => {
-  window.location = `/candidato.html?id=${idCandidato}`;
-});
+// btnCancel.addEventListener('click', (e) => {
+//   window.location = `/candidato.html?id=${idCandidato}`;
+// });
 
-function prepopulateFormWithCandidatoInfo(candidato) {
-  // We don't use FormData because formData.set() doesn't update the info on the page
-  document.querySelector('#cedula').value = candidato.cedula;
-  document.querySelector('#nombres').value = candidato.nombres;
-  document.querySelector('#apellidos').value = candidato.apellidos;
-  document.querySelector('#email').value = candidato.email;
-  document.querySelector('#dob').value = candidato.dob;
+// function prepopulateFormWithCandidatoInfo(candidato) {
+//   // We don't use FormData because formData.set() doesn't update the info on the page
+//   document.querySelector('#cedula').value = candidato.cedula;
+//   document.querySelector('#nombres').value = candidato.nombres;
+//   document.querySelector('#apellidos').value = candidato.apellidos;
+//   document.querySelector('#email').value = candidato.email;
+//   document.querySelector('#dob').value = candidato.dob;
 
-  const age = calculateAgeFromDOB(dob);
+//   const age = calculateAgeFromDOB(dob);
 
-  document.querySelector('#job_actual').value = candidato.job_actual;
+//   document.querySelector('#job_actual').value = candidato.job_actual;
 
-  // Select checkbox matching the value saved, set it to true (checked)
-  document.querySelector(
-    `input[value="${candidato.candidateExp}"]`
-  ).checked = true;
-  document.querySelector('#candidato-empleado').checked =
-    candidato.currentlyWorking;
-  document.querySelector('#job_actual').value = candidato.job_actual;
-  document.querySelector('#expectativa-salarial').value = candidato.exp_salario;
+//   // Select checkbox matching the value saved, set it to true (checked)
+//   document.querySelector(
+//     `input[value="${candidato.candidateExp}"]`
+//   ).checked = true;
+//   document.querySelector('#candidato-empleado').checked =
+//     candidato.currentlyWorking;
+//   document.querySelector('#job_actual').value = candidato.job_actual;
+//   document.querySelector('#expectativa-salarial').value = candidato.exp_salario;
 
-  document.querySelector('#perfil-candidato').value = candidato.perfilCandidato;
+//   document.querySelector('#perfil-candidato').value = candidato.perfilCandidato;
 
-  document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
-  const countryInput = document.querySelector('#countries');
+//   document.querySelector('#nivel-academico').value = candidato.nivelAcademico;
+//   const countryInput = document.querySelector('#countries');
 
-  countryInput.value = candidato.country ? candidato.country : '';
+//   countryInput.value = candidato.country ? candidato.country : '';
 
-  const regionInput = document.querySelector('#gds-cr-region');
-  regionInput.value = candidato.region ? candidato.region : '';
+//   const regionInput = document.querySelector('#gds-cr-region');
+//   regionInput.value = candidato.region ? candidato.region : '';
 
-  // If country of origin changes, clear region value
-  countryInput.addEventListener('input', () => {
-    regionInput.value = '';
-  });
+//   // If country of origin changes, clear region value
+//   countryInput.addEventListener('input', () => {
+//     regionInput.value = '';
+//   });
 
-  document.querySelector('#notas').value = candidato.notas;
+//   document.querySelector('#notas').value = candidato.notas;
 
-  // If the checkbox for currently employed is checked, enable the
-  // textbox for Trabajo Actual
-  const checkboxHasJob = document.querySelector('#candidato-empleado');
+//   // If the checkbox for currently employed is checked, enable the
+//   // textbox for Trabajo Actual
+//   const checkboxHasJob = document.querySelector('#candidato-empleado');
 
-  document.querySelector('#job_actual').disabled = !checkboxHasJob.checked;
+//   document.querySelector('#job_actual').disabled = !checkboxHasJob.checked;
 
-  checkboxHasJob.addEventListener('change', (e) => {
-    const inputCurrentJob = document.querySelector('#job_actual');
+//   checkboxHasJob.addEventListener('change', (e) => {
+//     const inputCurrentJob = document.querySelector('#job_actual');
 
-    inputCurrentJob.toggleAttribute('disabled');
-  });
-}
+//     inputCurrentJob.toggleAttribute('disabled');
+//   });
+// }
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
+// form.addEventListener('submit', (e) => {
+//   e.preventDefault();
 
-  p5Canvas.loadPixels();
+//   p5Canvas.loadPixels();
 
-  const modifiedCandidato = validateFormGetCandidato(form, errorMessage);
+//   const modifiedCandidato = validateFormGetCandidato(form, errorMessage);
 
-  if (imgInput.elt.files[0]) {
-    const imgName = imgInput.elt.files[0].name;
+//   if (imgInput.elt.files[0]) {
+//     const imgName = imgInput.elt.files[0].name;
 
-    // convert image data to Encode 64
-    const encode64 = imgProfile.elt.src.split(';base64,');
+//     // convert image data to Encode 64
+//     const encode64 = imgProfile.elt.src.split(';base64,');
 
-    // from data:image/format, split by :, then take the second
-    // argument which should be image/format
-    const type = encode64[0].split(':')[1];
-    const imgTo64 = encode64[1];
+//     // from data:image/format, split by :, then take the second
+//     // argument which should be image/format
+//     const type = encode64[0].split(':')[1];
+//     const imgTo64 = encode64[1];
 
-    const { width, height } = imgProfile;
+//     const { width, height } = imgProfile;
 
-    // Create an image object with the encoded base 64 data
-    const image = {
-      type,
-      width,
-      height,
-      imgName,
-      imgTo64,
-    };
+//     // Create an image object with the encoded base 64 data
+//     const image = {
+//       type,
+//       width,
+//       height,
+//       imgName,
+//       imgTo64,
+//     };
 
-    console.log(image);
+//     console.log(image);
 
-    modifiedCandidato.image = image;
-  }
+//     modifiedCandidato.image = image;
+//   }
 
-  if (modifiedCandidato) {
-    updateCandidato(modifiedCandidato).then((result) => {
-      console.log(result);
-      window.location = `/candidato.html?id=${idCandidato}`;
-    });
-  }
-});
+//   if (modifiedCandidato) {
+//     updateCandidato(modifiedCandidato).then((result) => {
+//       console.log(result);
+//       window.location = `/candidato.html?id=${idCandidato}`;
+//     });
+//   }
+// });
 
-async function updateCandidato(candidato) {
-  const options = {
-    method: 'PUT',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(candidato),
-  };
+// async function updateCandidato(candidato) {
+//   const options = {
+//     method: 'PUT',
+//     headers: {
+//       'content-type': 'application/json',
+//     },
+//     body: JSON.stringify(candidato),
+//   };
 
-  const res = await fetch(`${API_URL}/${idCandidato}`, options);
+//   const res = await fetch(`${API_URL}/${idCandidato}`, options);
 
-  return res.json();
-}
+//   return res.json();
+// }
