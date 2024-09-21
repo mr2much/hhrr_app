@@ -91,9 +91,6 @@ router.patch('/:id', async (req, res, next) => {
   const { id } = req.params;
   const newCandidato = req.body;
 
-  console.log(newCandidato);
-
-  // const newCandidato = req.body;
   // console.log(newCandidato.imgUrl);
   res.json(newCandidato);
   // const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);

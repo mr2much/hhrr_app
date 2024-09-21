@@ -12,7 +12,7 @@ const api = require('./api');
 
 const app = express();
 app
-  .use(express.json({ limig: '1mb' }))
+  .use(express.json({ limit: '1mb' }))
   .use(express.urlencoded({ extended: true }))
   .use(express.static(path.join(__dirname, '../public')))
   .use(cors())

@@ -96,36 +96,34 @@ function prepopulateFormWithCandidatoInfo(candidato) {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // p5Canvas.loadPixels();
+  p5Canvas.loadPixels();
 
   const modifiedCandidato = validateFormGetCandidato(form, errorMessage);
 
-  // if (imgInput.elt.files[0]) {
-  //   const imgName = imgInput.elt.files[0].name;
+  if (imgInput.elt.files[0]) {
+    const imgName = imgInput.elt.files[0].name;
 
-  //   // convert image data to Encode 64
-  //   const encode64 = imgProfile.elt.src.split(';base64,');
+    // convert image data to Encode 64
+    const encode64 = imgProfile.elt.src.split(';base64,');
 
-  //   // from data:image/format, split by :, then take the second
-  //   // argument which should be image/format
-  //   const type = encode64[0].split(':')[1];
-  //   const imgTo64 = encode64[1];
+    // from data:image/format, split by :, then take the second
+    // argument which should be image/format
+    const type = encode64[0].split(':')[1];
+    const imgTo64 = encode64[1];
 
-  //   const { width, height } = imgProfile;
+    const { width, height } = imgProfile;
 
-  //   // Create an image object with the encoded base 64 data
-  //   const image = {
-  //     type,
-  //     width,
-  //     height,
-  //     imgName,
-  //     imgTo64,
-  //   };
+    // Create an image object with the encoded base 64 data
+    const image = {
+      type,
+      width,
+      height,
+      imgName,
+      imgTo64,
+    };
 
-  //   console.log(image);
-
-  //   modifiedCandidato.image = image;
-  // }
+    modifiedCandidato.image = image;
+  }
 
   // updateCandidato(modifiedCandidato);
 
