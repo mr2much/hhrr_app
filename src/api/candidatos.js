@@ -93,14 +93,18 @@ router.patch('/:id', async (req, res, next) => {
 
   newCandidato.imgUrl = `${_dir}/${id}_${newCandidato.image.imgName}`;
 
-  if (newCandidato.image) {
-    handleImageData(newCandidato.image, id);
-  }
+  try {
+    if (newCandidato.image) {
+      handleImageData(newCandidato.image, id);
+    }
 
-  const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
+    const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
 
-  if (updatedCandidato) {
-    res.json(updatedCandidato);
+    if (updatedCandidato) {
+      res.json(updatedCandidato);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 // router.put('/:id', candidatoValidator, (req, res, next) => {

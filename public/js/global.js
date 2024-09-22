@@ -139,8 +139,6 @@ function validateFormGetCandidato(form, message) {
   const region = formData.get('region');
   const notas = formData.get('notas');
 
-  console.log(country);
-  console.log(region);
   // const country_region_data = {
   //   country: countrySelector.value,
   //   selectedIndex: countrySelector.selectedIndex - 1,

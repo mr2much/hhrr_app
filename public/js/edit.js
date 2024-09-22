@@ -128,8 +128,6 @@ form.addEventListener('submit', (e) => {
   if (modifiedCandidato) {
     updateCandidato(modifiedCandidato).then((candidato) => {
       window.location = `/api/v1/candidatos/${candidato._id}`;
-
-      return true;
     });
   }
 });
