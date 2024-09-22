@@ -101,22 +101,12 @@ router.patch('/:id', async (req, res, next) => {
     const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
 
     if (updatedCandidato) {
-      res.json(updatedCandidato);
+      res.status(200).json(updatedCandidato);
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
-// router.put('/:id', candidatoValidator, (req, res, next) => {
-//   const replaceCandidato = getCandidatoFromBody(req.body);
-
-//   candidatos
-//     .update({ _id: req.params.id }, { $set: replaceCandidato })
-//     .then((updatedCandidato) => {
-//       res.status(200);
-//       res.json(updatedCandidato);
-//     });
-// });
 
 // function validaCedula(cedula) {
 //   return (

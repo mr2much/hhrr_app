@@ -126,9 +126,13 @@ form.addEventListener('submit', (e) => {
   }
 
   if (modifiedCandidato) {
-    updateCandidato(modifiedCandidato).then((candidato) => {
-      window.location = `/api/v1/candidatos/${candidato._id}`;
-    });
+    updateCandidato(modifiedCandidato)
+      .then((candidato) => {
+        window.location = `/api/v1/candidatos/${candidato._id}`;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 });
 
