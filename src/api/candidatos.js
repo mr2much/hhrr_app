@@ -79,8 +79,11 @@ function imageBase64ToImageFile(imagePath, image) {
   });
 }
 
-function handleImageData(image) {
-  imageBase64ToImageFile(path.join(`public${_dir}/${image.imgName}`), image);
+function handleImageData(image, id) {
+  imageBase64ToImageFile(
+    path.join(`public${_dir}/${id}_${image.imgName}`),
+    image
+  );
 }
 
 // // Actualizar un candidato
@@ -88,15 +91,13 @@ router.patch('/:id', async (req, res, next) => {
   const { id } = req.params;
   const newCandidato = req.body;
 
-  newCandidato.imgUrl = `${_dir}/${newCandidato.image.imgName}`;
+  newCandidato.imgUrl = `${_dir}/${id}_${newCandidato.image.imgName}`;
 
   if (newCandidato.image) {
-    handleImageData(newCandidato.image);
+    handleImageData(newCandidato.image, id);
   }
 
   const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
-
-  console.log(updatedCandidato);
 
   if (updatedCandidato) {
     res.json(updatedCandidato);
