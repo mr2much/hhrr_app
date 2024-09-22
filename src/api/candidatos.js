@@ -3,16 +3,16 @@
 /* eslint-disable linebreak-style */
 const express = require('express');
 
+const fs = require('fs');
+const path = require('path');
 const db = require('./db/candidatos_db');
 const perfiles = require('./const/perfiles');
 const nivelesAcademicos = require('./const/nivelesAcademicos');
-// const fs = require('fs');
-// const path = require('path');
 // const monk = require('monk');
 
 // const url = process.env.MONGO_URI || 'localhost:27017/candidatos';
 
-// const _dir = 'res/img';
+const _dir = '/res/img';
 
 // const db = monk(url);
 // const candidatos = db.get('candidato');
@@ -67,19 +67,40 @@ router.get('/:id/edit', async (req, res, next) => {
   });
 });
 
+function imageBase64ToImageFile(imagePath, image) {
+  const asciiToBinary = Buffer.from(image.imgTo64, 'base64');
+
+  fs.writeFile(imagePath, asciiToBinary, (err) => {
+    if (err) {
+      return new Error(
+        `There was a problem saving when trying to write ${image.imgName}`
+      );
+    }
+  });
+}
+
+function handleImageData(image) {
+  imageBase64ToImageFile(path.join(`public${_dir}/${image.imgName}`), image);
+}
+
 // // Actualizar un candidato
 router.patch('/:id', async (req, res, next) => {
   const { id } = req.params;
   const newCandidato = req.body;
 
-  // console.log(newCandidato.imgUrl);
+  newCandidato.imgUrl = `${_dir}/${newCandidato.image.imgName}`;
 
-  res.json(newCandidato);
-  // const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
+  if (newCandidato.image) {
+    handleImageData(newCandidato.image);
+  }
 
-  // if (updatedCandidato) {
-  //   res.redirect(`/api/v1/candidatos/${id}`);
-  // }
+  const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
+
+  console.log(updatedCandidato);
+
+  if (updatedCandidato) {
+    res.json(updatedCandidato);
+  }
 });
 // router.put('/:id', candidatoValidator, (req, res, next) => {
 //   const replaceCandidato = getCandidatoFromBody(req.body);

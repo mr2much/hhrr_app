@@ -125,11 +125,11 @@ form.addEventListener('submit', (e) => {
     modifiedCandidato.image = image;
   }
 
-  // updateCandidato(modifiedCandidato);
-
   if (modifiedCandidato) {
-    updateCandidato(modifiedCandidato).then((result) => {
-      window.location = '/api/v1/candidatos/';
+    updateCandidato(modifiedCandidato).then((candidato) => {
+      window.location = `/api/v1/candidatos/${candidato._id}`;
+
+      return true;
     });
   }
 });
@@ -144,7 +144,6 @@ async function updateCandidato(candidato) {
   };
 
   const res = await fetch(`/api/v1/candidatos/${idCandidato}`, options);
-  // const res = await fetch(`${API_URL}/${idCandidato}`, options);
 
-  return res;
+  return res.json();
 }
