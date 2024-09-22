@@ -3,8 +3,9 @@
 /* eslint-disable linebreak-style */
 const express = require('express');
 
-const values = require('@hapi/joi/lib/values');
 const db = require('./db/candidatos_db');
+const perfiles = require('./const/perfiles');
+const nivelesAcademicos = require('./const/nivelesAcademicos');
 // const fs = require('fs');
 // const path = require('path');
 // const monk = require('monk');
@@ -53,26 +54,6 @@ const experiencia = [
   { id: 'experienced', value: 'Con experiencia' },
 ];
 
-const perfiles = [
-  { value: '', text: '--Seleccionar Perfil--' },
-  { value: 'IT', text: 'IT' },
-  { value: 'Desarrollo', text: 'Desarrollo' },
-  { value: 'DBA', text: 'DBA' },
-  { value: 'Telecomunicaciones', text: 'Telecomunicaciones' },
-  { value: 'Contabilidad', text: 'Contabilidad' },
-  { value: 'Servicio al Cliente', text: 'Servicio al Cliente' },
-];
-
-const nivelesAcademicos = [
-  { value: '', text: '--Elegir opcion--' },
-  { value: 'Estudiante', text: 'Estudiante' },
-  { value: 'Nivel Tecnico', text: 'Nivel Tecnico' },
-  { value: 'Licenciatura', text: 'Licenciatura' },
-  { value: 'Ingenieria', text: 'Ingenieria' },
-  { value: 'Maestria', text: 'Maestria' },
-  { value: 'Doctorado', text: 'Doctorado' },
-];
-
 // Redirecciona a Edit Form
 router.get('/:id/edit', async (req, res, next) => {
   const { id } = req.params;
@@ -92,6 +73,7 @@ router.patch('/:id', async (req, res, next) => {
   const newCandidato = req.body;
 
   // console.log(newCandidato.imgUrl);
+
   res.json(newCandidato);
   // const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
 

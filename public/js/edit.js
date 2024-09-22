@@ -145,5 +145,6 @@ async function updateCandidato(candidato) {
 
   const res = await fetch(`/api/v1/candidatos/${idCandidato}`, options);
   // const res = await fetch(`${API_URL}/${idCandidato}`, options);
+
   return res;
 }
