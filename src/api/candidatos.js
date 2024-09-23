@@ -5,6 +5,7 @@ const express = require('express');
 
 const fs = require('fs');
 const path = require('path');
+const { title } = require('process');
 const db = require('./db/candidatos_db');
 const perfiles = require('./const/perfiles');
 const nivelesAcademicos = require('./const/nivelesAcademicos');
@@ -37,7 +38,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   const candidatos = await db.findAll();
 
-  res.render('candidatos/home', { candidatos });
+  res.render('candidatos/home', { candidatos, title: 'HHRR Manager Home' });
 });
 
 // Lee un candidato con ID
@@ -46,7 +47,10 @@ router.get('/:id', async (req, res, next) => {
 
   const candidato = await db.findOneById(id);
 
-  res.render('candidatos/details', { candidato });
+  res.render('candidatos/details', {
+    candidato,
+    title: `Detalles de ${candidato.fullName}`,
+  });
 });
 
 const experiencia = [
@@ -64,6 +68,7 @@ router.get('/:id/edit', async (req, res, next) => {
     experiencia,
     perfiles,
     nivelesAcademicos,
+    title: `Editar información de ${candidato.fullName}`,
   });
 });
 
