@@ -29,7 +29,7 @@
             <td><%= candidato.nombres %></td>
             <td><%= candidato.apellidos %></td>
             <td><%= candidato.localDate %></td>
-            <td><%= candidato.job_actual %></td>
+            <td><%= candidato.job_actual ? candidato.job_actual : 'Ninguno' %></td>
             <td><%= candidato.salaryDOP %></td>
             <td>
               <div>
@@ -41,7 +41,6 @@
               </div>
             </td>
           </tr>
-
           <% } %>
         </tbody>
       </table>

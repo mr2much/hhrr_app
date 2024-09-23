@@ -75,7 +75,7 @@
                       candidato.currentlyWorking ? 'Si' : 'No' %>
                     </li>
                     <li class="list-group-item">
-                      Empleo Actual: <%= candidato.job_actual %>
+                      Empleo Actual: <%= candidato.job_actual ? candidato.job_actual : 'Ninguno' %>
                     </li>
                     <li class="list-group-item">
                       Expectativa Salarial: <%= candidato.salaryDOP %>
