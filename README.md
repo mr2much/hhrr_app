@@ -52,20 +52,25 @@ npm test
 npm run dev
 ```
 
-## TODO
+## TODOs
 
-- TODO: On `edit.js` fix code to extract image from image input
-- TODO: On server side, add code to extract and save image on `/res/img/` folder, and store image path for candidato.
+- TODO: Fix `new.js` just as I did with `edit.js` for new Candidatos
+- TODO: Fix `fetch` on for new form.
+- TODO: Add route on server side to create new Candidatos
+- TODO: Check how to use `axios` for fetch requests on client side
+- [x]: On `edit.js` fix code to extract image from image input
+- [x]: On server side, add code to extract and save image on `/res/img/` folder, and store image path for candidato.
 - [x]: Install EJS
   - [x]: Create Views folder
     - [x]: Create view for home
-    - TODO: Create view for new candidato
+    - [x]: Create view for new candidato
     - [x]: create view for view candidato
-    - TODO: create view to edit candidato
+    - [x]: create view to edit candidato
   - [x]: Create folders to serve static files `css, js`
-  - TODO: Create Partials folder
-    - TODO: Create partial for navbar
-    - TODO: create partial for <head>
+  - [x]: Create Partials folder
+    - [x]: Create partial for navbar
+    - [x]: create partial for <head>
+    - [x]: create partial for <footer>
 - [x]: Install Mongoose
   - [x]: create schema for candidato
   - [x]: create model for candidato
@@ -73,6 +78,6 @@ npm run dev
     - TODO: create route for insert new candidato
     - [x]: create route to query all candidatos
     - [x]: create route to query one candidato
-    - TODO: create route to update one candidato
+    - [x]: create route to update one candidato
     - TODO: create route to delete one candidato
 - [x]: Install method-override
