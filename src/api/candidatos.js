@@ -34,6 +34,11 @@ const _dir = '/res/img';
 
 const router = express.Router();
 
+// redirect to new form
+router.get('/new', (req, res, next) => {
+  res.render('candidatos/new', { title: 'New Candidato' });
+});
+
 // Lee todos los candidatos
 router.get('/', async (req, res, next) => {
   const candidatos = await db.findAll();
