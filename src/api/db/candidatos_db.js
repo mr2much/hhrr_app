@@ -47,6 +47,13 @@ candidatoSchema.virtual('localDate').get(function () {
   return newDate.toLocaleDateString('es-DO');
 });
 
+candidatoSchema.virtual('salaryDOP').get(function () {
+  return Intl.NumberFormat('es-DO', {
+    style: 'currency',
+    currency: 'DOP',
+  }).format(this.exp_salario);
+});
+
 const Candidato = mongoose.model('Candidato', candidatoSchema);
 
 findAll = () => Candidato.find({});

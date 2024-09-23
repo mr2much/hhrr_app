@@ -7,11 +7,11 @@ const errorMessage = document.querySelector('#errorMessage');
 
 errorMessage.style.display = 'none';
 
-const btnCancel = document.querySelector('form #cancel-btn');
+// const btnCancel = document.querySelector('form #cancel-btn');
 
-btnCancel.addEventListener('click', (e) => {
-  window.location = '/';
-});
+// btnCancel.addEventListener('click', (e) => {
+//   window.location = '/';
+// });
 
 const checkboxHasJob = document.querySelector('#candidato-empleado');
 
