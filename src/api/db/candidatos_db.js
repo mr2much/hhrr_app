@@ -41,6 +41,12 @@ candidatoSchema.virtual('fullName').get(function () {
   return `${this.nombres} ${this.apellidos}`;
 });
 
+candidatoSchema.virtual('localDate').get(function () {
+  // Add exactly four hours to stored date
+  const newDate = new Date(this.dob.getTime() + 4 * 60 * 60 * 1000);
+  return newDate.toLocaleDateString('es-DO');
+});
+
 const Candidato = mongoose.model('Candidato', candidatoSchema);
 
 findAll = () => Candidato.find({});
