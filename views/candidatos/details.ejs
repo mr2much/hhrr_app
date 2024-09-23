@@ -61,8 +61,7 @@
                       Email: <%= candidato.email %>
                     </li>
                     <li class="list-group-item">
-                      Fecha de Nacimiento: <%= new
-                      Date(candidato.dob).getFullYear() %>
+                      Fecha de Nacimiento: <%= candidato.localDate %>
                     </li>
                     <li class="list-group-item">Edad: <%= candidato.age %></li>
                   </ul>
