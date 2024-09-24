@@ -74,8 +74,7 @@ form.addEventListener('submit', (e) => {
         errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
         errorMessage.style.display = '';
       } else {
-        // window.location = `/candidato.html?id=${result._id}`;
-        console.log(result);
+        window.location = `/api/v1/candidatos/${result._id}`;
       }
     });
   }
@@ -97,7 +96,7 @@ function setup() {
   imgInput = createFileInput(imageFileHandler);
   imgInput.id('foto-perfil');
   imgInput.class('form-control');
-  imgInput.elt.name = 'foto-perfil';
+  imgInput.elt.name = 'imgUrl';
 
   imgInput.parent(profileFieldset);
 

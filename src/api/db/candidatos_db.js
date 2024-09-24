@@ -66,4 +66,11 @@ findByIdAndUpdate = (id, newCandidato) =>
     new: true,
   });
 
-module.exports = { findAll, findOneById, findByIdAndUpdate };
+insertOne = (newCandidato) => Candidato.create(newCandidato);
+
+module.exports = {
+  findAll,
+  findOneById,
+  findByIdAndUpdate,
+  insertOne,
+};

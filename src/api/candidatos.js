@@ -74,9 +74,9 @@ function imageBase64ToImageFile(imagePath, image) {
   });
 }
 
-function handleImageData(image, id) {
+function handleImageData(image, prefix) {
   imageBase64ToImageFile(
-    path.join(`public${_dir}/${id}_${image.imgName}`),
+    path.join(`public${_dir}/${prefix}_${image.imgName}`),
     image
   );
 }
@@ -86,11 +86,11 @@ router.patch('/:id', async (req, res, next) => {
   const { id } = req.params;
   const newCandidato = req.body;
 
-  newCandidato.imgUrl = `${_dir}/${id}_${newCandidato.image.imgName}`;
+  newCandidato.imgUrl = `${_dir}/${newCandidato.cedula}_${newCandidato.image.imgName}`;
 
   try {
     if (newCandidato.image) {
-      handleImageData(newCandidato.image, id);
+      handleImageData(newCandidato.image, newCandidato.cedula);
     }
 
     const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
@@ -99,14 +99,29 @@ router.patch('/:id', async (req, res, next) => {
       res.status(200).json(updatedCandidato);
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 });
 
 // // Crear un candidato
-router.post('/', (req, res, next) => {
-  console.log('Received a request to POST');
-  res.json({ message: 'Response from POST' });
+router.post('/', async (req, res, next) => {
+  const candidato = req.body;
+
+  candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
+
+  try {
+    if (candidato.image) {
+      handleImageData(candidato.image, candidato.cedula);
+    }
+
+    const newCandidato = await db.insertOne(candidato);
+
+    if (newCandidato) {
+      res.status(200).json(newCandidato);
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 // router.post('/', candidatoValidator, (req, res, next) => {
 //   const candidato = getCandidatoFromBody(req.body);
