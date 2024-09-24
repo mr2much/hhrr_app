@@ -5,32 +5,13 @@ const express = require('express');
 
 const fs = require('fs');
 const path = require('path');
-const { title } = require('process');
 const db = require('./db/candidatos_db');
 const perfiles = require('./const/perfiles');
 const nivelesAcademicos = require('./const/nivelesAcademicos');
-// const monk = require('monk');
-
-// const url = process.env.MONGO_URI || 'localhost:27017/candidatos';
 
 const _dir = '/res/img';
 
-// const db = monk(url);
 // const candidatos = db.get('candidato');
-
-// candidatos.createIndex({ cedula: 1 }, { unique: true });
-
-// // Para agregar un Field que no existe a todos los documentos de la DB, quizas probar con $rename?
-// // candidatos.bulkWrite([
-// //   {
-// //     updateMany: {
-// //       filter: {},
-// //       update: {
-// //         $set: { country_region_data: { country: '', selectedRegion: '' } },
-// //       },
-// //     },
-// //   },
-// // ]);
 
 const router = express.Router();
 
