@@ -5,9 +5,9 @@ const express = require('express');
 
 const fs = require('fs');
 const path = require('path');
-const db = require('./db/candidatos_db');
-const perfiles = require('./const/perfiles');
-const nivelesAcademicos = require('./const/nivelesAcademicos');
+const db = require('./db/models/candidatos_db');
+const perfiles = require('../constants/perfiles');
+const nivelesAcademicos = require('../constants/nivelesAcademicos');
 
 const _dir = '/res/img';
 

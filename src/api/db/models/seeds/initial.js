@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const candidatos = require('../../../../constants/candidatos');
 
 const url = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/candidatos';
 
@@ -37,43 +38,12 @@ const candidatoSchema = new mongoose.Schema(
   { collection: 'candidato' }
 );
 
-candidatoSchema.virtual('fullName').get(function () {
-  return `${this.nombres} ${this.apellidos}`;
-});
-
-candidatoSchema.virtual('localDate').get(function () {
-  // Add exactly four hours to stored date
-  const newDate = new Date(this.dob.getTime() + 4 * 60 * 60 * 1000);
-  return newDate.toLocaleDateString('es-DO');
-});
-
-candidatoSchema.virtual('salaryDOP').get(function () {
-  return Intl.NumberFormat('es-DO', {
-    style: 'currency',
-    currency: 'DOP',
-  }).format(this.exp_salario);
-});
-
 const Candidato = mongoose.model('Candidato', candidatoSchema);
 
-findAll = () => Candidato.find({});
+async function execute() {
+  await Candidato.deleteMany({});
+  await Candidato.insertMany(candidatos);
+  await mongoose.disconnect();
+}
 
-findOneById = (id) => Candidato.findById(id);
-
-findByIdAndUpdate = (id, newCandidato) =>
-  Candidato.findByIdAndUpdate(id, newCandidato, {
-    runValidators: true,
-    new: true,
-  });
-
-insertOne = (newCandidato) => Candidato.create(newCandidato);
-
-findByIdAndDelete = (id) => Candidato.findByIdAndDelete(id);
-
-module.exports = {
-  findAll,
-  findOneById,
-  findByIdAndUpdate,
-  insertOne,
-  findByIdAndDelete,
-};
+execute();
