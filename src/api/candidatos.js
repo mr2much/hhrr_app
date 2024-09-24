@@ -5,7 +5,6 @@ const express = require('express');
 
 const fs = require('fs');
 const path = require('path');
-const { log } = require('console');
 const db = require('./db/candidatos_db');
 const perfiles = require('./const/perfiles');
 const nivelesAcademicos = require('./const/nivelesAcademicos');
@@ -87,10 +86,9 @@ router.patch('/:id', async (req, res, next) => {
   const { id } = req.params;
   const newCandidato = req.body;
 
-  newCandidato.imgUrl = `${_dir}/${newCandidato.cedula}_${newCandidato.image.imgName}`;
-
   try {
     if (newCandidato.image) {
+      newCandidato.imgUrl = `${_dir}/${newCandidato.cedula}_${newCandidato.image.imgName}`;
       handleImageData(newCandidato.image, newCandidato.cedula);
     }
 
@@ -108,10 +106,9 @@ router.patch('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   const candidato = req.body;
 
-  candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
-
   try {
     if (candidato.image) {
+      candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
       handleImageData(candidato.image, candidato.cedula);
     }
 

@@ -133,7 +133,6 @@ function validateFormGetCandidato(form, message) {
   const currentlyWorking = formData.get('currentlyWorking') ? true : false;
   const exp_salario = Number(formData.get('exp_salario'));
   const perfilCandidato = formData.get('perfilCandidato');
-  const imgUrl = '/res/img/user.png';
   const nivelAcademico = formData.get('nivelAcademico');
   const country = formData.get('country');
   const region = formData.get('region');
@@ -196,7 +195,6 @@ function validateFormGetCandidato(form, message) {
     job_actual: formData.get('job_actual') ? formData.get('job_actual') : '',
     exp_salario,
     perfilCandidato,
-    imgUrl,
     nivelAcademico,
     country,
     region,
