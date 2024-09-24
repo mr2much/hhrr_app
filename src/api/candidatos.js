@@ -5,6 +5,7 @@ const express = require('express');
 
 const fs = require('fs');
 const path = require('path');
+const { log } = require('console');
 const db = require('./db/candidatos_db');
 const perfiles = require('./const/perfiles');
 const nivelesAcademicos = require('./const/nivelesAcademicos');
@@ -123,6 +124,16 @@ router.post('/', async (req, res, next) => {
     next(error);
   }
 });
+
+// // Remover un candidato
+router.delete('/:id', async (req, res, next) => {
+  const { id } = req.params;
+
+  const removedCandidato = await db.findByIdAndDelete(id);
+
+  res.redirect('/api/v1/candidatos');
+});
+
 // router.post('/', candidatoValidator, (req, res, next) => {
 //   const candidato = getCandidatoFromBody(req.body);
 
@@ -239,61 +250,5 @@ router.post('/', async (req, res, next) => {
 
 //   return candidato;
 // }
-
-// // Crear un candidato
-// router.post('/', candidatoValidator, (req, res, next) => {
-//   const candidato = getCandidatoFromBody(req.body);
-
-//   if (candidato) {
-//     candidatos
-//       .insert(candidato)
-//       .then((createdCandidato) => {
-//         res.status(200);
-//         res.json(createdCandidato);
-//       })
-//       .catch(async (err) => {
-//         const idxs = await candidatos.indexes();
-//         console.log(idxs);
-//         next(err);
-//       });
-//   } else {
-//     const error = new Error(`Error when inserting candidato: ${candidato}`);
-//     next(error);
-//   }
-// });
-
-// // Actualizar un candidato
-// router.put('/:id', candidatoValidator, (req, res, next) => {
-//   const replaceCandidato = getCandidatoFromBody(req.body);
-
-//   candidatos
-//     .update({ _id: req.params.id }, { $set: replaceCandidato })
-//     .then((updatedCandidato) => {
-//       res.status(200);
-//       res.json(updatedCandidato);
-//     });
-// });
-
-// // Remover un candidato
-// router.delete('/:id', async (req, res, next) => {
-//   candidatos.findOne({ _id: req.params.id }, (err, data) => {
-//     if (err) {
-//       next(err);
-//       return;
-//     }
-
-//     if (data) {
-//       candidatos.remove({ _id: req.params.id }, {}, (error, numRemoved) => {
-//         if (error) {
-//           next(err);
-//           return;
-//         }
-
-//         res.status(200);
-//         res.json({ message: `Removed ${numRemoved} entries` });
-//       });
-//     }
-//   });
-// });
 
 module.exports = router;

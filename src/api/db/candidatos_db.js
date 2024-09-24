@@ -68,9 +68,12 @@ findByIdAndUpdate = (id, newCandidato) =>
 
 insertOne = (newCandidato) => Candidato.create(newCandidato);
 
+findByIdAndDelete = (id) => Candidato.findByIdAndDelete(id);
+
 module.exports = {
   findAll,
   findOneById,
   findByIdAndUpdate,
   insertOne,
+  findByIdAndDelete,
 };

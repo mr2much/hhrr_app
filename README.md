@@ -54,9 +54,11 @@ npm run dev
 
 ## TODOs
 
-- TODO: Fix `new.js` just as I did with `edit.js` for new Candidatos
-- TODO: Fix `fetch` on for new form.
-- TODO: Add route on server side to create new Candidatos
+- TODO: Image for Candidato should only be created if INSERT or UPDATE were successful.
+- TODO: When a Candidato is deleted, corresponding image should also be deleted from the path.
+- [x]: Fix `new.js` just as I did with `edit.js` for new Candidatos
+- [x]: Fix `fetch` on for new form.
+- [x]: Add route on server side to create new Candidatos
 - TODO: Check how to use `axios` for fetch requests on client side
 - [x]: On `edit.js` fix code to extract image from image input
 - [x]: On server side, add code to extract and save image on `/res/img/` folder, and store image path for candidato.
@@ -74,10 +76,10 @@ npm run dev
 - [x]: Install Mongoose
   - [x]: create schema for candidato
   - [x]: create model for candidato
-  - TODO: create route for candidato CRUD
-    - TODO: create route for insert new candidato
+  - [x]: create route for candidato CRUD
+    - [x]: create route for insert new candidato
     - [x]: create route to query all candidatos
     - [x]: create route to query one candidato
     - [x]: create route to update one candidato
-    - TODO: create route to delete one candidato
+    - [x]: create route to delete one candidato
 - [x]: Install method-override
