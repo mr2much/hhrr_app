@@ -31,7 +31,7 @@ async function createNewCandidato(candidato) {
     },
     body: JSON.stringify(candidato),
   };
-  const res = await fetch(`${API_URL}/`, options);
+  const res = await fetch('/api/v1/candidatos/', options);
 
   return res.json();
 }
@@ -74,7 +74,8 @@ form.addEventListener('submit', (e) => {
         errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
         errorMessage.style.display = '';
       } else {
-        window.location = `/candidato.html?id=${result._id}`;
+        // window.location = `/candidato.html?id=${result._id}`;
+        console.log(result);
       }
     });
   }

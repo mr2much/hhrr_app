@@ -226,13 +226,9 @@
                 id="perfil-candidato"
                 class="form-select"
               >
-                <option value="">--Seleccionar Perfil--</option>
-                <option value="1">IT</option>
-                <option value="2">Desarrollo</option>
-                <option value="3">DBA</option>
-                <option value="4">Telecomunicaciones</option>
-                <option value="5">Contabilidad</option>
-                <option value="6">Servicio al Cliente</option>
+              <% for(perfil of perfiles) { %>
+                <option value="<%= perfil.value %>"><%= perfil.text %></option>
+              <% } %>
               </select></label
             >
           </fieldset>
@@ -250,18 +246,14 @@
                 name="nivel-academico"
                 class="form-select"
               >
-                <option value="">--Elegir opcion--</option>
-                <option value="1">Estudiante</option>
-                <option value="2">Nivel Tecnico</option>
-                <option value="3">Licenciatura</option>
-                <option value="4">Ingenieria</option>
-                <option value="5">Maestria</option>
-                <option value="6">Doctorado</option>
+              <% for(nivelAcademico of nivelesAcademicos) { %>
+                <option value="<%= nivelAcademico.value %>"><%- nivelAcademico.text %></option>
+              <% } %>
               </select></label
             >
             <label for="countries"
               >Indicar Pais de Origen:
-              <select name="country" id="countries" class="form-select gds-cr" country-data-region-id="gds-cr-region"></select>              
+              <select name="country" id="countries" class="form-select gds-cr" country-data-region-id="gds-cr-region" data-language="es"></select>              
             </label>
             <label for="gds-cr-region"
               >Region:

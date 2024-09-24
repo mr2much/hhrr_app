@@ -17,7 +17,11 @@ const router = express.Router();
 
 // redirect to new form
 router.get('/new', (req, res, next) => {
-  res.render('candidatos/new', { title: 'New Candidato' });
+  res.render('candidatos/new', {
+    perfiles,
+    nivelesAcademicos,
+    title: 'New Candidato',
+  });
 });
 
 // Lee todos los candidatos
@@ -98,6 +102,32 @@ router.patch('/:id', async (req, res, next) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// // Crear un candidato
+router.post('/', (req, res, next) => {
+  console.log('Received a request to POST');
+  res.json({ message: 'Response from POST' });
+});
+// router.post('/', candidatoValidator, (req, res, next) => {
+//   const candidato = getCandidatoFromBody(req.body);
+
+//   if (candidato) {
+//     candidatos
+//       .insert(candidato)
+//       .then((createdCandidato) => {
+//         res.status(200);
+//         res.json(createdCandidato);
+//       })
+//       .catch(async (err) => {
+//         const idxs = await candidatos.indexes();
+//         console.log(idxs);
+//         next(err);
+//       });
+//   } else {
+//     const error = new Error(`Error when inserting candidato: ${candidato}`);
+//     next(error);
+//   }
+// });
 
 // function validaCedula(cedula) {
 //   return (
