@@ -3,13 +3,12 @@
 /* eslint-disable linebreak-style */
 const express = require('express');
 
-const fs = require('fs');
-const path = require('path');
+const _dir = '/res/img';
+
 const db = require('./db/models/candidatos_db');
 const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
-
-const _dir = '/res/img';
+const imgUtils = require('../lib/imgUtils');
 
 // const candidatos = db.get('candidato');
 
@@ -62,35 +61,11 @@ router.get('/:id/edit', async (req, res, next) => {
   });
 });
 
-function imageBase64ToImageFile(imagePath, image) {
-  const asciiToBinary = Buffer.from(image.imgTo64, 'base64');
-
-  fs.writeFile(imagePath, asciiToBinary, (err) => {
-    if (err) {
-      return new Error(
-        `There was a problem saving when trying to write ${image.imgName}`
-      );
-    }
-  });
-}
-
-function handleImageData(image, prefix) {
-  imageBase64ToImageFile(
-    path.join(`public${_dir}/${prefix}_${image.imgName}`),
-    image
-  );
-}
-
 // // Actualizar un candidato
 router.patch('/:id', async (req, res, next) => {
-  const { id } = req.params;
-  const newCandidato = req.body;
-
   try {
-    if (newCandidato.image) {
-      newCandidato.imgUrl = `${_dir}/${newCandidato.cedula}_${newCandidato.image.imgName}`;
-      handleImageData(newCandidato.image, newCandidato.cedula);
-    }
+    const { id } = req.params;
+    const newCandidato = req.body;
 
     const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
 
@@ -109,7 +84,7 @@ router.post('/', async (req, res, next) => {
   try {
     if (candidato.image) {
       candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
-      handleImageData(candidato.image, candidato.cedula);
+      imgUtils.handleImageData(candidato.image, candidato.cedula);
     }
 
     const newCandidato = await db.insertOne(candidato);
