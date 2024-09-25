@@ -68,6 +68,15 @@ candidatoSchema.pre('findOneAndUpdate', async function (next) {
   next();
 });
 
+candidatoSchema.post('findOneAndDelete', async (doc, next) => {
+  try {
+    imgUtils.deleteImageFile(doc.imgUrl);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 const Candidato = mongoose.model('Candidato', candidatoSchema);
 
 findAll = () => Candidato.find({});

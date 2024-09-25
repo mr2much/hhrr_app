@@ -22,6 +22,15 @@ function handleImageData(image, prefix) {
   );
 }
 
+function deleteImageFile(imgPath) {
+  fs.unlink(path.join('public', imgPath), (err) => {
+    if (err) {
+      return new Error('Error deleting file: ', err);
+    }
+  });
+}
+
 module.exports = {
   handleImageData,
+  deleteImageFile,
 };
