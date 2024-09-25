@@ -22,8 +22,43 @@ function handleImageData(image, prefix) {
   );
 }
 
+function findOldImageFile(filePath, keyWord, callback) {
+  fs.readdir(filePath, (err, files) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+
+    const foundFiles = files.filter((file) => file.includes(keyWord));
+
+    if (foundFiles.length > 0) {
+      const fileFound = foundFiles.map((file) => path.join(filePath, file));
+      callback(null, fileFound);
+    } else {
+      callback(null, null);
+    }
+  });
+}
+
+function replaceImageFile(image, prefix) {
+  findOldImageFile(path.join('public', _dir), prefix, (err, oldImgFile) => {
+    if (err) {
+      return new Error(err);
+    }
+    if (oldImgFile) {
+      oldImgFile.forEach((filePath) => deleteImageFile(filePath));
+    }
+
+    handleImageData(image, prefix);
+  });
+}
+
 function deleteImageFile(imgPath) {
-  fs.unlink(path.join('public', imgPath), (err) => {
+  if (!imgPath.includes('public')) {
+    imgPath = path.join('public', imgPath);
+  }
+
+  fs.unlink(imgPath, (err) => {
     if (err) {
       return new Error('Error deleting file: ', err);
     }
@@ -32,5 +67,6 @@ function deleteImageFile(imgPath) {
 
 module.exports = {
   handleImageData,
+  replaceImageFile,
   deleteImageFile,
 };

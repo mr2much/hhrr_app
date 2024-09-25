@@ -58,6 +58,7 @@ npm run dev
   - TODO: Use Candidato Model file on the seeds file, and Candidatos routes
 - TODO: Image for Candidato should only be created if INSERT or UPDATE were successful.
 - TODO: When a Candidato is deleted, corresponding image should also be deleted from the path.
+- TODO: When a Candidato is updated, old image should be deleted, new image should be created on the path.
 - [x]: Fix `new.js` just as I did with `edit.js` for new Candidatos
 - [x]: Fix `fetch` on for new form.
 - [x]: Add route on server side to create new Candidatos
