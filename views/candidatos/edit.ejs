@@ -1,111 +1,9 @@
 <%- include('../partials/head') %>
 
-    <link
-      rel="stylesheet"
-      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-    />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-    <script src="/crddm/assets/js/geodatasource-cr.min.js"></script>
-
-    <!-- <link
-      rel="gettext"
-      type="application/x-po"
-      href="/crddm/languages/en/LC_MESSAGES/en.po"
-    /> -->
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="/crddm/languages/es/LC_MESSAGES/es.po"
-    />
-    <!-- <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/cs/LC_MESSAGES/cs.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/da/LC_MESSAGES/da.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/de/LC_MESSAGES/de.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/en/LC_MESSAGES/en.po"
-    />    
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/fr/LC_MESSAGES/fr.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/it/LC_MESSAGES/it.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/ja/LC_MESSAGES/ja.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/ko/LC_MESSAGES/ko.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/ms/LC_MESSAGES/ms.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/nl/LC_MESSAGES/nl.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/pt/LC_MESSAGES/pt.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/ru/LC_MESSAGES/ru.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/sv/LC_MESSAGES/sv.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/vi/LC_MESSAGES/vi.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/zh-cn/LC_MESSAGES/zh-cn.po"
-    />
-    <link
-      rel="gettext"
-      type="application/x-po"
-      href="languages/zh-tw/LC_MESSAGES/zh-tw.po"
-    /> -->
-
-    <script src="/crddm/assets/js/Gettext.js"></script>
-    
+<%- include('../partials/geodata') %>
   </head>
   <body>
-    <%- include('../partials/navbar') %>
-    
+    <%- include('../partials/navbar') %>    
 
     <div class="container-fluid">
       <h1 class="text-center">Editar Informacion de <%= candidato.fullName %></h1>
@@ -282,11 +180,10 @@
         </form>
       </div>
       <div id="errorMessage" class="alert alert-danger" role="alert"></div>
-    </div>
-
-    
+    </div>    
 
     <footer><%- include('../partials/switchtheme') %></footer>
+    
     <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
     <script src="/js/global.js" charset="utf-8"></script>
     <script src="/js/edit.js" charset="utf-8"></script>

@@ -54,11 +54,22 @@ npm run dev
 
 ## TODOs
 
+- TODO: Add filters by criteria
+  - Add filter by `age`
+  - Add filter by `labora actualmente`
+  - Add filter by `perfil del candidato`
+  - Add filter by `expectativa salarial`
+  - Add filter by `Nivel academico`
+  - Add filter by `pais`
+  - Add filter by `region`
+- TODO: Add sort by criteria
+  - Add sort by `age`
+  - Add sort by `expectativa salarial`
 - TODO: Move Candidato Model code, to a separate file
   - TODO: Use Candidato Model file on the seeds file, and Candidatos routes
 - TODO: Image for Candidato should only be created if INSERT or UPDATE were successful.
-- TODO: When a Candidato is deleted, corresponding image should also be deleted from the path.
-- TODO: When a Candidato is updated, old image should be deleted, new image should be created on the path.
+- [x]: When a Candidato is deleted, corresponding image should also be deleted from the path.
+- [x]: When a Candidato is updated, old image should be deleted, new image should be created on the path.
 - [x]: Fix `new.js` just as I did with `edit.js` for new Candidatos
 - [x]: Fix `fetch` on for new form.
 - [x]: Add route on server side to create new Candidatos
