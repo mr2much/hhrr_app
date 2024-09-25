@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const dataUtils = require('../../../../lib/dataUtils');
 const candidatos = require('../../../../constants/candidatos');
 
 const url = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/candidatos';
@@ -37,6 +38,14 @@ const candidatoSchema = new mongoose.Schema(
   },
   { collection: 'candidato' }
 );
+
+candidatoSchema.pre('insertMany', async (next, docs) => {
+  docs.forEach((doc) => {
+    doc.age = dataUtils.calculateAgeFromDOB(doc.dob);
+  });
+
+  next();
+});
 
 const Candidato = mongoose.model('Candidato', candidatoSchema);
 

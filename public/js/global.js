@@ -128,7 +128,6 @@ function validateFormGetCandidato(form, message) {
   const apellidos = formData.get('apellidos');
   const email = formData.get('email');
   const dob = formData.get('dob');
-  const age = calculateAgeFromDOB(dob);
   const candidateExp = formData.get('candidateExp');
   const currentlyWorking = formData.get('currentlyWorking') ? true : false;
   const exp_salario = Number(formData.get('exp_salario'));
@@ -189,7 +188,6 @@ function validateFormGetCandidato(form, message) {
     apellidos,
     email,
     dob,
-    age,
     candidateExp,
     currentlyWorking,
     job_actual: formData.get('job_actual') ? formData.get('job_actual') : '',
