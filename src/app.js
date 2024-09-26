@@ -29,6 +29,7 @@ app
           'https://cdn.jsdelivr.net',
           'https://cdnjs.cloudflare.com',
           'https://ajax.googleapis.com',
+          'https://cdn.amcharts.com',
         ],
       },
     })

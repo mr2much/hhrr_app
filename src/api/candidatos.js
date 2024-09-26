@@ -23,6 +23,17 @@ router.get('/new', (req, res, next) => {
   });
 });
 
+// redirect to map
+router.get('/map', (req, res, next) => {
+  res.render('candidatos/map');
+});
+
+router.get('/all', async (req, res, next) => {
+  const candidatos = await db.findAll();
+
+  res.json(candidatos);
+});
+
 // Lee todos los candidatos
 router.get('/', async (req, res, next) => {
   const candidatos = await db.findAll();
