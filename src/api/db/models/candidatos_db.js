@@ -38,8 +38,6 @@ const candidatoSchema = new mongoose.Schema(
       selectedIndex: { type: Number, default: 62 },
       region: { type: String, default: 'Distrito Nacional (Santo Domingo)' },
     },
-    country: { type: String, default: 'República Dominicana' },
-    region: { type: String },
     notas: { type: String },
   },
   { collection: 'candidato' }
@@ -47,6 +45,14 @@ const candidatoSchema = new mongoose.Schema(
 
 candidatoSchema.virtual('fullName').get(function () {
   return `${this.nombres} ${this.apellidos}`;
+});
+
+candidatoSchema.virtual('country').get(function () {
+  return `${this.countryRegionData.country}`;
+});
+
+candidatoSchema.virtual('region').get(function () {
+  return `${this.countryRegionData.region}`;
 });
 
 candidatoSchema.virtual('localDate').get(function () {
