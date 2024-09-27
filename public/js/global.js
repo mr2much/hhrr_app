@@ -137,11 +137,16 @@ function validateFormGetCandidato(form, message) {
   const region = formData.get('region');
   const notas = formData.get('notas');
 
-  // const country_region_data = {
-  //   country: countrySelector.value,
-  //   selectedIndex: countrySelector.selectedIndex - 1,
-  //   selectedRegion: regionSelector.value,
-  // };
+  const countrySelector = document.querySelector('#countries');
+  const regionSelector = document.querySelector('#gds-cr-region');
+
+  const countryRegionData = {
+    country: countrySelector.value,
+    selectedIndex: countrySelector.selectedIndex - 1,
+    region: regionSelector.value,
+  };
+
+  console.log(countryRegionData);
 
   // console.log(`Country: ${countrySelector.value}`);
   // console.log(`Index: ${countrySelector.selectedIndex - 1}`);
@@ -194,6 +199,7 @@ function validateFormGetCandidato(form, message) {
     exp_salario,
     perfilCandidato,
     nivelAcademico,
+    countryRegionData,
     country,
     region,
     notas,

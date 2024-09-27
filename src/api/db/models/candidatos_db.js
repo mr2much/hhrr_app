@@ -33,6 +33,11 @@ const candidatoSchema = new mongoose.Schema(
     perfilCandidato: { type: String },
     imgUrl: { type: String, default: '/res/img/user.png' },
     nivelAcademico: { type: String },
+    countryRegionData: {
+      country: { type: String, default: 'Dominican Republic' },
+      selectedIndex: { type: Number, default: 62 },
+      region: { type: String, default: 'Distrito Nacional (Santo Domingo)' },
+    },
     country: { type: String, default: 'República Dominicana' },
     region: { type: String },
     notas: { type: String },
