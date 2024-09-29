@@ -54,6 +54,7 @@ npm run dev
 
 ## TODOs
 
+- TODO: Change Map library from amCharts to Leaflet
 - TODO: Add filters by criteria
   - Add filter by `age`
   - Add filter by `labora actualmente`
