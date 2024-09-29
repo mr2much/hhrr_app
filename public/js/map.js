@@ -72,115 +72,126 @@ window.addEventListener('DOMContentLoaded', (e) => {
   //   showCountryRegion(allCandidatos);
   // }
   // showCandidatosInMap();
-  async function displayMap(candidatos) {
-    const candidatoCountryData = [];
-    const drCandidates = [];
+  // async function displayMap(candidatos) {
+  //   const candidatoCountryData = [];
+  //   const drCandidates = [];
 
-    const geoData = await $.getJSON(
-      '/crddm/plugins/amcharts/gds-amchart-mapping.json'
-    );
+  //   const geoData = await $.getJSON(
+  //     '/crddm/plugins/amcharts/gds-amchart-mapping.json'
+  //   );
 
-    candidatos.forEach((candidato) => {
-      const { country, selectedIndex, region } = candidato.countryRegionData;
+  //   candidatos.forEach((candidato) => {
+  //     const { country, selectedIndex, region } = candidato.countryRegionData;
 
-      let selectedCountryCode = country_region[selectedIndex][0];
-      selectedCountryCode = selectedCountryCode.replace('1', '');
+  //     let selectedCountryCode = country_region[selectedIndex][0];
+  //     selectedCountryCode = selectedCountryCode.replace('1', '');
 
-      const region_id = geoData.find(
-        (entry) =>
-          entry.geodatasource_country === selectedCountryCode &&
-          entry.geodatasource_region === region
-      );
+  //     const region_id = geoData.find(
+  //       (entry) =>
+  //         entry.geodatasource_country === selectedCountryCode &&
+  //         entry.geodatasource_region === region
+  //     );
 
-      if (selectedCountryCode === 'DO') {
-        drCandidates.push({
-          id: selectedCountryCode,
-          country,
-          region,
-          region_id: region_id.amchart_id,
-          title: `${candidato.nombres} ${candidato.apellidos}`,
-          value: candidato.exp_salario,
-          fill: am4core.color('#f05c5c'),
-        });
-      } else {
-        candidatoCountryData.push({
-          id: selectedCountryCode,
-          country,
-          region,
-          region_id: region_id.amchart_id,
-          title: `${candidato.nombres} ${candidato.apellidos}`,
-          value: candidato.exp_salario,
-          fill: am4core.color('#f05c5c'),
-        });
-      }
-    });
+  //     if (selectedCountryCode === 'DO') {
+  //       drCandidates.push({
+  //         id: selectedCountryCode,
+  //         country,
+  //         region,
+  //         region_id: region_id.amchart_id,
+  //         title: `${candidato.nombres} ${candidato.apellidos}`,
+  //         value: candidato.exp_salario,
+  //         fill: am4core.color('#f05c5c'),
+  //       });
+  //     } else {
+  //       candidatoCountryData.push({
+  //         id: selectedCountryCode,
+  //         country,
+  //         region,
+  //         region_id: region_id.amchart_id,
+  //         title: `${candidato.nombres} ${candidato.apellidos}`,
+  //         value: candidato.exp_salario,
+  //         fill: am4core.color('#f05c5c'),
+  //       });
+  //     }
+  //   });
 
-    const map = am4core.create('chartdiv', am4maps.MapChart);
-    map.geodata = am4geodata_worldHigh;
-    map.projection = new am4maps.projections.Miller();
+  //   const map = am4core.create('chartdiv', am4maps.MapChart);
+  //   map.geodata = am4geodata_worldHigh;
+  //   map.projection = new am4maps.projections.Miller();
 
-    const worldSeries = new am4maps.MapPolygonSeries();
-    map.series.push(worldSeries);
-    worldSeries.useGeodata = true;
-    worldSeries.exclude = ['AQ'];
-    worldSeries.data = candidatoCountryData;
+  //   const worldSeries = new am4maps.MapPolygonSeries();
+  //   map.series.push(worldSeries);
+  //   worldSeries.useGeodata = true;
+  //   worldSeries.exclude = ['AQ'];
+  //   worldSeries.data = candidatoCountryData;
 
-    // polygonSeries.include = candidatoCountryData;
+  //   // polygonSeries.include = candidatoCountryData;
 
-    // Configure series
-    const polygonTemplate = worldSeries.mapPolygons.template;
-    polygonTemplate.tooltipText = '{name}: {title}';
-    polygonTemplate.fill = am4core.color('#74b266');
-    polygonTemplate.propertyFields.fill = 'fill';
+  //   // Configure series
+  //   const polygonTemplate = worldSeries.mapPolygons.template;
+  //   polygonTemplate.tooltipText = '{name}: {title}';
+  //   polygonTemplate.fill = am4core.color('#74b266');
+  //   polygonTemplate.propertyFields.fill = 'fill';
 
-    // Create hover state and set alternative fill color
-    const hs = polygonTemplate.states.create('hover');
-    hs.properties.fill = am4core.color('#367b25');
+  //   // Create hover state and set alternative fill color
+  //   const hs = polygonTemplate.states.create('hover');
+  //   hs.properties.fill = am4core.color('#367b25');
 
-    const repDomSeries = map.series.push(new am4maps.MapPolygonSeries());
-    repDomSeries.geodata = am4geodata_dominicanRepublicHigh;
-    repDomSeries.data = drCandidates;
+  //   const repDomSeries = map.series.push(new am4maps.MapPolygonSeries());
+  //   repDomSeries.geodata = am4geodata_dominicanRepublicHigh;
+  //   repDomSeries.data = drCandidates;
 
-    const drPolygonTemplate = repDomSeries.mapPolygons.template;
-    drPolygonTemplate.tooltipText = '{name}';
-    drPolygonTemplate.fill = am4core.color('#00b266');
-    // drPolygonTemplate.propertyFields.id = 'id';
+  //   const drPolygonTemplate = repDomSeries.mapPolygons.template;
+  //   drPolygonTemplate.tooltipText = '{name}';
+  //   drPolygonTemplate.fill = am4core.color('#00b266');
+  //   // drPolygonTemplate.propertyFields.id = 'id';
 
-    const drHs = drPolygonTemplate.states.create('hover');
-    drHs.properties.fill = am4core.color('#360025');
+  //   const drHs = drPolygonTemplate.states.create('hover');
+  //   drHs.properties.fill = am4core.color('#360025');
 
-    const labelSeries = map.series.push(new am4maps.MapImageSeries());
-    const labelTemplate = labelSeries.mapImages.template.createChild(
-      am4core.Label
-    );
+  //   const labelSeries = map.series.push(new am4maps.MapImageSeries());
+  //   const labelTemplate = labelSeries.mapImages.template.createChild(
+  //     am4core.Label
+  //   );
 
-    labelTemplate.horizontalCenter = 'middle';
-    labelTemplate.verticalCenter = 'middle';
-    labelTemplate.fill = am4core.color('#000');
-    labelTemplate.fontSize = 12;
-    labelTemplate.nonScaling = true;
-    labelTemplate.interactionsEnable = false;
+  //   labelTemplate.horizontalCenter = 'middle';
+  //   labelTemplate.verticalCenter = 'middle';
+  //   labelTemplate.fill = am4core.color('#000');
+  //   labelTemplate.fontSize = 12;
+  //   labelTemplate.nonScaling = true;
+  //   labelTemplate.interactionsEnable = false;
 
-    repDomSeries.events.on('inited', () => {
-      drCandidates.forEach((candidate) => {
-        const polygon = repDomSeries.getPolygonById(candidate.region_id);
+  //   repDomSeries.events.on('inited', () => {
+  //     drCandidates.forEach((candidate) => {
+  //       const polygon = repDomSeries.getPolygonById(candidate.region_id);
 
-        if (polygon) {
-          const label = labelSeries.mapImages.create();
-          label.latitude = polygon.visualLatitude;
-          label.longitude = polygon.visualLongitude;
-          label.children.getIndex(0).text = candidate.title;
-        }
-      });
-    });
+  //       if (polygon) {
+  //         const label = labelSeries.mapImages.create();
+  //         label.latitude = polygon.visualLatitude;
+  //         label.longitude = polygon.visualLongitude;
+  //         label.children.getIndex(0).text = candidate.title;
+  //       }
+  //     });
+  //   });
 
-    map.zoomControl = new am4maps.ZoomControl();
-  }
+  //   map.zoomControl = new am4maps.ZoomControl();
+  // }
 
   async function loadEntries() {
     const res = await fetch('/api/v1/candidatos/all');
 
     return res.json();
+  }
+
+  function displayMap() {
+    const map = L.map('chartdiv').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      crossOrigin: 'anonymous',
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
   }
 
   async function showCandidatosInMap() {

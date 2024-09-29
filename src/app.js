@@ -30,6 +30,13 @@ app
           'https://cdnjs.cloudflare.com',
           'https://ajax.googleapis.com',
           'https://cdn.amcharts.com',
+          'https://unpkg.com',
+          'https://tile.openstreetmap.org',
+        ],
+        imgSrc: [
+          'self',
+          'https://tile.openstreetmap.org',
+          'https://tile.openstreetmap.org data:',
         ],
       },
     })
