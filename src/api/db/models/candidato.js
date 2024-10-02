@@ -69,6 +69,13 @@ candidatoSchema.pre('save', async function (next) {
   next();
 });
 
+candidatoSchema.pre('insertMany', async (next, docs) => {
+  docs.forEach((doc) => {
+    doc.age = dataUtils.calculateAgeFromDOB(doc.dob);
+  });
+  next();
+});
+
 candidatoSchema.pre('findOneAndUpdate', async function (next) {
   this._update.age = dataUtils.calculateAgeFromDOB(this._update.dob);
 

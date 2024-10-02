@@ -48,6 +48,47 @@ window.addEventListener('DOMContentLoaded', (e) => {
   }
 
   function showMarkers(map, candidatos) {
+    // const LeafIcon = L.Icon.extend({
+    //   options: {
+    //     shadowUrl: '/res/img/leaflet/leaf-shadow.png',
+    //     iconSize: [38, 95],
+    //     shadowSize: [50, 64],
+    //     iconAnchor: [22, 94],
+    //     shadowAnchor: [4, 62],
+    //     popupAnchor: [-3, -76],
+    //   },
+    // });
+
+    // const greenIcon = new LeafIcon({
+    //   iconUrl: '/res/img/leaflet/leaf-green.png',
+    // });
+    // const redIcon = new LeafIcon({ iconUrl: '/res/img/leaflet/leaf-red.png' });
+    // const orangeIcon = new LeafIcon({
+    //   iconUrl: '/res/img/leaflet/leaf-orange.png',
+    // });
+
+    // L.marker([51.5, -0.09], { icon: greenIcon })
+    //   .addTo(map)
+    //   .bindPopup('I am a green leaf.');
+    // L.marker([51.495, -0.083], { icon: redIcon })
+    //   .addTo(map)
+    //   .bindPopup('I am a red leaf.');
+    // L.marker([51.49, -0.1], { icon: orangeIcon })
+    //   .addTo(map)
+    //   .bindPopup('I am a orange leaf.');
+
+    // const greenIcon = L.icon({
+    //   iconUrl: '/res/img/leaflet/leaf-green.png',
+    //   shadowUrl: '/res/img/leaflet/leaf-shadow.png',
+    //   iconSize: [38, 95],
+    //   shadowSize: [50, 64],
+    //   iconAnchor: [22, 94],
+    //   shadowAnchor: [4, 62],
+    //   popupAnchor: [-3, -76],
+    // });
+
+    // L.marker([51.5, -0.09], { icon: greenIcon }).addTo(map);
+
     candidatos.forEach((candidato) => {
       const candidateMarker = importCustomMarker(candidato);
 
@@ -57,7 +98,20 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
       marker
         .bindPopup(
-          `<strong>Nombre:</strong><br><a href="/api/v1/candidatos/${candidato._id}">${candidato.nombres} ${candidato.apellidos}</a><br><strong>LatLon: </strong> ${candidato.countryRegionData.latLon}`
+          `<div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="${candidato.imgUrl}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="/api/v1/candidatos/${candidato._id}">${candidato.nombres} ${candidato.apellidos}</a></h5>
+                  <p class="card-text">${candidato.age}</p>
+                  <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+          </div>`
         )
         .openPopup();
     });
