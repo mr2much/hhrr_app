@@ -86,10 +86,10 @@ candidatoSchema.pre('findOneAndUpdate', async function (next) {
   this._update.age = dataUtils.calculateAgeFromDOB(this._update.dob);
 
   const latLon = await geoUtils.getCoordinatesFromCountryAndRegion(
-    this.countryRegionData
+    this._update.countryRegionData
   );
 
-  this.countryRegionData.latLon = latLon;
+  this._update.countryRegionData.latLon = latLon;
 
   next();
 });
