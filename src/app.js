@@ -18,17 +18,9 @@ app
   .use(cors())
   .use(morgan('dev'))
   .use(helmet())
-  .use(
-    helmet.crossOriginEmbedderPolicy({
-      directives: {
-        imgSrc: ["'self'", 'https://unpkg.com', 'https://unpkg.com data:'],
-      },
-    })
-  )
-  .use(helmet.crossOriginResourcePolicy())
+  .use(helmet.crossOriginEmbedderPolicy({ policy: 'credentialless' }))
   .use(
     helmet.contentSecurityPolicy({
-      useDefaults: true,
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: [

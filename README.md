@@ -1,3 +1,5 @@
+Check this for the COEP error: https://github.com/helmetjs/helmet/issues/343
+
 # Express API Starter
 
 How to use this template:

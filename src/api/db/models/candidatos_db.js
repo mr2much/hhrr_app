@@ -38,6 +38,7 @@ const candidatoSchema = new mongoose.Schema(
       country: { type: String, default: 'Dominican Republic' },
       selectedIndex: { type: Number, default: 62 },
       region: { type: String, default: 'Distrito Nacional (Santo Domingo)' },
+      latLon: { type: [Number], default: [18.4801972, -69.942111] },
     },
     notas: { type: String },
   },
@@ -72,10 +73,11 @@ candidatoSchema.virtual('salaryDOP').get(function () {
 candidatoSchema.pre('save', async function (next) {
   this.age = dataUtils.calculateAgeFromDOB(this.dob);
 
-  console.log(
-    'LatLong',
-    geoUtils.getCoordinatesFromCountryAndRegion(this.countryRegionData)
+  const latLon = await geoUtils.getCoordinatesFromCountryAndRegion(
+    this.countryRegionData
   );
+
+  console.log('LatLon:', latLon);
 
   next();
 });

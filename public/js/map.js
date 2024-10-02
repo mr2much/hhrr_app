@@ -192,7 +192,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
       maxZoom: 19,
       crossOrigin: 'anonymous',
       attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Geocoding by <a href="https://nominatim.org">Nominatim</a>',
     }).addTo(map);
 
     return map;
