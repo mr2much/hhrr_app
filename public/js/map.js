@@ -197,17 +197,15 @@ window.addEventListener('DOMContentLoaded', (e) => {
     return map;
   }
 
-  function importCustomMarker() {
-    // return L.icon({
-    //   iconUrl: '/res/img/leaflet/marker-icon.png',
-    //   iconSize: [25, 41],
-    //   iconAnchor: [12, 41],
-    //   shadowUrl: '/res/img/leaflet/marker-shadow.png',
-    //   shadowSize: [41, 41],
-    // });
+  function importCustomMarker(candidate) {
+    const { imgUrl } = candidate;
+    return L.icon({
+      iconUrl: imgUrl,
+      iconSize: [35, 35],
+    });
 
     // Allow crossorigin, or else, the marker won't show
-    return L.Icon.Default.mergeOptions({ crossOrigin: true });
+    // return L.Icon.Default.mergeOptions({ crossOrigin: true });
   }
 
   function circleMarker() {
@@ -227,14 +225,20 @@ window.addEventListener('DOMContentLoaded', (e) => {
     ]);
   }
 
-  function showMarkers(map) {
-    // importCustomMarker();
+  function showMarkers(map, candidatos) {
+    candidatos.forEach((candidato) => {
+      const candidateMarker = importCustomMarker(candidato);
 
-    const marker = L.marker([51.5, -0.09]).addTo(map);
+      const marker = L.marker(candidato.countryRegionData.latLon, {
+        icon: candidateMarker,
+      }).addTo(map);
 
-    marker
-      .bindPopup('<strong>Hello World!</strong><br>I am a popup.')
-      .openPopup();
+      marker
+        .bindPopup(
+          `<strong>Nombre:</strong><br><a href="/api/v1/candidatos/${candidato._id}">${candidato.nombres} ${candidato.apellidos}</a><br><strong>LatLon: </strong> ${candidato.countryRegionData.latLon}`
+        )
+        .openPopup();
+    });
 
     const roundMarker = circleMarker().addTo(map);
     roundMarker.bindPopup('I am a circle');
@@ -259,7 +263,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
   function displayMap(candidatos) {
     const map = setupMap();
 
-    showMarkers(map);
+    showMarkers(map, candidatos);
 
     map.on('click', onMapClick);
   }
