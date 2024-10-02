@@ -96,7 +96,9 @@ candidatoSchema.pre('findOneAndUpdate', async function (next) {
 
 candidatoSchema.post('findOneAndDelete', async (doc, next) => {
   try {
-    imgUtils.deleteImageFile(doc.imgUrl);
+    if (doc.imgUrl !== '/res/img/user.png') {
+      imgUtils.deleteImageFile(doc.imgUrl);
+    }
     next();
   } catch (error) {
     next(error);
