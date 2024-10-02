@@ -71,6 +71,8 @@ form.addEventListener('submit', (e) => {
   if (newCandidato) {
     createNewCandidato(newCandidato).then((result) => {
       if (result.status === 500) {
+        console.log(result);
+
         errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
         errorMessage.style.display = '';
       } else {

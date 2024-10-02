@@ -19,7 +19,16 @@ app
   .use(morgan('dev'))
   .use(helmet())
   .use(
+    helmet.crossOriginEmbedderPolicy({
+      directives: {
+        imgSrc: ["'self'", 'https://unpkg.com', 'https://unpkg.com data:'],
+      },
+    })
+  )
+  .use(helmet.crossOriginResourcePolicy())
+  .use(
     helmet.contentSecurityPolicy({
+      useDefaults: true,
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: [
@@ -31,12 +40,16 @@ app
           'https://ajax.googleapis.com',
           'https://cdn.amcharts.com',
           'https://unpkg.com',
+          'https://bootswatch.com',
           'https://tile.openstreetmap.org',
         ],
         imgSrc: [
-          'self',
-          'https://tile.openstreetmap.org',
-          'https://tile.openstreetmap.org data:',
+          "'self'",
+          "'self' data:",
+          'https://unpkg.com',
+          'https://unpkg.com data:',
+          '*.openstreetmap.org',
+          '*.openstreetmap.org data:',
         ],
       },
     })

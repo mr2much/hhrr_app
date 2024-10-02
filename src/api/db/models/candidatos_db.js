@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dataUtils = require('../../../lib/dataUtils');
+const geoUtils = require('../../../lib/geoUtils');
 const imgUtils = require('../../../lib/imgUtils');
 
 const url = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/candidatos';
@@ -71,8 +72,14 @@ candidatoSchema.virtual('salaryDOP').get(function () {
 candidatoSchema.pre('save', async function (next) {
   this.age = dataUtils.calculateAgeFromDOB(this.dob);
 
+  console.log(
+    'LatLong',
+    geoUtils.getCoordinatesFromCountryAndRegion(this.countryRegionData)
+  );
+
   next();
 });
+
 candidatoSchema.pre('findOneAndUpdate', async function (next) {
   this._update.age = dataUtils.calculateAgeFromDOB(this._update.dob);
 

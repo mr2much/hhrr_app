@@ -140,15 +140,11 @@ function validateFormGetCandidato(form, message) {
   const countrySelector = document.querySelector('#countries');
   const regionSelector = document.querySelector('#gds-cr-region');
 
-  console.log(regionSelector);
-
   const countryRegionData = {
     country: countrySelector.value,
     selectedIndex: countrySelector.selectedIndex - 1,
     region: regionSelector.value,
   };
-
-  console.log(countryRegionData);
 
   // console.log(`Country: ${countrySelector.value}`);
   // console.log(`Index: ${countrySelector.selectedIndex - 1}`);
