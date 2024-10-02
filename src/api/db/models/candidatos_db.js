@@ -77,13 +77,19 @@ candidatoSchema.pre('save', async function (next) {
     this.countryRegionData
   );
 
-  console.log('LatLon:', latLon);
+  this.countryRegionData.latLon = latLon;
 
   next();
 });
 
 candidatoSchema.pre('findOneAndUpdate', async function (next) {
   this._update.age = dataUtils.calculateAgeFromDOB(this._update.dob);
+
+  const latLon = await geoUtils.getCoordinatesFromCountryAndRegion(
+    this.countryRegionData
+  );
+
+  this.countryRegionData.latLon = latLon;
 
   next();
 });

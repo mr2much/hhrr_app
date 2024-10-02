@@ -36,6 +36,7 @@ const candidatoSchema = new mongoose.Schema(
       country: { type: String, default: 'Dominican Republic' },
       selectedIndex: { type: Number, default: 62 },
       region: { type: String, default: 'Distrito Nacional (Santo Domingo)' },
+      latLon: { type: [Number], default: [18.4801972, -69.942111] },
     },
     country: { type: String, default: 'República Dominicana' },
     region: { type: String },

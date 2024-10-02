@@ -1,3 +1,6 @@
+const perfiles = require('./perfiles');
+const nivelesAcademicos = require('./nivelesAcademicos');
+
 module.exports = [
   {
     cedula: '001-1686342-4',
@@ -10,9 +13,9 @@ module.exports = [
     currentlyWorking: false,
     job_actual: '',
     exp_salario: 10000,
-    perfilCandidato: 'Desarrollo',
+    perfilCandidato: perfiles[1].text,
     imgUrl: '/res/img/001-1686342-4_user.png',
-    nivelAcademico: 'Ingenieria',
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -33,8 +36,8 @@ module.exports = [
     currentlyWorking: true,
     job_actual: 'Tech Solutions Corp',
     exp_salario: 15000,
-    perfilCandidato: 'Analista',
-    nivelAcademico: 'Licenciatura',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -55,8 +58,8 @@ module.exports = [
     currentlyWorking: false,
     job_actual: '',
     exp_salario: 20000,
-    perfilCandidato: 'Marketing',
-    nivelAcademico: 'Maestría',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -77,8 +80,8 @@ module.exports = [
     currentlyWorking: false,
     job_actual: '',
     exp_salario: 12000,
-    perfilCandidato: 'Administración',
-    nivelAcademico: 'Técnico',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -99,8 +102,8 @@ module.exports = [
     currentlyWorking: true,
     job_actual: 'WebDev Enterprises',
     exp_salario: 25000,
-    perfilCandidato: 'Desarrollo',
-    nivelAcademico: 'Ingeniería',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -121,8 +124,8 @@ module.exports = [
     currentlyWorking: false,
     job_actual: '',
     exp_salario: 18000,
-    perfilCandidato: 'Recursos Humanos',
-    nivelAcademico: 'Licenciatura',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -143,8 +146,8 @@ module.exports = [
     currentlyWorking: true,
     job_actual: 'TechCorp Solutions',
     exp_salario: 40000,
-    perfilCandidato: 'Ingeniería',
-    nivelAcademico: 'Doctorado',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -165,8 +168,8 @@ module.exports = [
     currentlyWorking: false,
     job_actual: '',
     exp_salario: 25000,
-    perfilCandidato: 'Diseño Gráfico',
-    nivelAcademico: 'Licenciatura',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -187,8 +190,8 @@ module.exports = [
     currentlyWorking: true,
     job_actual: 'Global Tech Innovators',
     exp_salario: 35000,
-    perfilCandidato: 'Marketing',
-    nivelAcademico: 'Maestría',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -209,8 +212,8 @@ module.exports = [
     currentlyWorking: false,
     job_actual: '',
     exp_salario: 20000,
-    perfilCandidato: 'Desarrollo',
-    nivelAcademico: 'Ingeniería',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -231,8 +234,8 @@ module.exports = [
     currentlyWorking: true,
     job_actual: 'Tech Innovations SRL',
     exp_salario: 30000,
-    perfilCandidato: 'Administración',
-    nivelAcademico: 'Licenciatura',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -253,8 +256,8 @@ module.exports = [
     currentlyWorking: false,
     job_actual: '',
     exp_salario: 18000,
-    perfilCandidato: 'Desarrollo',
-    nivelAcademico: 'Ingeniería',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -275,8 +278,8 @@ module.exports = [
     currentlyWorking: true,
     job_actual: 'Creative Solutions Inc.',
     exp_salario: 40000,
-    perfilCandidato: 'Marketing',
-    nivelAcademico: 'Maestría',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
@@ -297,8 +300,8 @@ module.exports = [
     currentlyWorking: false,
     job_actual: '',
     exp_salario: 35000,
-    perfilCandidato: 'Ingeniería',
-    nivelAcademico: 'Licenciatura',
+    perfilCandidato: perfiles[1].text,
+    nivelAcademico: nivelesAcademicos[1].text,
     countryRegionData: {
       country: 'Dominican Republic',
       selectedIndex: 62,
