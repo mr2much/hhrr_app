@@ -190,7 +190,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
     // add tile layer to map
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      crossOrigin: 'anonymous',
       attribution:
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Geocoding by <a href="https://nominatim.org">Nominatim</a>',
     }).addTo(map);
@@ -229,7 +228,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
   }
 
   function showMarkers(map) {
-    importCustomMarker();
+    // importCustomMarker();
 
     const marker = L.marker([51.5, -0.09]).addTo(map);
 

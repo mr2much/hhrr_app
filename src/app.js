@@ -33,15 +33,12 @@ app
           'https://cdn.amcharts.com',
           'https://unpkg.com',
           'https://bootswatch.com',
-          'https://tile.openstreetmap.org',
         ],
         imgSrc: [
           "'self'",
           "'self' data:",
           'https://unpkg.com',
-          'https://unpkg.com data:',
           '*.openstreetmap.org',
-          '*.openstreetmap.org data:',
         ],
       },
     })
