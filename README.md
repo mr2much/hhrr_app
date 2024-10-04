@@ -56,7 +56,16 @@ npm run dev
 
 ## TODOs
 
-- TODO: Change Map library from amCharts to Leaflet
+- TODO: Marker should be centered on selected `country` (default `Dominican Republic`)
+- TODO: Add `next` and `previous` buttons on `view one` view, to traverse between Candidatos
+- TODO: Add `next` and `previous` buttons on the `map` view, to traverse between displayed Markers.
+  - TODO: Add panning effect when moving towards a Marker.
+- TODO: Add `region groups` when there are more than one Candidato in the same `region` (Might have to use a `for loop` when creating the HTML code for the popup). Might have to add an object where the key is the `region`
+- TODO: Markers should be colored according to the Candidato's salary expectations.
+- TODO: Add filters, to filter displayed markers that match the criteria.
+- TODO: Add effects similars to this example: https://leafletjs.com/examples/choropleth/
+  - TODO: Add `zoom in` when a marker is clicked, `zoom out` when the same marker is clicked again.
+- [x]: Change Map library from amCharts to Leaflet
 - TODO: Add filters by criteria
   - Add filter by `age`
   - Add filter by `labora actualmente`
