@@ -9,6 +9,7 @@ const db = require('./db/models/candidatos_db');
 const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
 const imgUtils = require('../lib/imgUtils');
+const geoJsonUtils = require('../lib/geoUtils');
 
 // const candidatos = db.get('candidato');
 
@@ -31,7 +32,9 @@ router.get('/map', (req, res, next) => {
 router.get('/all', async (req, res, next) => {
   const candidatos = await db.findAll();
 
-  res.json(candidatos);
+  const geojsonData = geoJsonUtils.buildGeoJSONFromCandidatos(candidatos);
+
+  res.json(geojsonData);
 });
 
 // Lee todos los candidatos

@@ -77,8 +77,8 @@ npm run dev
 - TODO: Add sort by criteria
   - Add sort by `age`
   - Add sort by `expectativa salarial`
-- TODO: Move Candidato Model code, to a separate file
-  - TODO: Use Candidato Model file on the seeds file, and Candidatos routes
+- [x]: Move Candidato Model code, to a separate file
+  - [x]: Use Candidato Model file on the seeds file, and Candidatos routes
 - TODO: Image for Candidato should only be created if INSERT or UPDATE were successful.
 - [x]: When a Candidato is deleted, corresponding image should also be deleted from the path.
 - [x] ~~BUG: Default `user.png` is being deleted on Candidato deletion.~~

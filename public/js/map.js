@@ -1,4 +1,9 @@
 window.addEventListener('DOMContentLoaded', (e) => {
+  const coords = [39.395771, -5.788566];
+  const zoomLevel = 2;
+
+  const candidatoInfo = L.control();
+
   async function loadEntries() {
     const res = await fetch('/api/v1/candidatos/all');
 
@@ -7,7 +12,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
   function setupMap() {
     // Initialize map
-    const map = L.map('chartdiv').setView([51.505, -0.09], 13);
+    const map = L.map('chartdiv').setView(coords, zoomLevel);
 
     // add tile layer to map
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -47,89 +52,77 @@ window.addEventListener('DOMContentLoaded', (e) => {
     ]);
   }
 
-  function showMarkers(map, candidatos) {
-    // const LeafIcon = L.Icon.extend({
-    //   options: {
-    //     shadowUrl: '/res/img/leaflet/leaf-shadow.png',
-    //     iconSize: [38, 95],
-    //     shadowSize: [50, 64],
-    //     iconAnchor: [22, 94],
-    //     shadowAnchor: [4, 62],
-    //     popupAnchor: [-3, -76],
-    //   },
-    // });
+  function highlightFeature(e) {
+    const layer = e.target;
 
-    // const greenIcon = new LeafIcon({
-    //   iconUrl: '/res/img/leaflet/leaf-green.png',
-    // });
-    // const redIcon = new LeafIcon({ iconUrl: '/res/img/leaflet/leaf-red.png' });
-    // const orangeIcon = new LeafIcon({
-    //   iconUrl: '/res/img/leaflet/leaf-orange.png',
-    // });
+    candidatoInfo.update(layer.feature.properties);
+  }
 
-    // L.marker([51.5, -0.09], { icon: greenIcon })
-    //   .addTo(map)
-    //   .bindPopup('I am a green leaf.');
-    // L.marker([51.495, -0.083], { icon: redIcon })
-    //   .addTo(map)
-    //   .bindPopup('I am a red leaf.');
-    // L.marker([51.49, -0.1], { icon: orangeIcon })
-    //   .addTo(map)
-    //   .bindPopup('I am a orange leaf.');
+  function resetHighlight(e) {
+    candidatoInfo.update();
+  }
 
-    // const greenIcon = L.icon({
-    //   iconUrl: '/res/img/leaflet/leaf-green.png',
-    //   shadowUrl: '/res/img/leaflet/leaf-shadow.png',
-    //   iconSize: [38, 95],
-    //   shadowSize: [50, 64],
-    //   iconAnchor: [22, 94],
-    //   shadowAnchor: [4, 62],
-    //   popupAnchor: [-3, -76],
-    // });
+  function showCandidate(e) {
+    const { id } = e.target.feature;
 
-    // L.marker([51.5, -0.09], { icon: greenIcon }).addTo(map);
+    window.location = `/api/v1/candidatos/${id}`;
+  }
 
-    candidatos.forEach((candidato) => {
-      const candidateMarker = importCustomMarker(candidato);
+  function onEachFeature(feature, layer) {
+    if (feature.properties && feature.properties.names) {
+      layer.bindPopup(feature.properties.names);
+    }
+  }
 
-      const marker = L.marker(candidato.countryRegionData.latLon, {
-        icon: candidateMarker,
-      }).addTo(map);
-
-      marker
-        .bindPopup(
-          `<div class="card mb-3">
-            <div class="row g-0">
+  function getCardHTML(properties) {
+    return `<div class="row g-0">
               <div class="col-md-4">
-                <img src="${candidato.imgUrl}" class="img-fluid rounded-start" alt="...">
+                <img src="${properties.iconUrl}" class="img-fluid rounded-start" alt="...">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title"><a href="/api/v1/candidatos/${candidato._id}">${candidato.nombres} ${candidato.apellidos}</a></h5>
-                  <p class="card-text">${candidato.age}</p>
+                  <h5 class="card-title">${properties.name}</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                 </div>
               </div>
-            </div>
-          </div>`
-        )
-        .openPopup();
-    });
+            </div>`;
+  }
 
-    const roundMarker = circleMarker().addTo(map);
-    roundMarker.bindPopup('I am a circle');
+  function showCandidatoCard(map) {
+    candidatoInfo.update = function (properties) {
+      this._div.innerHTML = properties
+        ? getCardHTML(properties)
+        : `<div class="card-body">
+            Hover over a Candidato Marker
+          </div>`;
+    };
 
-    const pMarker = polygonMarker().addTo(map);
-    pMarker.bindPopup('I am a polygon');
+    candidatoInfo.onAdd = function (map) {
+      this._div = L.DomUtil.create('div', 'card mb-3');
+      this._div.style.maxWidth = '300px';
+      this.update();
 
-    // Create standalone popup on map
-    L.popup()
-      .setLatLng([51.513, -0.09])
-      .setContent('I am a standalone popup.')
-      .openOn(map);
+      return this._div;
+    };
 
-    // openOn() function automatically closes previously opened
-    // popups, and opens the last one
+    candidatoInfo.addTo(map);
+  }
+
+  function showMarkers(map, candidatos) {
+    const startingCoords =
+      candidatos.features[0].geometry.coordinates.toReversed();
+
+    const geojson = L.geoJson(candidatos, {
+      pointToLayer(feature, latlng) {
+        return L.marker(latlng);
+      },
+      onEachFeature,
+    }).addTo(map);
+
+    showCandidatoCard(map);
+
+    map.setView(startingCoords, 8.5);
   }
 
   function onMapClick(e) {
