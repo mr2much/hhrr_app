@@ -35,23 +35,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
     // return L.Icon.Default.mergeOptions({ crossOrigin: true });
   }
 
-  function circleMarker() {
-    return L.circle([51.508, -0.11], {
-      color: 'red',
-      fillColor: '#f03',
-      fillOpacity: 0.5,
-      radius: 500,
-    });
-  }
-
-  function polygonMarker() {
-    return L.polygon([
-      [51.509, -0.08],
-      [51.503, -0.06],
-      [51.51, -0.047],
-    ]);
-  }
-
   function highlightFeature(e) {
     const layer = e.target;
 
@@ -94,7 +77,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
       this._div.innerHTML = properties
         ? getCardHTML(properties)
         : `<div class="card-body">
-            Hover over a Candidato Marker
+            Click a Candidato Marker
           </div>`;
     };
 

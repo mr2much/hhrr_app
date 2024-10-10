@@ -37,6 +37,7 @@ async function getCoordinatesFromCountryAndRegion(countryRegion) {
 //   })),
 // });
 
+// Creates GeoJSON features from Candidatos, and groups them by region
 buildGeoJSONFromCandidatos = (candidatos) => {
   const geoJSONFeaturesByRegion = {};
 
