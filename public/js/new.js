@@ -7,11 +7,11 @@ const errorMessage = document.querySelector('#errorMessage');
 
 errorMessage.style.display = 'none';
 
-const btnCancel = document.querySelector('form #cancel-btn');
+// const btnCancel = document.querySelector('form #cancel-btn');
 
-btnCancel.addEventListener('click', (e) => {
-  window.location = '/';
-});
+// btnCancel.addEventListener('click', (e) => {
+//   window.location = '/';
+// });
 
 const checkboxHasJob = document.querySelector('#candidato-empleado');
 
@@ -31,7 +31,7 @@ async function createNewCandidato(candidato) {
     },
     body: JSON.stringify(candidato),
   };
-  const res = await fetch(`${API_URL}/`, options);
+  const res = await fetch('/api/v1/candidatos/', options);
 
   return res.json();
 }
@@ -71,10 +71,12 @@ form.addEventListener('submit', (e) => {
   if (newCandidato) {
     createNewCandidato(newCandidato).then((result) => {
       if (result.status === 500) {
+        console.log(result);
+
         errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
         errorMessage.style.display = '';
       } else {
-        window.location = `/candidato.html?id=${result._id}`;
+        window.location = `/api/v1/candidatos/${result._id}`;
       }
     });
   }
@@ -96,7 +98,7 @@ function setup() {
   imgInput = createFileInput(imageFileHandler);
   imgInput.id('foto-perfil');
   imgInput.class('form-control');
-  imgInput.elt.name = 'foto-perfil';
+  imgInput.elt.name = 'imgUrl';
 
   imgInput.parent(profileFieldset);
 

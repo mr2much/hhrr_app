@@ -10,7 +10,7 @@ const errorMessage = document.querySelector('#errorMessage');
 
 errorMessage.style.display = 'none';
 
-const btnCancel = document.querySelector('form #cancel-btn');
+// const btnCancel = document.querySelector('form #cancel-btn');
 
 function imageFileHandler(file) {
   if (file.type.includes('image')) {
@@ -28,19 +28,19 @@ function setup() {
   imgInput = createFileInput(imageFileHandler);
   imgInput.id('foto-perfil');
   imgInput.class('form-control');
-  imgInput.elt.name = 'foto-perfil';
+  imgInput.elt.name = 'imgUrl';
 
   imgInput.parent(profileFieldset);
 
   pixelDensity(1);
   background(0);
 
-  getCandidato(idCandidato).then(prepopulateFormWithCandidatoInfo);
+  // getCandidato(idCandidato).then(prepopulateFormWithCandidatoInfo);
 }
 
-btnCancel.addEventListener('click', (e) => {
-  window.location = `/candidato.html?id=${idCandidato}`;
-});
+// btnCancel.addEventListener('click', (e) => {
+//   window.location = `/candidato.html?id=${idCandidato}`;
+// });
 
 function prepopulateFormWithCandidatoInfo(candidato) {
   // We don't use FormData because formData.set() doesn't update the info on the page
@@ -122,29 +122,30 @@ form.addEventListener('submit', (e) => {
       imgTo64,
     };
 
-    console.log(image);
-
     modifiedCandidato.image = image;
   }
 
   if (modifiedCandidato) {
-    updateCandidato(modifiedCandidato).then((result) => {
-      console.log(result);
-      window.location = `/candidato.html?id=${idCandidato}`;
-    });
+    updateCandidato(modifiedCandidato)
+      .then((candidato) => {
+        window.location = `/api/v1/candidatos/${candidato._id}`;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 });
 
 async function updateCandidato(candidato) {
   const options = {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       'content-type': 'application/json',
     },
     body: JSON.stringify(candidato),
   };
 
-  const res = await fetch(`${API_URL}/${idCandidato}`, options);
+  const res = await fetch(`/api/v1/candidatos/${idCandidato}`, options);
 
   return res.json();
 }

@@ -47,12 +47,14 @@ if (isDark) {
 }
 
 function activateLightTheme() {
+  styleSheetLink.setAttribute('crossorigin', 'anonymous');
   styleSheetLink.setAttribute('href', lightThemePath);
   darkMode.style.display = '';
   lightMode.style.display = 'none';
 }
 
 function activateDarkTheme() {
+  styleSheetLink.setAttribute('crossorigin', 'anonymous');
   styleSheetLink.setAttribute('href', darkThemePath);
   lightMode.style.display = '';
   darkMode.style.display = 'none';
@@ -75,7 +77,7 @@ toggleMode.addEventListener('click', (e) => {
 });
 
 function parseIDFromURL() {
-  const parts = window.location.search.match(/\?id\=(.*)/);
+  const parts = window.location.href.match(/\/candidatos\/(.*)\/edit/);
   return parts[1].trim();
 }
 
@@ -126,24 +128,23 @@ function validateFormGetCandidato(form, message) {
   const apellidos = formData.get('apellidos');
   const email = formData.get('email');
   const dob = formData.get('dob');
-  const age = calculateAgeFromDOB(dob);
-  const candidateExp = formData.get('tipo-candidato');
-  const currentlyWorking = formData.get('trabajo-actual') ? true : false;
-  const exp_salario = Number(formData.get('expectativa-salarial'));
-  const perfilCandidato = formData.get('perfil-candidato');
-  const imgUrl = '../res/img/user.png';
-  const nivelAcademico = formData.get('nivel-academico');
-  const country = formData.get('countries');
+  const candidateExp = formData.get('candidateExp');
+  const currentlyWorking = formData.get('currentlyWorking') ? true : false;
+  const exp_salario = Number(formData.get('exp_salario'));
+  const perfilCandidato = formData.get('perfilCandidato');
+  const nivelAcademico = formData.get('nivelAcademico');
+  const country = formData.get('country');
   const region = formData.get('region');
   const notas = formData.get('notas');
 
-  console.log(country);
-  console.log(region);
-  // const country_region_data = {
-  //   country: countrySelector.value,
-  //   selectedIndex: countrySelector.selectedIndex - 1,
-  //   selectedRegion: regionSelector.value,
-  // };
+  const countrySelector = document.querySelector('#countries');
+  const regionSelector = document.querySelector('#gds-cr-region');
+
+  const countryRegionData = {
+    country: countrySelector.value,
+    selectedIndex: countrySelector.selectedIndex - 1,
+    region: regionSelector.value,
+  };
 
   // console.log(`Country: ${countrySelector.value}`);
   // console.log(`Index: ${countrySelector.selectedIndex - 1}`);
@@ -190,14 +191,13 @@ function validateFormGetCandidato(form, message) {
     apellidos,
     email,
     dob,
-    age,
     candidateExp,
     currentlyWorking,
     job_actual: formData.get('job_actual') ? formData.get('job_actual') : '',
     exp_salario,
     perfilCandidato,
-    imgUrl,
     nivelAcademico,
+    countryRegionData,
     country,
     region,
     notas,

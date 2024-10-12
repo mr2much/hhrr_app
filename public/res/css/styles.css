@@ -71,3 +71,8 @@ input[type='text']:disabled {
   height: 85vh;
   margin: 0 auto;
 }
+
+.img-small {
+  height: 48px;
+  max-height: 48px;
+}

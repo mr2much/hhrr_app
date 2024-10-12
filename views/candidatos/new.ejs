@@ -1,0 +1,202 @@
+<%- include('../partials/head') %>
+
+<%- include('../partials/geodata') %>
+  </head>
+  <body>
+    <%- include('../partials/navbar') %>
+
+    <div class="container-fluid">
+      <h1 class="text-center">Crear Nuevo Candidato</h1>
+
+      <div class="d-flex mt-5 p-2 justify-content-center">
+        <form class="bg-light p-3 rounded bg-opacity-10">
+          <fieldset>
+            <label for="cedula"
+              >Cedula: <span class="text-danger">*</span>
+              <input
+                id="cedula"
+                class="form-control"
+                name="cedula"
+                type="text"
+                placeholder="000-0000000-0"
+                pattern="^[0-9]{3}-?[0-9]{7}-?[0-9]{1}$"
+                required
+            /></label>
+
+            <label for="nombres"
+              >Nombre: <span class="text-danger">*</span>
+              <input
+                id="nombres"
+                class="form-control"
+                name="nombres"
+                type="text"
+                placeholder="John"
+                required
+            /></label>
+
+            <label for="apellidos"
+              >Apellidos: <span class="text-danger">*</span>
+              <input
+                id="apellidos"
+                class="form-control"
+                name="apellidos"
+                type="text"
+                placeholder="Doe"
+                required
+            /></label>
+
+            <label for="email"
+              >Introduzca su correo: <span class="text-danger">*</span>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="correo@dominio.com"
+                required
+            /></label>
+            <label for="dob"
+              >Fecha de Nacimiento: <span class="text-danger">*</span
+              ><input
+                type="date"
+                class="form-control"
+                name="dob"
+                id="dob"
+                required
+              />
+              <!-- <i class="fas fa-calendar input-prefix"></i> -->
+            </label>
+          </fieldset>
+          <fieldset>
+            <label for="inexperienced-candidate">
+              <input
+                id="inexperienced-candidate"
+                type="radio"
+                name="candidateExp"
+                class="inline"
+                value="Sin experiencia"
+                checked
+              />
+              Candidato Sin Experiencia
+            </label>
+            <label for="experienced-candidate">
+              <input
+                id="experienced-candidate"
+                type="radio"
+                name="candidateExp"
+                class="inline"
+                value="Con experiencia"
+              />
+              Candidato Con Experiencia
+            </label>
+            <label for="candidato-empleado"
+              ><input
+                id="candidato-empleado"
+                type="checkbox"
+                name="currentlyWorking"
+                class="inline"
+              />
+              Empleado se encuentra laborando actualmente?</label
+            >
+            <label for="job_actual"
+              >Lugar de Trabajo Actual:
+              <input
+                id="job_actual"
+                class="form-control"
+                name="job_actual"
+                type="text"
+                disabled
+                placeholder="EX: Nombre empresa"
+            /></label>
+            <label for="expectativa-salarial"
+              >Expectativa Salarial:
+              <input
+                type="number"
+                id="expectativa-salarial"
+                name="exp_salario"
+                class="form-control"
+                min="0"
+                step="0.1"
+                placeholder="1,000.00"
+            /></label>
+            <label for="perfil-candidato"
+              >Perfil del candidato:
+              <select
+                name="perfilCandidato"
+                id="perfil-candidato"
+                class="form-select"
+              >
+              <% for(perfil of perfiles) { %>
+                <option value="<%= perfil.value %>"><%= perfil.text %></option>
+              <% } %>
+              </select></label
+            >
+          </fieldset>
+
+          <fieldset>
+            <label for="foto-perfil"
+              >Agregar foto de perfil:
+              <div id="profile-pic"></div>
+            </label>
+            <label for="nivel-academico"
+              >Nivel academico:
+              <select
+                name="nivelAcademico"
+                id="nivel-academico"
+                name="nivel-academico"
+                class="form-select"
+              >
+              <% for(nivelAcademico of nivelesAcademicos) { %>
+                <option value="<%= nivelAcademico.value %>"><%- nivelAcademico.text %></option>
+              <% } %>
+              </select></label
+            >
+            <label for="countries"
+              >Indicar Pais de Origen:
+              <select name="country" id="countries" class="form-select gds-cr" country-data-region-id="gds-cr-region" data-language="en"></select>              
+            </label>
+            <label for="gds-cr-region"
+              >Region:
+              <select class="form-select" name="region" id="gds-cr-region"></select>              
+            </label>
+            <label for="notas"
+              >Informacion adicional:
+              <textarea
+                name="notas"
+                id="notas"
+                class="form-control"
+                cols="30"
+                rows="5"
+                placeholder="Candidato da muy buena impresion..."
+              ></textarea>
+            </label>
+          </fieldset>
+
+          <div
+            class="btn-group col-12"
+            role="group"
+            aria-label="Controles de Formulario Candidato Nuevo"
+          >
+            <button class="btn btn-lg btn-success" type="submit">
+              <span class="pe-2"><i class="far fa-save"></i></span>Guardar
+            </button>
+            <a
+              href="/api/v1/candidatos/"              
+              class="btn btn-lg btn-warning"
+              type="button"
+            >
+              <span class="pe-2"><i class="fas fa-ban"></i></span>Cancelar
+          </a>
+          </div>
+        </form>
+      </div>
+      <div id="errorMessage" class="alert alert-danger" role="alert"></div>
+    </div>
+
+    <footer><%- include('../partials/switchtheme') %></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+    <script src="/js/global.js" charset="utf-8"></script>
+    <script src="/js/new.js" charset="utf-8"></script>
+  </body>
+</html>
