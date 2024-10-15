@@ -1,5 +1,7 @@
 Check this for the COEP error: https://github.com/helmetjs/helmet/issues/343
 
+App is now deployed on Render at: https://managerhhrr.onrender.com/api/v1/candidatos/
+
 # Express API Starter
 
 How to use this template:
@@ -56,6 +58,9 @@ npm run dev
 
 ## TODOs
 
+- TODO: Fix mobile first display
+- TODO: Fix validar cedula, account for other types of ID's
+  - TODO: Add checkbox with different types of ID's. ex: Cedula, Passport
 - TODO: Marker should be centered on selected `country` (default `Dominican Republic`)
 - TODO: Add `next` and `previous` buttons on `view one` view, to traverse between Candidatos
 - TODO: Add `next` and `previous` buttons on the `map` view, to traverse between displayed Markers.

@@ -54,6 +54,7 @@ buildGeoJSONFromCandidatos = (candidatos) => {
         <div class="col-md-9">
           <div class="card-body">
             <h5 class="card-title fs-6 m-0 p-0">${candidatoName}</h5>
+            <p class="card-text">${candidato.countryRegionData.country}, ${candidato.countryRegionData.region}</p>            
             <a href="/api/v1/candidatos/${candidato._id}">Ver detalles</a>
           </div>
         </div>
@@ -71,6 +72,7 @@ buildGeoJSONFromCandidatos = (candidatos) => {
                     <div class="col-md-9">
                       <div class="card-body">
                         <h5 class="card-title fs-6 m-0 p-0">${candidatoName}</h5>
+                        <p class="card-text">${candidato.countryRegionData.country}, ${candidato.countryRegionData.region}</p>            
                         <a href="/api/v1/candidatos/${candidato._id}">Ver detalles</a>
                       </div>
                     </div>

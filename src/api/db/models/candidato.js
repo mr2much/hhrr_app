@@ -23,7 +23,6 @@ const candidatoSchema = new mongoose.Schema(
     nivelAcademico: { type: String },
     countryRegionData: {
       country: { type: String, default: 'Dominican Republic' },
-      selectedIndex: { type: Number, default: 62 },
       region: { type: String, default: 'Distrito Nacional (Santo Domingo)' },
       latLon: { type: [Number], default: [18.4801972, -69.942111] },
     },
@@ -70,8 +69,13 @@ candidatoSchema.pre('save', async function (next) {
 });
 
 candidatoSchema.pre('insertMany', async (next, docs) => {
-  docs.forEach((doc) => {
+  docs.forEach(async (doc) => {
     doc.age = dataUtils.calculateAgeFromDOB(doc.dob);
+
+    const latLon = await geoUtils.getCoordinatesFromCountryAndRegion(
+      doc.countryRegionData
+    );
+    doc.countryRegionData.latLon = latLon;
   });
   next();
 });
