@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', (e) => {
-  const coords = [39.395771, -5.788566];
+  const coords = [29.950125, 2.636991];
   const zoomLevel = 2;
 
   const candidatoInfo = L.control();
@@ -105,7 +105,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     showCandidatoCard(map);
 
-    map.setView(startingCoords, 8.5);
+    // map.setView(startingCoords, 8.5);
   }
 
   function onMapClick(e) {

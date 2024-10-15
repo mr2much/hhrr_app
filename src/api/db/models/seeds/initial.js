@@ -70,8 +70,8 @@ sample = (array) => array[Math.floor(Math.random() * array.length)];
 async function execute() {
   await Candidato.deleteMany({});
 
-  const candidatos = [];
-  for (let i = 0; i < 25; i++) {
+  // const candidatos = [];
+  for (let i = 0; i < 100; i++) {
     const candidato = {
       cedula: generateRandomID(),
       nombres: sample(firstNames),
@@ -90,10 +90,11 @@ async function execute() {
       ? getRandomCompanyName()
       : '';
 
-    candidatos.push(new Candidato(candidato));
+    const c = new Candidato(candidato);
+    await c.save();
   }
 
-  await Candidato.insertMany(candidatos);
+  // await Candidato.insertMany(candidatos);
   await mongoose.disconnect();
 }
 
