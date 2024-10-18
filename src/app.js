@@ -1,4 +1,5 @@
 const express = require('express');
+const engine = require('ejs-mate');
 const path = require('path');
 const methodOverride = require('method-override');
 const morgan = require('morgan');
@@ -45,6 +46,7 @@ app
   )
   .use(methodOverride('_method'));
 
+app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 

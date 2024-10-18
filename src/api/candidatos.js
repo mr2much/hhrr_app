@@ -26,7 +26,7 @@ router.get('/new', (req, res, next) => {
 
 // redirect to map
 router.get('/map', (req, res, next) => {
-  res.render('candidatos/map');
+  res.render('candidatos/map', { title: 'Candidatos en el Mundo' });
 });
 
 router.get('/all', async (req, res, next) => {

@@ -58,6 +58,9 @@ npm run dev
 
 ## TODOs
 
+- TODO: Implement functionality to allow Candidato to apply for a specific position.
+  - TODO: Recruiter should be able to see the Candidates that applied for a specific job posting.
+- TODO: Add functionality to display which columns I want to see on Index page.
 - TODO: Fix mobile first display
 - TODO: Fix validar cedula, account for other types of ID's
   - TODO: Add checkbox with different types of ID's. ex: Cedula, Passport

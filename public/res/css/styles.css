@@ -40,14 +40,6 @@ textarea {
   border: 1px solid #0a0a23;
 }
 
-.navbar .fas,
-.navbar .fas a {
-  vertical-align: middle;
-  padding: 0;
-  margin: 0;
-  height: auto;
-}
-
 .inline {
   width: unset;
   margin: 0 0.5em 0 0;
@@ -66,10 +58,10 @@ input[type='text']:disabled {
   background-color: #ddd;
 }
 
-#map {
-  width: 70%;
-  height: 85vh;
+#chartdiv {
   margin: 0 auto;
+  width: 80%;
+  height: 80vh;
 }
 
 .img-small {
