@@ -1,17 +1,6 @@
-/* eslint-disable linebreak-style */
 let p5Canvas;
 let imgInput;
 let imgProfile;
-
-const errorMessage = document.querySelector('#errorMessage');
-
-errorMessage.style.display = 'none';
-
-// const btnCancel = document.querySelector('form #cancel-btn');
-
-// btnCancel.addEventListener('click', (e) => {
-//   window.location = '/';
-// });
 
 const checkboxHasJob = document.querySelector('#candidato-empleado');
 
@@ -39,7 +28,7 @@ async function createNewCandidato(candidato) {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const newCandidato = validateFormGetCandidato(form, errorMessage);
+  const newCandidato = validateFormGetCandidato(form);
 
   p5Canvas.loadPixels();
 
@@ -73,8 +62,8 @@ form.addEventListener('submit', (e) => {
       if (result.status === 500) {
         console.log(result);
 
-        errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
-        errorMessage.style.display = '';
+        // errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
+        // errorMessage.style.display = '';
       } else {
         window.location = `/api/v1/candidatos/${result._id}`;
       }
@@ -98,6 +87,7 @@ function setup() {
   imgInput = createFileInput(imageFileHandler);
   imgInput.id('foto-perfil');
   imgInput.class('form-control');
+  imgInput.addClass('p-1');
   imgInput.elt.name = 'imgUrl';
 
   imgInput.parent(profileFieldset);

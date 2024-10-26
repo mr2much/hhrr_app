@@ -94,9 +94,9 @@ router.patch(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { id } = req.params;
-      const newCandidato = req.body;
+      const { candidato } = req.body;
 
-      const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
+      const updatedCandidato = await db.findByIdAndUpdate(id, candidato);
 
       if (updatedCandidato) {
         res.status(200).json(updatedCandidato);
@@ -122,6 +122,7 @@ router.post(
       const newCandidato = await db.insertOne(candidato);
 
       if (newCandidato) {
+        // res.redirect(`/api/v1/candidatos/${newCandidato._id}`);
         res.status(200).json(newCandidato);
       }
     } catch (error) {

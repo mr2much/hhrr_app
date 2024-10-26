@@ -5,7 +5,7 @@ body {
   height: 100vh;
 }
 
-form {
+/* form {
   width: 60vw;
   max-width: 500px;
   min-width: 300px;
@@ -38,7 +38,7 @@ select {
 input,
 textarea {
   border: 1px solid #0a0a23;
-}
+} */
 
 .inline {
   width: unset;
