@@ -1,6 +1,3 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable comma-dangle */
-/* eslint-disable linebreak-style */
 const express = require('express');
 
 const _dir = '/res/img';
@@ -10,8 +7,6 @@ const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
 const imgUtils = require('../lib/imgUtils');
 const geoJsonUtils = require('../lib/geoUtils');
-
-// const candidatos = db.get('candidato');
 
 const router = express.Router();
 
@@ -24,37 +19,52 @@ router.get('/new', (req, res, next) => {
   });
 });
 
+const catchAsyncErrors = (fn) => {
+  return (req, res, next) => {
+    fn(req, res, next).catch(next);
+  };
+};
+
 // redirect to map
 router.get('/map', (req, res, next) => {
   res.render('candidatos/map', { title: 'Candidatos en el Mundo' });
 });
 
-router.get('/all', async (req, res, next) => {
-  const candidatos = await db.findAll();
+router.get(
+  '/all',
+  catchAsyncErrors(async (req, res, next) => {
+    const candidatos = await db.findAll();
 
-  const geojsonData = geoJsonUtils.buildGeoJSONFromCandidatos(candidatos);
+    const geojsonData = geoJsonUtils.buildGeoJSONFromCandidatos(candidatos);
 
-  res.json(geojsonData);
-});
+    res.json(geojsonData);
+  })
+);
 
 // Lee todos los candidatos
-router.get('/', async (req, res, next) => {
-  const candidatos = await db.findAll();
+router.get(
+  '/',
+  catchAsyncErrors(async (req, res, next) => {
+    const candidatos = await db.findAll();
 
-  res.render('candidatos/home', { candidatos, title: 'HHRR Manager Home' });
-});
+    res.render('candidatos/home', { candidatos, title: 'HHRR Manager Home' });
+  })
+);
 
 // Lee un candidato con ID
-router.get('/:id', async (req, res, next) => {
-  const { id } = req.params;
+router.get(
+  '/:id',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
 
-  const candidato = await db.findOneById(id);
+    const candidato = await db.findOneById(id);
 
-  res.render('candidatos/details', {
-    candidato,
-    title: `Detalles de ${candidato.fullName}`,
-  });
-});
+    res.render('candidatos/details', {
+      candidato,
+      title: `Detalles de ${candidato.fullName}`,
+    });
+  })
+);
 
 const experiencia = [
   { id: 'inexperienced', value: 'Sin experiencia' },
@@ -62,63 +72,75 @@ const experiencia = [
 ];
 
 // Redirecciona a Edit Form
-router.get('/:id/edit', async (req, res, next) => {
-  const { id } = req.params;
+router.get(
+  '/:id/edit',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
 
-  const candidato = await db.findOneById(id);
-  res.render('candidatos/edit', {
-    candidato,
-    experiencia,
-    perfiles,
-    nivelesAcademicos,
-    title: `Editar información de ${candidato.fullName}`,
-  });
-});
+    const candidato = await db.findOneById(id);
+    res.render('candidatos/edit', {
+      candidato,
+      experiencia,
+      perfiles,
+      nivelesAcademicos,
+      title: `Editar información de ${candidato.fullName}`,
+    });
+  })
+);
 
 // // Actualizar un candidato
-router.patch('/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const newCandidato = req.body;
+router.patch(
+  '/:id',
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const newCandidato = req.body;
 
-    const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
+      const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
 
-    if (updatedCandidato) {
-      res.status(200).json(updatedCandidato);
+      if (updatedCandidato) {
+        res.status(200).json(updatedCandidato);
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
-  }
-});
+  })
+);
 
 // // Crear un candidato
-router.post('/', async (req, res, next) => {
-  const candidato = req.body;
+router.post(
+  '/',
+  catchAsyncErrors(async (req, res, next) => {
+    const candidato = req.body;
 
-  try {
-    if (candidato.image) {
-      candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
-      imgUtils.handleImageData(candidato.image, candidato.cedula);
+    try {
+      if (candidato.image) {
+        candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
+        imgUtils.handleImageData(candidato.image, candidato.cedula);
+      }
+
+      const newCandidato = await db.insertOne(candidato);
+
+      if (newCandidato) {
+        res.status(200).json(newCandidato);
+      }
+    } catch (error) {
+      next(error);
     }
-
-    const newCandidato = await db.insertOne(candidato);
-
-    if (newCandidato) {
-      res.status(200).json(newCandidato);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
+  })
+);
 
 // // Remover un candidato
-router.delete('/:id', async (req, res, next) => {
-  const { id } = req.params;
+router.delete(
+  '/:id',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
 
-  const removedCandidato = await db.findByIdAndDelete(id);
+    const removedCandidato = await db.findByIdAndDelete(id);
 
-  res.redirect('/api/v1/candidatos');
-});
+    res.redirect('/api/v1/candidatos');
+  })
+);
 
 // router.post('/', candidatoValidator, (req, res, next) => {
 //   const candidato = getCandidatoFromBody(req.body);
