@@ -22,4 +22,6 @@ module.exports.categories = [
   'Incorporated',
   'Int',
   'Co',
+  'Ltd',
+  'GmbH',
 ];

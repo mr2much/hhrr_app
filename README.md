@@ -58,6 +58,13 @@ npm run dev
 
 ## TODOs
 
+- TODO: Implement error handling
+  - TODO: Install JOI
+  - TODO: Create JOI Schema for Candidato
+  - TODO: Create EJS Error template
+  - TODO: Create Erro Handling Middleware
+  - TODO: Create function to capture async errors
+  - TODO: Create Error Class
 - TODO: Implement functionality to allow Candidato to apply for a specific position.
   - TODO: Recruiter should be able to see the Candidates that applied for a specific job posting.
 - TODO: Add functionality to display which columns I want to see on Index page.
