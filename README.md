@@ -58,19 +58,21 @@ npm run dev
 
 ## TODOs
 
+- TODO: Ensure that only images can be selected when creating or editing a Candidato's image
+- TODO: Implement sending emails to a Candidato if he gets selected for a position.
 - TODO: Fix folder organization for the project
-- TODO: Group Candidato data in NEW Form and EDIT Form
-  - TODO: Route handlers should destructure Candidato from `req.body`
+- [x]: Group Candidato data in NEW Form and EDIT Form
+  - ~~TODO: Route handlers should destructure Candidato from `req.body`~~ Candidato data is send to the server from the client with a `fetch`
 - TODO: Implement error handling
   - TODO: Install JOI
   - TODO: Create JOI Schema for Candidato
   - [x]: Create EJS Error template
-  - [x]: Create Erro Handling Middleware
+  - [x]: Create Error Handling Middleware
   - [x]: Create function to capture async errors
   - TODO: Create Error Class
   - TODO: Add form validation
     - [x]: Add form validation on Candidato creation
-    - TODO: Add form validation on Candidato edition
+    - [x]: Add form validation on Candidato edition
   - TODO: Add Candidato validation
 - TODO: Implement functionality to allow Candidato to apply for a specific position.
   - TODO: Recruiter should be able to see the Candidates that applied for a specific job posting.
