@@ -94,12 +94,16 @@ router.patch(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { candidato } = req.body;
+      const candidato = req.body;
 
       const updatedCandidato = await db.findByIdAndUpdate(id, candidato);
 
       if (updatedCandidato) {
-        res.status(200).json(updatedCandidato);
+        res.status(200).json({
+          message: 'Redirect',
+          redirectURL: `/api/v1/candidatos/${updatedCandidato._id}`,
+        });
+        // res.status(200).json(updatedCandidato);
       }
     } catch (error) {
       next(error);
@@ -123,12 +127,10 @@ router.post(
 
       if (newCandidato) {
         // res.redirect(`/api/v1/candidatos/${newCandidato._id}`);
-        res
-          .status(200)
-          .json({
-            message: 'Redirect',
-            redirectURL: `/api/v1/candidatos/${newCandidato._id}`,
-          });
+        res.status(200).json({
+          message: 'Redirect',
+          redirectURL: `/api/v1/candidatos/${newCandidato._id}`,
+        });
       }
     } catch (error) {
       next(error);
