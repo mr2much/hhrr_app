@@ -64,11 +64,13 @@ npm run dev
 - TODO: Implement error handling
   - TODO: Install JOI
   - TODO: Create JOI Schema for Candidato
-  - TODO: Create EJS Error template
-  - TODO: Create Erro Handling Middleware
-  - TODO: Create function to capture async errors
+  - [x]: Create EJS Error template
+  - [x]: Create Erro Handling Middleware
+  - [x]: Create function to capture async errors
   - TODO: Create Error Class
   - TODO: Add form validation
+    - [x]: Add form validation on Candidato creation
+    - TODO: Add form validation on Candidato edition
   - TODO: Add Candidato validation
 - TODO: Implement functionality to allow Candidato to apply for a specific position.
   - TODO: Recruiter should be able to see the Candidates that applied for a specific job posting.
