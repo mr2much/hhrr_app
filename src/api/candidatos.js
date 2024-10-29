@@ -123,7 +123,12 @@ router.post(
 
       if (newCandidato) {
         // res.redirect(`/api/v1/candidatos/${newCandidato._id}`);
-        res.status(200).json(newCandidato);
+        res
+          .status(200)
+          .json({
+            message: 'Redirect',
+            redirectURL: `/api/v1/candidatos/${newCandidato._id}`,
+          });
       }
     } catch (error) {
       next(error);

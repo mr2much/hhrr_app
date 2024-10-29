@@ -10,23 +10,25 @@ checkboxHasJob.addEventListener('change', (e) => {
   inputCurrentJob.toggleAttribute('disabled');
 });
 
-const form = document.querySelector('form');
-
-async function createNewCandidato(candidato) {
+async function createNewCandidato(candidato, action, method) {
   const options = {
-    method: 'POST',
+    method: method,
+    redirect: 'follow',
     headers: {
       'content-type': 'application/json',
     },
     body: JSON.stringify(candidato),
   };
-  const res = await fetch('/api/v1/candidatos/', options);
+
+  const res = await fetch(action, options);
 
   return res.json();
 }
 
-form.addEventListener('submit', (e) => {
+document.querySelector('form').addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  const form = e.target;
 
   const newCandidato = validateFormGetCandidato(form);
 
@@ -57,17 +59,14 @@ form.addEventListener('submit', (e) => {
     newCandidato.image = image;
   }
 
-  if (newCandidato) {
-    createNewCandidato(newCandidato).then((result) => {
-      if (result.status === 500) {
-        console.log(result);
+  const data = await createNewCandidato(
+    newCandidato,
+    form.action.split('5000')[1],
+    form.method
+  );
 
-        // errorMessage.textContent = 'Ya existe un candidato con esta cedula!';
-        // errorMessage.style.display = '';
-      } else {
-        window.location = `/api/v1/candidatos/${result._id}`;
-      }
-    });
+  if (data.redirectURL) {
+    window.location = data.redirectURL;
   }
 });
 
