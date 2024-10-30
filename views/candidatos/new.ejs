@@ -6,7 +6,7 @@
   <h1 class="text-center">Crear Nuevo Candidato</h1>
 
   <div class="col-6 offset-3">
-    <form class="row validate-form" action="/api/v1/candidatos" method="POST" novalidate>
+    <form class="row validate-form" action="/api/v1/candidatos" method="POST" enctype="multipart/form-data" novalidate>
       <div class="mb-3">
         <label class="form-label" for="cedula">Cedula: <span class="text-danger">*</span></label> 
           <input
@@ -143,8 +143,7 @@
 
       <div class="mb-3">
         <label class="form-label" for="foto-perfil">Agregar foto de perfil:</label>
-        <!-- <input class="form-control" type="file" id="foto-perfil" name="candidato[imgUrl]" accept=".jpg, .jpeg, .png"> -->
-        <div id="profile-pic"></div>
+        <input class="form-control" type="file" id="foto-perfil" name="candidato[imgUrl]" accept=".jpg, .jpeg, .png">
       </div>
 
       <div class="mb-3">
@@ -170,7 +169,7 @@
           <select
             class="form-select gds-cr"
             id="countries"
-            name="candidato[country]"
+            name="candidato[countryRegionData][country]"
             country-data-region-id="gds-cr-region"
             data-language="en"
             required
@@ -180,7 +179,7 @@
 
       <div class="mb-3">
         <label class="form-label" for="gds-cr-region">Region: <span class="text-danger">*</span></label>
-        <select class="form-select" name="candidato[region]" id="gds-cr-region" required></select>
+        <select class="form-select" name="candidato[countryRegionData][region]" id="gds-cr-region" required></select>
         <div class="invalid-feedback">Es necesario indicar la región desde donde aplica!</div>
       </div>
 
@@ -217,4 +216,3 @@
 </div>
 
 <%- include('../partials/geoscripts') %>
-<% block('scripts').append('<script src="/js/form.js" charset="utf-8"></script>') %>

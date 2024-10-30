@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 
 const _dir = '/res/img';
 
@@ -11,6 +12,8 @@ const AppError = require('../lib/AppError');
 const Joi = require('joi');
 
 const router = express.Router();
+
+const upload = multer({ dest: 'public/res/img' });
 
 const experiencia = [
   { id: 'experienced', value: 'Con experiencia' },
@@ -43,8 +46,6 @@ const validateCandidato = (req, res, next) => {
 
   if (error) {
     const msg = error.details.map((el) => el.message).join(', ');
-
-    console.log(msg);
 
     throw new AppError(400, msg);
   } else {
@@ -149,23 +150,19 @@ router.patch(
 // // Crear un candidato
 router.post(
   '/',
+  upload.single('candidato[imgUrl]'),
   validateCandidato,
   catchAsyncErrors(async (req, res, next) => {
     const { candidato } = req.body;
 
-    if (candidato.image) {
-      candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
-      imgUtils.handleImageData(candidato.image, candidato.cedula);
+    if (req.file) {
+      candidato.imgUrl = `${_dir}/${req.file.filename}`;
     }
 
     const newCandidato = await db.insertOne(candidato);
 
     if (newCandidato) {
-      // res.redirect(`/api/v1/candidatos/${newCandidato._id}`);
-      res.status(200).json({
-        message: 'Redirect',
-        redirectURL: `/api/v1/candidatos/${newCandidato._id}`,
-      });
+      res.redirect(`/api/v1/candidatos/${newCandidato._id}`);
     }
   })
 );

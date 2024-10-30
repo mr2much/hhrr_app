@@ -5,23 +5,23 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable linebreak-style */
 
-const perfiles = [
-  'IT',
-  'Desarrollo',
-  'DBA',
-  'Telecomunicaciones',
-  'Contabilidad',
-  'Servicio al Cliente',
-];
+// const perfiles = [
+//   'IT',
+//   'Desarrollo',
+//   'DBA',
+//   'Telecomunicaciones',
+//   'Contabilidad',
+//   'Servicio al Cliente',
+// ];
 
-const academicLevels = [
-  'Estudiante',
-  'Nivel Tecnico',
-  'Licenciatura',
-  'Ingenieria',
-  'Maestria',
-  'Doctorado',
-];
+// const academicLevels = [
+//   'Estudiante',
+//   'Nivel Tecnico',
+//   'Licenciatura',
+//   'Ingenieria',
+//   'Maestria',
+//   'Doctorado',
+// ];
 
 const API_URL =
   window.location.hostname === 'localhost'
