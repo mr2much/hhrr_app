@@ -49,6 +49,10 @@ const validateCandidato = (req, res, next) => {
 
     throw new AppError(400, msg);
   } else {
+    req.body.candidato.currentlyWorking = req.body.candidato.currentlyWorking
+      ? true
+      : false;
+
     next();
   }
 };
@@ -130,19 +134,25 @@ router.get(
 // // Actualizar un candidato
 router.patch(
   '/:id',
+  upload.single('candidato[imgUrl]'),
   validateCandidato,
   catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
     const { candidato } = req.body;
 
+    if (req.file) {
+      candidato.imgUrl = `${_dir}/${req.file.filename}`;
+    }
+
     const updatedCandidato = await db.findByIdAndUpdate(id, candidato);
 
     if (updatedCandidato) {
-      res.status(200).json({
-        message: 'Redirect',
-        redirectURL: `/api/v1/candidatos/${updatedCandidato._id}`,
-      });
+      // res.status(200).json({
+      //   message: 'Redirect',
+      //   redirectURL: `/api/v1/candidatos/${updatedCandidato._id}`,
+      // });
       // res.status(200).json(updatedCandidato);
+      res.redirect(`/api/v1/candidatos/${updatedCandidato._id}`);
     }
   })
 );

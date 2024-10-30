@@ -5,7 +5,7 @@
   <h1 class="text-center">Editar Informacion de <%= candidato.fullName %></h1>
 
   <div class="col-6 offset-3">    
-    <form class="row validate-form" action="/api/v1/candidatos/<%= candidato._id %>?_method=PATCH" method="POST" novalidate>
+    <form class="row validate-form" action="/api/v1/candidatos/<%= candidato._id %>?_method=PATCH" method="POST" enctype="multipart/form-data" novalidate>
       <div class="mb-3">
         <label class="form-label" for="cedula">Cedula: <span class="text-danger">*</span></label>
           <input
@@ -134,7 +134,7 @@
 
       <div class="mb-3">
         <label class="form-label" for="foto-perfil">Agregar foto de perfil:</label>
-        <div id="profile-pic"></div>        
+        <input class="form-control" type="file" id="foto-perfil" name="candidato[imgUrl]" accept=".jpg, .jpeg, .png">
       </div>
 
       <div class="mb-3">
@@ -157,7 +157,7 @@
         <select
           id="countries"
           class="form-select gds-cr"
-          name="candidato[country]"
+          name="candidato[countryRegionData][country]"
           country-data-region-id="gds-cr-region"
           data-language="en"
           country-data-default-value="<%= candidato.country %>"
@@ -168,7 +168,7 @@
 
       <div class="mb-3">
         <label class="form-label" for="gds-cr-region">Region:</label>
-        <select class="form-select"  name="candidato[region]" id="gds-cr-region" region-data-default-value="<%= candidato.region %>"></select>
+        <select class="form-select"  name="candidato[countryRegionData][region]" id="gds-cr-region" region-data-default-value="<%= candidato.region %>"></select>
         <div class="invalid-feedback">Es necesario indicar la región desde donde aplica!</div>
       </div>
 
