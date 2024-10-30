@@ -58,10 +58,11 @@ npm run dev
 
 ## TODOs
 
-- TODO: Handle image upload without using `P5`
-  - TODO: Add multi-part form
-  - TODO: Install multer2
-  - TODO: Remove fetch requests from Client-Side
+- TODO: Fix image updating when Image is changed for Candidato
+- [x]: Handle image upload without using `P5`
+  - [x]: Add multi-part form
+  - [x]: Install multer
+  - [x]: Remove fetch requests from Client-Side
 - TODO: Ensure that only the countries in the `countrynames` file can be stored in Mongo
 - TODO: Ensure that only the regions found in `geojson_chart_data` can be stored in Mongo
 - TODO: Ensure that only images can be selected when creating or editing a Candidato's image
