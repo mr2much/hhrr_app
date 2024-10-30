@@ -2,6 +2,8 @@ const mongoose = require('../mongo/db');
 const dataUtils = require('../../../lib/dataUtils');
 const geoUtils = require('../../../lib/geoUtils');
 const imgUtils = require('../../../lib/imgUtils');
+const perfiles = require('../../../constants/perfiles');
+const nivelesAcademicos = require('../../../constants/nivelesAcademicos');
 
 const candidatoSchema = new mongoose.Schema(
   {
@@ -18,9 +20,9 @@ const candidatoSchema = new mongoose.Schema(
     currentlyWorking: { type: Boolean, default: false },
     job_actual: { type: String },
     exp_salario: { type: Number, default: 0 },
-    perfilCandidato: { type: String },
+    perfilCandidato: { type: String, required: true, enum: perfiles },
     imgUrl: { type: String, default: '/res/img/user.png' },
-    nivelAcademico: { type: String },
+    nivelAcademico: { type: String, required: true, enum: nivelesAcademicos },
     countryRegionData: {
       country: { type: String, default: 'Dominican Republic' },
       region: { type: String, default: 'Distrito Nacional (Santo Domingo)' },

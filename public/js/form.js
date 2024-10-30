@@ -17,12 +17,23 @@ async function createNewCandidato(candidato, action, method) {
     headers: {
       'content-type': 'application/json',
     },
-    body: JSON.stringify(candidato),
+    body: JSON.stringify({ candidato }),
   };
 
-  const res = await fetch(action, options);
+  try {
+    const res = await fetch(action, options);
+    if (res.status >= 300 && res.status < 400) {
+      console.log('Redirected', res.headers);
 
-  return res.json();
+      if (location) {
+        console.log(location);
+      }
+    } else {
+      return res.json();
+    }
+  } catch (error) {
+    console.error('Request failed', error);
+  }
 }
 
 document.querySelector('form').addEventListener('submit', async (e) => {

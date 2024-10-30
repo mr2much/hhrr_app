@@ -135,8 +135,6 @@ function validateFormGetCandidato(form) {
   const exp_salario = Number(formData.get('candidato[exp_salario]'));
   const perfilCandidato = formData.get('candidato[perfilCandidato]');
   const nivelAcademico = formData.get('candidato[nivelAcademico]');
-  const country = formData.get('candidato[country]');
-  const region = formData.get('candidato[region]');
   const notas = formData.get('candidato[notas]');
 
   const countrySelector = document.querySelector('#countries');
@@ -144,7 +142,6 @@ function validateFormGetCandidato(form) {
 
   const countryRegionData = {
     country: countrySelector.value,
-    selectedIndex: countrySelector.selectedIndex - 1,
     region: regionSelector.value,
   };
 
@@ -170,8 +167,6 @@ function validateFormGetCandidato(form) {
     perfilCandidato,
     nivelAcademico,
     countryRegionData,
-    country,
-    region,
     notas,
   };
 

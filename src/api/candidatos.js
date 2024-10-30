@@ -7,12 +7,55 @@ const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
 const imgUtils = require('../lib/imgUtils');
 const geoJsonUtils = require('../lib/geoUtils');
+const AppError = require('../lib/AppError');
+const Joi = require('joi');
 
 const router = express.Router();
+
+const experiencia = [
+  { id: 'experienced', value: 'Con experiencia' },
+  { id: 'inexperienced', value: 'Sin experiencia' },
+];
+
+const candidatoValidationSchema = Joi.object({
+  candidato: Joi.object({
+    cedula: Joi.string().required(),
+    nombres: Joi.string().required(),
+    apellidos: Joi.string().required(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+      .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+      .required(),
+    dob: Joi.date().required(),
+    perfilCandidato: Joi.string().required(),
+    nivelAcademico: Joi.string().required(),
+    countryRegionData: Joi.object({
+      country: Joi.string().required(),
+      region: Joi.string().required(),
+    }).required(),
+  })
+    .required()
+    .options({ allowUnknown: true }),
+});
+
+const validateCandidato = (req, res, next) => {
+  const { error } = candidatoValidationSchema.validate(req.body);
+
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(', ');
+
+    console.log(msg);
+
+    throw new AppError(400, msg);
+  } else {
+    next();
+  }
+};
 
 // redirect to new form
 router.get('/new', (req, res, next) => {
   res.render('candidatos/new', {
+    experiencia,
     perfiles,
     nivelesAcademicos,
     title: 'New Candidato',
@@ -66,11 +109,6 @@ router.get(
   })
 );
 
-const experiencia = [
-  { id: 'inexperienced', value: 'Sin experiencia' },
-  { id: 'experienced', value: 'Con experiencia' },
-];
-
 // Redirecciona a Edit Form
 router.get(
   '/:id/edit',
@@ -91,22 +129,19 @@ router.get(
 // // Actualizar un candidato
 router.patch(
   '/:id',
+  validateCandidato,
   catchAsyncErrors(async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const candidato = req.body;
+    const { id } = req.params;
+    const { candidato } = req.body;
 
-      const updatedCandidato = await db.findByIdAndUpdate(id, candidato);
+    const updatedCandidato = await db.findByIdAndUpdate(id, candidato);
 
-      if (updatedCandidato) {
-        res.status(200).json({
-          message: 'Redirect',
-          redirectURL: `/api/v1/candidatos/${updatedCandidato._id}`,
-        });
-        // res.status(200).json(updatedCandidato);
-      }
-    } catch (error) {
-      next(error);
+    if (updatedCandidato) {
+      res.status(200).json({
+        message: 'Redirect',
+        redirectURL: `/api/v1/candidatos/${updatedCandidato._id}`,
+      });
+      // res.status(200).json(updatedCandidato);
     }
   })
 );
@@ -114,26 +149,23 @@ router.patch(
 // // Crear un candidato
 router.post(
   '/',
+  validateCandidato,
   catchAsyncErrors(async (req, res, next) => {
-    const candidato = req.body;
+    const { candidato } = req.body;
 
-    try {
-      if (candidato.image) {
-        candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
-        imgUtils.handleImageData(candidato.image, candidato.cedula);
-      }
+    if (candidato.image) {
+      candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
+      imgUtils.handleImageData(candidato.image, candidato.cedula);
+    }
 
-      const newCandidato = await db.insertOne(candidato);
+    const newCandidato = await db.insertOne(candidato);
 
-      if (newCandidato) {
-        // res.redirect(`/api/v1/candidatos/${newCandidato._id}`);
-        res.status(200).json({
-          message: 'Redirect',
-          redirectURL: `/api/v1/candidatos/${newCandidato._id}`,
-        });
-      }
-    } catch (error) {
-      next(error);
+    if (newCandidato) {
+      // res.redirect(`/api/v1/candidatos/${newCandidato._id}`);
+      res.status(200).json({
+        message: 'Redirect',
+        redirectURL: `/api/v1/candidatos/${newCandidato._id}`,
+      });
     }
   })
 );

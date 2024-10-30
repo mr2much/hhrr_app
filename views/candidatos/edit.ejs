@@ -17,6 +17,7 @@
             value="<%= candidato.cedula %>"
             required
         />
+        <div class="invalid-feedback">Es necesario proveer una cédula!</div>
       </div>
       
       <div class="mb-3">
@@ -30,6 +31,7 @@
             value="<%= candidato.nombres %>"
             required
         />
+        <div class="invalid-feedback">Es necesario proveer un nombre!</div>
       </div>
 
       <div class="mb-3">
@@ -43,6 +45,7 @@
             value="<%= candidato.apellidos %>"
             required
         />
+        <div class="invalid-feedback">Es necesario proveer un apellido!</div>
       </div>
 
       <div class="mb-3">
@@ -57,6 +60,7 @@
             value="<%= candidato.email %>"
             required
         />
+        <div class="invalid-feedback">Es necesario proveer una dirección de correo!</div>
       </div>
 
       <div class="mb-3">
@@ -68,7 +72,8 @@
             type="date"
             value="<%= candidato.dob.toISOString().split('T')[0] %>"
             required
-          />        
+          />
+          <div class="invalid-feedback">Es necesario indicar su fecha de nacimiento!</div>
       </div>
       
       <fieldset class="mb-3 border">
@@ -119,11 +124,12 @@
           required
         >
           <% for(perfil of perfiles) { %>
-          <option value="<%= perfil.value %>" <%= candidato.perfilCandidato === perfil.text ? 'selected' : '' %> >
-            <%= perfil.text %>
+          <option value="<%= perfil %>" <%= candidato.perfilCandidato === perfil ? 'selected' : '' %> >
+            <%= perfil %>
           </option>
           <% } %>                
         </select>
+        <div class="invalid-feedback">Es necesario especificar el perfil al que aplica!</div>
       </div>
 
       <div class="mb-3">
@@ -138,11 +144,12 @@
           class="form-select"
           name="candidato[nivelAcademico]"
           required
-        >
+        >        
         <% for(nivelAcademico of nivelesAcademicos) { %>
-          <option value="<%= nivelAcademico.value %>" <%= candidato.nivelAcademico === nivelAcademico.text ? 'selected' : '' %> ><%= nivelAcademico.text %></option>
+          <option value="<%= nivelAcademico %>" <%= candidato.nivelAcademico === nivelAcademico ? 'selected' : '' %> ><%= nivelAcademico %></option>
         <% } %>                
         </select>
+        <div class="invalid-feedback">Es necesario indicar su nivel académico!</div>
       </div>
 
       <div class="mb-3">
@@ -156,12 +163,13 @@
           country-data-default-value="<%= candidato.country %>"
           required
         ></select>        
+        <div class="invalid-feedback">Es necesario indicar el país desde el que aplica!</div>
       </div>
 
       <div class="mb-3">
         <label class="form-label" for="gds-cr-region">Region:</label>
         <select class="form-select"  name="candidato[region]" id="gds-cr-region" region-data-default-value="<%= candidato.region %>"></select>
-        
+        <div class="invalid-feedback">Es necesario indicar la región desde donde aplica!</div>
       </div>
 
       <div class="mb-3">

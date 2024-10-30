@@ -74,28 +74,19 @@
 
       <fieldset class="mb-3 border">
         <legend class="col-form-label pt-0">Experiencia Laboral</legend>
-        <div class="form-check">        
-          <input
-              class="form-check-input"
-              id="inexperienced-candidate"
-              type="radio"
-              name="candidato[candidateExp]"
-              value="Sin experiencia"
-              checked
-            />
-          <label class="form-check-label" for="inexperienced-candidate">Candidato Sin Experiencia</label>          
-        </div>
-
-        <div class="form-check mb-3">        
-          <input
-            class="form-check-input"
-            id="experienced-candidate"
-            type="radio"
-            name="candidato[candidateExp]"
-            value="Con experiencia"
-          />          
-          <label class="form-check-label" for="experienced-candidate">Candidato Con Experiencia</label>
-        </div>
+        <% for( exp of experiencia ) { %>
+          <div class="form-check">        
+            <input
+                id="<%= exp.id %>"
+                class="form-check-input"
+                type="radio"
+                name="candidato[candidateExp]"
+                value="<%= exp.value %>"
+                checked                
+              />
+            <label class="form-check-label" for="<%= exp.id %>"><%= exp.value %></label>          
+          </div>
+        <% } %>        
       </fieldset>
 
       <fieldset class="mb-3 border">
@@ -142,8 +133,9 @@
             name="candidato[perfilCandidato]"
             required
           >
+            <option value="">--Seleccionar Perfil--</option>
             <% for(perfil of perfiles) { %>
-            <option value="<%= perfil.value %>"><%= perfil.text %></option>
+            <option value="<%= perfil %>"><%= perfil %></option>
             <% } %>
           </select>
           <div class="invalid-feedback">Es necesario especificar el perfil al que aplica!</div>
@@ -163,9 +155,10 @@
             name="candidato[nivelAcademico]"
             required
           >
+          <option value="">--Elegir opcion--</option>
             <% for(nivelAcademico of nivelesAcademicos) { %>
-            <option value="<%= nivelAcademico.value %>">
-              <%- nivelAcademico.text %>
+            <option value="<%= nivelAcademico %>">
+              <%- nivelAcademico %>
             </option>
             <% } %>
           </select>
