@@ -40,16 +40,14 @@ function findOldImageFile(filePath, keyWord, callback) {
   });
 }
 
-function replaceImageFile(image, prefix) {
-  findOldImageFile(path.join('public', _dir), prefix, (err, oldImgFile) => {
+function replaceImageFile(imgPath) {
+  findOldImageFile(path.join('public', _dir), imgPath, (err, oldImgFile) => {
     if (err) {
       return new Error(err);
     }
     if (oldImgFile) {
       oldImgFile.forEach((filePath) => deleteImageFile(filePath));
     }
-
-    handleImageData(image, prefix);
   });
 }
 

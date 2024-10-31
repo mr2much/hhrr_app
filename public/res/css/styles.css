@@ -5,7 +5,7 @@ body {
   height: 100vh;
 }
 
-form {
+/* form {
   width: 60vw;
   max-width: 500px;
   min-width: 300px;
@@ -38,15 +38,7 @@ select {
 input,
 textarea {
   border: 1px solid #0a0a23;
-}
-
-.navbar .fas,
-.navbar .fas a {
-  vertical-align: middle;
-  padding: 0;
-  margin: 0;
-  height: auto;
-}
+} */
 
 .inline {
   width: unset;
@@ -66,10 +58,10 @@ input[type='text']:disabled {
   background-color: #ddd;
 }
 
-#map {
-  width: 70%;
-  height: 85vh;
+#chartdiv {
   margin: 0 auto;
+  width: 80%;
+  height: 80vh;
 }
 
 .img-small {

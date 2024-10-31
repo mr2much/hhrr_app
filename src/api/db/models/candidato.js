@@ -2,6 +2,8 @@ const mongoose = require('../mongo/db');
 const dataUtils = require('../../../lib/dataUtils');
 const geoUtils = require('../../../lib/geoUtils');
 const imgUtils = require('../../../lib/imgUtils');
+const perfiles = require('../../../constants/perfiles');
+const nivelesAcademicos = require('../../../constants/nivelesAcademicos');
 
 const candidatoSchema = new mongoose.Schema(
   {
@@ -18,12 +20,11 @@ const candidatoSchema = new mongoose.Schema(
     currentlyWorking: { type: Boolean, default: false },
     job_actual: { type: String },
     exp_salario: { type: Number, default: 0 },
-    perfilCandidato: { type: String },
+    perfilCandidato: { type: String, required: true, enum: perfiles },
     imgUrl: { type: String, default: '/res/img/user.png' },
-    nivelAcademico: { type: String },
+    nivelAcademico: { type: String, required: true, enum: nivelesAcademicos },
     countryRegionData: {
       country: { type: String, default: 'Dominican Republic' },
-      selectedIndex: { type: Number, default: 62 },
       region: { type: String, default: 'Distrito Nacional (Santo Domingo)' },
       latLon: { type: [Number], default: [18.4801972, -69.942111] },
     },
@@ -70,8 +71,13 @@ candidatoSchema.pre('save', async function (next) {
 });
 
 candidatoSchema.pre('insertMany', async (next, docs) => {
-  docs.forEach((doc) => {
+  docs.forEach(async (doc) => {
     doc.age = dataUtils.calculateAgeFromDOB(doc.dob);
+
+    const latLon = await geoUtils.getCoordinatesFromCountryAndRegion(
+      doc.countryRegionData
+    );
+    doc.countryRegionData.latLon = latLon;
   });
   next();
 });

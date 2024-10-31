@@ -5,23 +5,23 @@
 /* eslint-disable function-paren-newline */
 /* eslint-disable linebreak-style */
 
-const perfiles = [
-  'IT',
-  'Desarrollo',
-  'DBA',
-  'Telecomunicaciones',
-  'Contabilidad',
-  'Servicio al Cliente',
-];
+// const perfiles = [
+//   'IT',
+//   'Desarrollo',
+//   'DBA',
+//   'Telecomunicaciones',
+//   'Contabilidad',
+//   'Servicio al Cliente',
+// ];
 
-const academicLevels = [
-  'Estudiante',
-  'Nivel Tecnico',
-  'Licenciatura',
-  'Ingenieria',
-  'Maestria',
-  'Doctorado',
-];
+// const academicLevels = [
+//   'Estudiante',
+//   'Nivel Tecnico',
+//   'Licenciatura',
+//   'Ingenieria',
+//   'Maestria',
+//   'Doctorado',
+// ];
 
 const API_URL =
   window.location.hostname === 'localhost'
@@ -120,29 +120,28 @@ function calculateAgeFromDOB(dob) {
   return age;
 }
 
-function validateFormGetCandidato(form, message) {
+function validateFormGetCandidato(form) {
   const formData = new FormData(form);
 
-  const cedula = formData.get('cedula');
-  const nombres = formData.get('nombres');
-  const apellidos = formData.get('apellidos');
-  const email = formData.get('email');
-  const dob = formData.get('dob');
-  const candidateExp = formData.get('candidateExp');
-  const currentlyWorking = formData.get('currentlyWorking') ? true : false;
-  const exp_salario = Number(formData.get('exp_salario'));
-  const perfilCandidato = formData.get('perfilCandidato');
-  const nivelAcademico = formData.get('nivelAcademico');
-  const country = formData.get('country');
-  const region = formData.get('region');
-  const notas = formData.get('notas');
+  const cedula = formData.get('candidato[cedula]');
+  const nombres = formData.get('candidato[nombres]');
+  const apellidos = formData.get('candidato[apellidos]');
+  const email = formData.get('candidato[email]');
+  const dob = formData.get('candidato[dob]');
+  const candidateExp = formData.get('candidato[candidateExp]');
+  const currentlyWorking = formData.get('candidato[currentlyWorking]')
+    ? true
+    : false;
+  const exp_salario = Number(formData.get('candidato[exp_salario]'));
+  const perfilCandidato = formData.get('candidato[perfilCandidato]');
+  const nivelAcademico = formData.get('candidato[nivelAcademico]');
+  const notas = formData.get('candidato[notas]');
 
   const countrySelector = document.querySelector('#countries');
   const regionSelector = document.querySelector('#gds-cr-region');
 
   const countryRegionData = {
     country: countrySelector.value,
-    selectedIndex: countrySelector.selectedIndex - 1,
     region: regionSelector.value,
   };
 
@@ -153,38 +152,6 @@ function validateFormGetCandidato(form, message) {
   //   `Country_Region: ${country_region[countrySelector.selectedIndex - 1][0]}`
   // );
 
-  // should validate that the cedula has a valid format
-  if (!validaCedula(cedula)) {
-    message.textContent = 'Por favor introduzca una cedula valida!';
-    message.style.display = '';
-    return;
-  }
-
-  if (nombres.trim() === '') {
-    // show alert message when nombres is empty
-    return;
-  }
-
-  if (apellidos.trim() === '') {
-    // show alert message when apellidos is empty
-    return;
-  }
-
-  // should validate that the dob has a valid date format
-  if (dob.trim() === '') {
-    // show alert message when date of birth (dob) is empty
-    return;
-  }
-
-  if (Number.isNaN(exp_salario)) {
-    message.textContent =
-      'Debe introducir un valor númerico para la Expectativa Salarial';
-    message.style.display = '';
-    return;
-  }
-
-  // should also convert dob from YYYY-MM-DD to valid database date format
-
   const candidato = {
     cedula,
     nombres,
@@ -193,13 +160,13 @@ function validateFormGetCandidato(form, message) {
     dob,
     candidateExp,
     currentlyWorking,
-    job_actual: formData.get('job_actual') ? formData.get('job_actual') : '',
+    job_actual: formData.get('candidato[job_actual]')
+      ? formData.get('candidato[job_actual]')
+      : '',
     exp_salario,
     perfilCandidato,
     nivelAcademico,
     countryRegionData,
-    country,
-    region,
     notas,
   };
 

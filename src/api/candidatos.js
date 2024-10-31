@@ -1,7 +1,5 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable comma-dangle */
-/* eslint-disable linebreak-style */
 const express = require('express');
+const multer = require('multer');
 
 const _dir = '/res/img';
 
@@ -10,115 +8,189 @@ const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
 const imgUtils = require('../lib/imgUtils');
 const geoJsonUtils = require('../lib/geoUtils');
-
-// const candidatos = db.get('candidato');
+const AppError = require('../lib/AppError');
+const Joi = require('joi');
 
 const router = express.Router();
+
+const upload = multer({ dest: 'public/res/img' });
+
+const experiencia = [
+  { id: 'experienced', value: 'Con experiencia' },
+  { id: 'inexperienced', value: 'Sin experiencia' },
+];
+
+const candidatoValidationSchema = Joi.object({
+  candidato: Joi.object({
+    cedula: Joi.string().required(),
+    nombres: Joi.string().required(),
+    apellidos: Joi.string().required(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+      .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+      .required(),
+    dob: Joi.date().required(),
+    perfilCandidato: Joi.string().required(),
+    nivelAcademico: Joi.string().required(),
+    countryRegionData: Joi.object({
+      country: Joi.string().required(),
+      region: Joi.string().required(),
+    }).required(),
+  })
+    .required()
+    .options({ allowUnknown: true }),
+});
+
+const validateCandidato = (req, res, next) => {
+  const { error } = candidatoValidationSchema.validate(req.body);
+
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(', ');
+
+    throw new AppError(400, msg);
+  } else {
+    req.body.candidato.currentlyWorking = req.body.candidato.currentlyWorking
+      ? true
+      : false;
+
+    next();
+  }
+};
 
 // redirect to new form
 router.get('/new', (req, res, next) => {
   res.render('candidatos/new', {
+    experiencia,
     perfiles,
     nivelesAcademicos,
     title: 'New Candidato',
   });
 });
 
+const catchAsyncErrors = (fn) => {
+  return (req, res, next) => {
+    fn(req, res, next).catch(next);
+  };
+};
+
 // redirect to map
 router.get('/map', (req, res, next) => {
-  res.render('candidatos/map');
+  res.render('candidatos/map', { title: 'Candidatos en el Mundo' });
 });
 
-router.get('/all', async (req, res, next) => {
-  const candidatos = await db.findAll();
+router.get(
+  '/all',
+  catchAsyncErrors(async (req, res, next) => {
+    const candidatos = await db.findAll();
 
-  const geojsonData = geoJsonUtils.buildGeoJSONFromCandidatos(candidatos);
+    const geojsonData = geoJsonUtils.buildGeoJSONFromCandidatos(candidatos);
 
-  res.json(geojsonData);
-});
+    res.json(geojsonData);
+  })
+);
 
 // Lee todos los candidatos
-router.get('/', async (req, res, next) => {
-  const candidatos = await db.findAll();
+router.get(
+  '/',
+  catchAsyncErrors(async (req, res, next) => {
+    const candidatos = await db.findAll();
 
-  res.render('candidatos/home', { candidatos, title: 'HHRR Manager Home' });
-});
+    res.render('candidatos/home', { candidatos, title: 'HHRR Manager Home' });
+  })
+);
 
 // Lee un candidato con ID
-router.get('/:id', async (req, res, next) => {
-  const { id } = req.params;
+router.get(
+  '/:id',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
 
-  const candidato = await db.findOneById(id);
+    const candidato = await db.findOneById(id);
 
-  res.render('candidatos/details', {
-    candidato,
-    title: `Detalles de ${candidato.fullName}`,
-  });
-});
-
-const experiencia = [
-  { id: 'inexperienced', value: 'Sin experiencia' },
-  { id: 'experienced', value: 'Con experiencia' },
-];
+    res.render('candidatos/details', {
+      candidato,
+      title: `Detalles de ${candidato.fullName}`,
+    });
+  })
+);
 
 // Redirecciona a Edit Form
-router.get('/:id/edit', async (req, res, next) => {
-  const { id } = req.params;
+router.get(
+  '/:id/edit',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
 
-  const candidato = await db.findOneById(id);
-  res.render('candidatos/edit', {
-    candidato,
-    experiencia,
-    perfiles,
-    nivelesAcademicos,
-    title: `Editar información de ${candidato.fullName}`,
-  });
-});
+    const candidato = await db.findOneById(id);
+    res.render('candidatos/edit', {
+      candidato,
+      experiencia,
+      perfiles,
+      nivelesAcademicos,
+      title: `Editar información de ${candidato.fullName}`,
+    });
+  })
+);
 
 // // Actualizar un candidato
-router.patch('/:id', async (req, res, next) => {
-  try {
+router.patch(
+  '/:id',
+  upload.single('candidato[imgUrl]'),
+  validateCandidato,
+  catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
-    const newCandidato = req.body;
+    const { candidato } = req.body;
 
-    const updatedCandidato = await db.findByIdAndUpdate(id, newCandidato);
+    const oldCandidato = await db.findOneById(id);
+
+    const oldImgUrl = oldCandidato.imgUrl.split('/')[3];
+
+    if (req.file) {
+      candidato.imgUrl = `${_dir}/${req.file.filename}`;
+    }
+
+    const updatedCandidato = await db.findByIdAndUpdate(
+      id,
+      oldImgUrl,
+      candidato
+    );
 
     if (updatedCandidato) {
-      res.status(200).json(updatedCandidato);
+      res.redirect(`/api/v1/candidatos/${updatedCandidato._id}`);
     }
-  } catch (error) {
-    next(error);
-  }
-});
+  })
+);
 
 // // Crear un candidato
-router.post('/', async (req, res, next) => {
-  const candidato = req.body;
+router.post(
+  '/',
+  upload.single('candidato[imgUrl]'),
+  validateCandidato,
+  catchAsyncErrors(async (req, res, next) => {
+    const { candidato } = req.body;
 
-  try {
-    if (candidato.image) {
-      candidato.imgUrl = `${_dir}/${candidato.cedula}_${candidato.image.imgName}`;
-      imgUtils.handleImageData(candidato.image, candidato.cedula);
+    if (req.file) {
+      candidato.imgUrl = `${_dir}/${req.file.filename}`;
     }
 
     const newCandidato = await db.insertOne(candidato);
 
     if (newCandidato) {
-      res.status(200).json(newCandidato);
+      res.redirect(`/api/v1/candidatos/${newCandidato._id}`);
     }
-  } catch (error) {
-    next(error);
-  }
-});
+  })
+);
 
 // // Remover un candidato
-router.delete('/:id', async (req, res, next) => {
-  const { id } = req.params;
+router.delete(
+  '/:id',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
 
-  const removedCandidato = await db.findByIdAndDelete(id);
+    const removedCandidato = await db.findByIdAndDelete(id);
 
-  res.redirect('/api/v1/candidatos');
-});
+    res.redirect('/api/v1/candidatos');
+  })
+);
 
 // router.post('/', candidatoValidator, (req, res, next) => {
 //   const candidato = getCandidatoFromBody(req.body);

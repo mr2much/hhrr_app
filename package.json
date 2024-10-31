@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "lint": "eslint --fix src",
-    "test": "jest"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "Anubis Lockward",
@@ -17,25 +15,20 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
     "express": "^4.18.1",
     "helmet": "^5.1.1",
+    "joi": "^17.13.3",
     "method-override": "^3.0.0",
     "mongoose": "^8.6.3",
-    "monk": "^7.3.4",
     "morgan": "^1.10.0",
-    "multiparty-express": "^0.1.9",
-    "nedb": "^1.8.0"
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
-    "eslint": "^8.22.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.19",
-    "supertest": "^6.2.4"
+    "nodemon": "^2.0.19"
   }
 }

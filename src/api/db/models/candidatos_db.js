@@ -7,11 +7,10 @@ findAll = () => Candidato.find({});
 
 findOneById = (id) => Candidato.findById(id);
 
-findByIdAndUpdate = (id, newCandidato) => {
+findByIdAndUpdate = (id, oldImgUrl, newCandidato) => {
   try {
-    if (newCandidato.image) {
-      imgUtils.replaceImageFile(newCandidato.image, newCandidato.cedula);
-      newCandidato.imgUrl = `${_dir}/${newCandidato.cedula}_${newCandidato.image.imgName}`;
+    if (oldImgUrl && oldImgUrl !== 'user.png') {
+      imgUtils.replaceImageFile(oldImgUrl);
     }
 
     return Candidato.findByIdAndUpdate(id, newCandidato, {
