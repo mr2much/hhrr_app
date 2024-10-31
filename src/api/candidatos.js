@@ -140,18 +140,21 @@ router.patch(
     const { id } = req.params;
     const { candidato } = req.body;
 
+    const oldCandidato = await db.findOneById(id);
+
+    const oldImgUrl = oldCandidato.imgUrl.split('/')[3];
+
     if (req.file) {
       candidato.imgUrl = `${_dir}/${req.file.filename}`;
     }
 
-    const updatedCandidato = await db.findByIdAndUpdate(id, candidato);
+    const updatedCandidato = await db.findByIdAndUpdate(
+      id,
+      oldImgUrl,
+      candidato
+    );
 
     if (updatedCandidato) {
-      // res.status(200).json({
-      //   message: 'Redirect',
-      //   redirectURL: `/api/v1/candidatos/${updatedCandidato._id}`,
-      // });
-      // res.status(200).json(updatedCandidato);
       res.redirect(`/api/v1/candidatos/${updatedCandidato._id}`);
     }
   })

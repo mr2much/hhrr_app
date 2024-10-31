@@ -58,7 +58,10 @@ npm run dev
 
 ## TODOs
 
-- TODO: Fix image updating when Image is changed for Candidato
+- TODO: Implement error handling for imgUtils
+- [x]: Fix image updating when Image is changed for Candidato
+  - [x]: Change implementation in imgUtils
+  - [x]: Change implementation in findOneAndUpdate
 - [x]: Handle image upload without using `P5`
   - [x]: Add multi-part form
   - [x]: Install multer
