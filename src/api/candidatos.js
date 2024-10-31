@@ -4,42 +4,18 @@ const multer = require('multer');
 const _dir = '/res/img';
 
 const db = require('./db/models/candidatos_db');
+const { candidatoValidationSchema } = require('./joi/joi-schemas');
 const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
+const experiencia = require('../constants/experiencia');
 const imgUtils = require('../lib/imgUtils');
 const geoJsonUtils = require('../lib/geoUtils');
 const AppError = require('../lib/AppError');
-const Joi = require('joi');
+const catchAsyncErrors = require('../lib/catchAsyncErrors');
 
 const router = express.Router();
 
 const upload = multer({ dest: 'public/res/img' });
-
-const experiencia = [
-  { id: 'experienced', value: 'Con experiencia' },
-  { id: 'inexperienced', value: 'Sin experiencia' },
-];
-
-const candidatoValidationSchema = Joi.object({
-  candidato: Joi.object({
-    cedula: Joi.string().required(),
-    nombres: Joi.string().required(),
-    apellidos: Joi.string().required(),
-    email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-      .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-      .required(),
-    dob: Joi.date().required(),
-    perfilCandidato: Joi.string().required(),
-    nivelAcademico: Joi.string().required(),
-    countryRegionData: Joi.object({
-      country: Joi.string().required(),
-      region: Joi.string().required(),
-    }).required(),
-  })
-    .required()
-    .options({ allowUnknown: true }),
-});
 
 const validateCandidato = (req, res, next) => {
   const { error } = candidatoValidationSchema.validate(req.body);
@@ -66,12 +42,6 @@ router.get('/new', (req, res, next) => {
     title: 'New Candidato',
   });
 });
-
-const catchAsyncErrors = (fn) => {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-};
 
 // redirect to map
 router.get('/map', (req, res, next) => {

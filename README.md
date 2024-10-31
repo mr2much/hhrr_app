@@ -58,6 +58,7 @@ npm run dev
 
 ## TODOs
 
+- TODO: Implement error handling for geoUtils
 - TODO: Implement error handling for imgUtils
 - [x]: Fix image updating when Image is changed for Candidato
   - [x]: Change implementation in imgUtils
