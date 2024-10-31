@@ -8,7 +8,7 @@ const { candidatoValidationSchema } = require('./joi/joi-schemas');
 const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
 const experiencia = require('../constants/experiencia');
-const imgUtils = require('../lib/imgUtils');
+// const imgUtils = require('../lib/imgUtils');
 const geoJsonUtils = require('../lib/geoUtils');
 const AppError = require('../lib/AppError');
 const catchAsyncErrors = require('../lib/catchAsyncErrors');
@@ -162,27 +162,6 @@ router.delete(
   })
 );
 
-// router.post('/', candidatoValidator, (req, res, next) => {
-//   const candidato = getCandidatoFromBody(req.body);
-
-//   if (candidato) {
-//     candidatos
-//       .insert(candidato)
-//       .then((createdCandidato) => {
-//         res.status(200);
-//         res.json(createdCandidato);
-//       })
-//       .catch(async (err) => {
-//         const idxs = await candidatos.indexes();
-//         console.log(idxs);
-//         next(err);
-//       });
-//   } else {
-//     const error = new Error(`Error when inserting candidato: ${candidato}`);
-//     next(error);
-//   }
-// });
-
 // function validaCedula(cedula) {
 //   return (
 //     typeof cedula === 'string' &&
@@ -190,27 +169,6 @@ router.delete(
 //     cedula.length === 13 &&
 //     cedula.match('^[0-9]{3}-?[0-9]{7}-?[0-9]{1}$') !== null
 //   );
-// }
-
-// function validCandidato(candidato) {
-//   return (
-//     typeof candidato.nombres === 'string' &&
-//     typeof candidato.apellidos === 'string' &&
-//     validaCedula(candidato.cedula) &&
-//     typeof candidato.dob === 'string' &&
-//     candidato.dob.match('^[0-9]{4}-?[0-9]{2}-?[0-9]{2}$') &&
-//     !Number.isNaN(candidato.exp_salario)
-//   );
-// }
-
-// // Middleware that sends the appropriate response if the Candidato is valid
-// function candidatoValidator(req, res, next) {
-//   if (validCandidato(req.body)) {
-//     next();
-//   } else {
-//     const error = new Error(`Candidato invalido! ${JSON.stringify(candidato)}`);
-//     next(error);
-//   }
 // }
 
 // function imageBase64ToImageFile(imagePath, image) {
@@ -229,54 +187,6 @@ router.delete(
 //   imageBase64ToImageFile(path.join(`public/${_dir}/${image.imgName}`), image);
 
 //   return `${_dir}/${image.imgName}`;
-// }
-
-// function getCandidatoFromBody(body) {
-//   const {
-//     cedula,
-//     nombres,
-//     apellidos,
-//     email,
-//     dob,
-//     age,
-//     candidateExp,
-//     currentlyWorking,
-//     job_actual,
-//     exp_salario,
-//     perfilCandidato,
-//     image,
-//     nivelAcademico,
-//     country,
-//     region,
-//     notas,
-//   } = body;
-
-//   let { imgUrl } = body;
-
-//   if (image) {
-//     imgUrl = handleImageData(image);
-//   }
-
-//   const candidato = {
-//     cedula,
-//     nombres,
-//     apellidos,
-//     email,
-//     dob,
-//     age,
-//     candidateExp,
-//     currentlyWorking,
-//     job_actual,
-//     exp_salario,
-//     perfilCandidato,
-//     imgUrl,
-//     nivelAcademico,
-//     country,
-//     region,
-//     notas,
-//   };
-
-//   return candidato;
 // }
 
 module.exports = router;
