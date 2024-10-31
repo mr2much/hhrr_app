@@ -74,17 +74,17 @@ npm run dev
 - TODO: Fix folder organization for the project
 - [x]: Group Candidato data in NEW Form and EDIT Form
   - ~~TODO: Route handlers should destructure Candidato from `req.body`~~ Candidato data is send to the server from the client with a `fetch`
-- TODO: Implement error handling
-- [x]: Add Candidato validation
-  - [x]: Install JOI
-  - [x]: Create JOI Schema for Candidato
-  - [x]: Create EJS Error template
-  - [x]: Create Error Handling Middleware
-  - [x]: Create function to capture async errors
-  - [x]: Create Error Class
-  - [x]: Add form validation
-    - [x]: Add form validation on Candidato creation
-    - [x]: Add form validation on Candidato edition
+- [x]: Implement error handling
+  - [x]: Add Candidato validation
+    - [x]: Install JOI
+    - [x]: Create JOI Schema for Candidato
+    - [x]: Create EJS Error template
+    - [x]: Create Error Handling Middleware
+    - [x]: Create function to capture async errors
+    - [x]: Create Error Class
+    - [x]: Add form validation
+      - [x]: Add form validation on Candidato creation
+      - [x]: Add form validation on Candidato edition
 - TODO: Implement functionality to allow Candidato to apply for a specific position.
   - TODO: Recruiter should be able to see the Candidates that applied for a specific job posting.
 - TODO: Add functionality to display which columns I want to see on Index page.
