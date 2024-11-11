@@ -5,6 +5,7 @@ const _dir = '/res/img';
 
 const db = require('./db/models/candidatos_db');
 const { candidatoValidationSchema } = require('./joi/joi-schemas');
+const profileDB = require('./db/models/profiles/profile_db');
 const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
 const experiencia = require('../constants/experiencia');
@@ -34,14 +35,19 @@ const validateCandidato = (req, res, next) => {
 };
 
 // redirect to new form
-router.get('/new', (req, res, next) => {
-  res.render('candidatos/new', {
-    experiencia,
-    perfiles,
-    nivelesAcademicos,
-    title: 'New Candidato',
-  });
-});
+router.get(
+  '/new',
+  catchAsyncErrors(async (req, res, next) => {
+    const profiles = await profileDB.findAll();
+    res.render('candidatos/new', {
+      experiencia,
+      profiles,
+      perfiles,
+      nivelesAcademicos,
+      title: 'New Candidato',
+    });
+  })
+);
 
 // redirect to map
 router.get('/map', (req, res, next) => {
@@ -65,7 +71,10 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     const candidatos = await db.findAll();
 
-    res.render('candidatos/home', { candidatos, title: 'HHRR Manager Home' });
+    res.render('candidatos/home', {
+      candidatos,
+      title: 'Candidate Managemenet Home',
+    });
   })
 );
 
@@ -75,7 +84,7 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
 
-    const candidato = await db.findOneById(id);
+    const candidato = await db.findOneById(id).populate('candidateProfile');
 
     res.render('candidatos/details', {
       candidato,
@@ -90,10 +99,13 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
 
-    const candidato = await db.findOneById(id);
+    const profiles = await profileDB.findAll();
+
+    const candidato = await db.findOneById(id).populate('candidateProfile');
     res.render('candidatos/edit', {
       candidato,
       experiencia,
+      profiles,
       perfiles,
       nivelesAcademicos,
       title: `Editar información de ${candidato.fullName}`,

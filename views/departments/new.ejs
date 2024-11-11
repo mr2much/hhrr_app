@@ -1,0 +1,52 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+    <h1 class="text-center">Crear Nuevo Departamento</h1>
+  
+    <div class="col-6 offset-3">
+      <form class="row validate-form" action="/api/v1/departments" method="POST" novalidate>
+        <div class="mb-3">
+          <label class="form-label" for="name">Nombre del Departamento: <span class="text-danger">*</span></label> 
+            <input
+              id="name"
+              class="form-control"
+              name="department[name]"
+              type="text"
+              placeholder="Ex. Management"
+              required
+          />       
+          <div class="invalid-feedback">Es necesario proveer un nombre para el departamento!</div>
+        </div>  
+
+        <div class="mb-3">
+          <label class="form-label" for="email">Email: <span class="text-danger">*</span></label> 
+            <input
+              id="email"
+              class="form-control"
+              name="department[email]"
+              type="email"
+              placeholder="Ex. name@domain.com"
+              required
+          />       
+          <div class="invalid-feedback">Es necesario proveer una dirección de correo!</div>
+        </div>  
+          
+        <div
+          class="btn-group col-12"
+          role="group"
+          aria-label="Controles de Formulario Perfil Nuevo"
+        >
+          <button class="btn btn-lg btn-success" type="submit">
+            <span class="pe-2"><i class="far fa-save"></i></span>Guardar
+          </button>
+          <a
+            href="/api/v1/departments/"
+            class="btn btn-lg btn-warning"
+            type="button"
+          >
+            <span class="pe-2"><i class="fas fa-ban"></i></span>Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>

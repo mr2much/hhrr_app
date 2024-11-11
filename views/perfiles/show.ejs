@@ -1,0 +1,9 @@
+<% layout('layouts/boilerplate') %>
+
+<h1 class="mb-3 text-center text-success">Detalles de <%= profile.name %></h1>
+<h2>
+  Area:
+  <a href="/api/v1/departments/<%= profile.area._id %>"
+    ><%= profile.area.name %></a
+  >
+</h2>

@@ -1,0 +1,15 @@
+<% layout('layouts/boilerplate') %>
+
+<h1 class="mb-3 text-center text-success">HHRR Manager</h1>
+
+<h2 class="text-info">Listado de Departamentos</h2>
+
+<ul>
+  <% for(department of departments) { %>
+  <li>
+    <a href="/api/v1/departments/<%= department._id %>"
+      ><%= department.name %></a
+    >
+  </li>
+  <% } %>
+</ul>

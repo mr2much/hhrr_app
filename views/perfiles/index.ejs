@@ -1,0 +1,11 @@
+<% layout('layouts/boilerplate') %>
+
+<h1 class="mb-3 text-center text-success">HHRR Manager</h1>
+
+<h2 class="text-info">Listado de Perfiles</h2>
+
+<ul>
+  <% for(perfil of perfiles) { %>
+  <li><a href="/api/v1/profiles/<%= perfil._id %>"><%= perfil.name %></a></li>
+  <% } %>
+</ul>

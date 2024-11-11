@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+
+<h1 class="mb-3 text-center text-success">
+  Detalles de <%= department.name %>
+</h1>
+
+<p>Email: <%= department.email %></p>
+
+<ul>
+  <% for(perfil of department.profiles) {%>
+  <li><a href="/api/v1/profiles/<%= perfil._id %>"><%= perfil.name %></a></li>
+  <% } %>
+</ul>
+
+<a
+  class="btn btn-info"
+  href="/api/v1/departments/<%= department._id %>/profiles/new"
+  >Agregar Perfil</a
+>
