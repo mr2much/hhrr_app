@@ -42,6 +42,35 @@ router.get(
   })
 );
 
+// Edit One Department
+router.get(
+  '/:id/edit',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+
+    const department = await db.findOneById(id).populate('profiles');
+    res.render('departments/edit', {
+      department,
+      title: `Editar información de ${department.name}`,
+    });
+  })
+);
+
+// Update One Department
+router.put(
+  '/:id',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+    const { department } = req.body;
+
+    const updatedDepartment = await db.findByIdAndUpdate(id, department);
+
+    if (updatedDepartment) {
+      res.redirect(`/api/v1/departments/${updatedDepartment._id}`);
+    }
+  })
+);
+
 // Create new Department
 router.post(
   '/',

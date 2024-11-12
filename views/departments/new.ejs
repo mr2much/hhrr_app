@@ -16,7 +16,19 @@
               required
           />       
           <div class="invalid-feedback">Es necesario proveer un nombre para el departamento!</div>
-        </div>  
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="imgUrl">Image URL: <span class="text-danger">*</span></label> 
+            <input
+              id="imgUrl"
+              class="form-control"
+              name="department[imgUrl]"
+              type="imgUrl"
+              placeholder="Ex. name@domain.com"              
+          />       
+          <div class="invalid-feedback">Es necesario proveer una dirección de correo!</div>
+        </div>
 
         <div class="mb-3">
           <label class="form-label" for="email">Email: <span class="text-danger">*</span></label> 
@@ -29,7 +41,31 @@
               required
           />       
           <div class="invalid-feedback">Es necesario proveer una dirección de correo!</div>
-        </div>  
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="location">Location: <span class="text-danger">*</span></label> 
+            <input
+              id="text"
+              class="form-control"
+              name="department[location]"
+              type="location"
+              placeholder="Ex. Edificio A"              
+          />       
+          <div class="invalid-feedback">Es necesario proveer una dirección de correo!</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="description">Descripcion:</label>
+          <textarea
+            class="form-control"
+            id="description"
+            cols="30"
+            rows="5"
+            name="department[description]"
+            placeholder=""
+          ></textarea>        
+        </div>
           
         <div
           class="btn-group col-12"

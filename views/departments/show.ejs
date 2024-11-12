@@ -5,15 +5,23 @@
 </h1>
 
 <div class="card col-6 offset-3 mb-3">
-  <div class="card-body">
-    <h5 class="card-title"><%= department.name %></h5>
-    <h6 class="card-subtitle mb-2 text-body-secondary">
-      <%= department.email %>
-    </h6>
-    <p class="card-text">
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
-    </p>
+  <div class="row g-0">
+    <div class="col-md-2">
+      <img
+        class="img-fluid rounded-start h-100"
+        src="<%= department.imgUrl %>"
+        alt="Imagen para <%= department.name %>"
+      />
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <h5 class="card-title"><%= department.name %></h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+          <%= department.email %>
+        </h6>
+        <p class="card-text"><%= department.description %></p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -26,16 +34,22 @@
     </li>
     <% } %>
   </ul>
-  <a
-    class="btn btn-info"
-    href="/api/v1/departments/<%= department._id %>/profiles/new"
-    >Agregar Perfil</a
-  >
+  <div class="card-footer text-center">
+    <a
+      class="btn btn-info col-6"
+      href="/api/v1/departments/<%= department._id %>/profiles/new"
+      >Agregar Perfil</a
+    >
+  </div>
 </div>
 
 <div class="card col-6 offset-3">
   <div class="card-body text-center">
-    <a href="#" class="btn btn-warning">Editar</a>
-    <a href="#" class="btn btn-danger">Eliminar</a>
+    <a
+      href="/api/v1/departments/<%= department._id %>/edit"
+      class="btn btn-warning col-4 mx-1"
+      >Editar</a
+    >
+    <a href="#" class="btn btn-danger col-4 mx-1">Eliminar</a>
   </div>
 </div>

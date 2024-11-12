@@ -6,9 +6,18 @@ const departmentSchema = new Schema({
     type: String,
     required: [true, 'You must provide a department name'],
   },
+  imgUrl: {
+    type: String,
+  },
   email: {
     type: String,
     require: [true, 'Department must have an email address'],
+  },
+  location: {
+    type: String,
+  },
+  description: {
+    type: String,
   },
   profiles: [
     {
