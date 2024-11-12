@@ -6,6 +6,12 @@ const profileSchema = new Schema({
     type: String,
     required: [true, 'You must provide a profile name'],
   },
+  grade: {
+    type: Number,
+  },
+  description: {
+    type: String,
+  },
   area: {
     type: Schema.Types.ObjectId,
     ref: 'Department',
