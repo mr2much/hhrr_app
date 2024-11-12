@@ -1,11 +1,29 @@
 <% layout('layouts/boilerplate') %>
 
-<h1 class="mb-3 text-center text-success">HHRR Manager</h1>
+<h1 class="mb-3 text-center text-info"><%= department %> Profiles</h1>
 
-<h2 class="text-info">Listado de Perfiles</h2>
-
-<ul>
+<div class="row justify-content-center row-cols-1 row-cols-md-3 g-4">
   <% for(perfil of perfiles) { %>
-  <li><a href="/api/v1/profiles/<%= perfil._id %>"><%= perfil.name %></a></li>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><%= perfil.name %></h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Grado:</h6>
+        <p class="card-text">
+          This is a longer card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer.
+        </p>
+        <a
+          class="card-link"
+          href="/api/v1/profiles?department=<%= perfil.area._id %>"
+          ><%= perfil.area.name %>
+        </a>
+      </div>
+
+      <div class="card-footer">
+        <small class="text-body-secondary">Last updated 3 mins ago</small>
+      </div>
+    </div>
+  </div>
   <% } %>
-</ul>
+</div>

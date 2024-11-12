@@ -1,6 +1,7 @@
 const express = require('express');
 const catchAsyncErrors = require('../lib/catchAsyncErrors');
 const db = require('./db/models/profiles/profile_db');
+const departmentDB = require('./db/models/departments/department_db');
 
 const router = express.Router();
 
@@ -8,12 +9,26 @@ const router = express.Router();
 router.get(
   '/',
   catchAsyncErrors(async (req, res) => {
-    const perfiles = await db.findAll();
+    const { department } = req.query;
 
-    res.render('perfiles/index', {
-      perfiles,
-      title: 'Profile Management Home',
-    });
+    if (department) {
+      const perfiles = await db.findByDepartment(department).populate('area');
+      const { name } = await departmentDB.findOneById(department);
+
+      res.render('perfiles/index', {
+        perfiles,
+        department: name,
+        title: 'Profile Management Home',
+      });
+    } else {
+      const perfiles = await db.findAll().populate('area');
+
+      res.render('perfiles/index', {
+        perfiles,
+        department: 'All',
+        title: 'Profile Management Home',
+      });
+    }
   })
 );
 
