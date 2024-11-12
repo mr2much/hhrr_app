@@ -6,7 +6,7 @@
   <% for(perfil of perfiles) { %>
   <div class="col">
     <div class="card h-100">
-      <div class="card-body">
+      <div class="card-body d-flex flex-column">
         <h5 class="card-title"><%= perfil.name %></h5>
         <h6 class="card-subtitle mb-2 text-body-secondary">
           Grado: <%= perfil.grade %>
@@ -19,7 +19,7 @@
         </a>
         <br />
         <a
-          class="btn btn-info mt-3"
+          class="btn btn-info mt-auto"
           href="/api/v1/profiles/<%= perfil._id %>/edit"
           >Editar Perfil
         </a>
