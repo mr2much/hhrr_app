@@ -113,7 +113,7 @@ router.get(
   })
 );
 
-// // Actualizar un candidato
+// Actualizar un candidato
 router.patch(
   '/:id',
   upload.single('candidato[imgUrl]'),

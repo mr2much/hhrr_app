@@ -8,9 +8,16 @@ insertOne = (profile) => Profile.create(profile);
 
 findOneById = (id) => Profile.findById(id);
 
+findByIdAndUpdate = (id, profile) =>
+  Profile.findByIdAndUpdate(id, profile, {
+    runValidators: true,
+    new: true,
+  });
+
 module.exports = {
   findAll,
   findByDepartment,
   insertOne,
   findOneById,
+  findByIdAndUpdate,
 };

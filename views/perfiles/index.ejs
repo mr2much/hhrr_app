@@ -5,18 +5,23 @@
 <div class="row justify-content-center row-cols-1 row-cols-md-3 g-4">
   <% for(perfil of perfiles) { %>
   <div class="col">
-    <div class="card">
+    <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title"><%= perfil.name %></h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Grado:</h6>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </p>
+        <h6 class="card-subtitle mb-2 text-body-secondary">
+          Grado: <%= perfil.grade %>
+        </h6>
+        <p class="card-text"><%= perfil.description %></p>
         <a
           class="card-link"
           href="/api/v1/profiles?department=<%= perfil.area._id %>"
           ><%= perfil.area.name %>
+        </a>
+        <br />
+        <a
+          class="btn btn-info mt-3"
+          href="/api/v1/profiles/<%= perfil._id %>/edit"
+          >Editar Perfil
         </a>
       </div>
 

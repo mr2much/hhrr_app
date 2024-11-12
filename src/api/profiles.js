@@ -46,6 +46,35 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Edit One Profile
+router.get(
+  '/:id/edit',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+
+    const profile = await db.findOneById(id).populate('area');
+    res.render('perfiles/edit', {
+      profile,
+      title: `Editar información de ${profile.name}`,
+    });
+  })
+);
+
+// Update One Profile
+router.put(
+  '/:id',
+  catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+    const { profile } = req.body;
+
+    const updatedProfile = await db.findByIdAndUpdate(id, profile);
+
+    if (updatedProfile) {
+      res.redirect(`/api/v1/profiles`);
+    }
+  })
+);
+
 // Create a new Profile
 router.post(
   '/',

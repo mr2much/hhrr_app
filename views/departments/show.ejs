@@ -4,16 +4,38 @@
   Detalles de <%= department.name %>
 </h1>
 
-<p>Email: <%= department.email %></p>
+<div class="card col-6 offset-3 mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= department.name %></h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">
+      <%= department.email %>
+    </h6>
+    <p class="card-text">
+      Some quick example text to build on the card title and make up the bulk of
+      the card's content.
+    </p>
+  </div>
+</div>
 
-<ul>
-  <% for(perfil of department.profiles) {%>
-  <li><a href="/api/v1/profiles/<%= perfil._id %>"><%= perfil.name %></a></li>
-  <% } %>
-</ul>
+<div class="card col-6 offset-3 mb-3">
+  <div class="card-header">Perfiles</div>
+  <ul class="list-group list-group-flush">
+    <% for(perfil of department.profiles) { %>
+    <li class="list-group-item">
+      <a href="/api/v1/profiles/<%= perfil._id %>"><%= perfil.name %></a>
+    </li>
+    <% } %>
+  </ul>
+  <a
+    class="btn btn-info"
+    href="/api/v1/departments/<%= department._id %>/profiles/new"
+    >Agregar Perfil</a
+  >
+</div>
 
-<a
-  class="btn btn-info"
-  href="/api/v1/departments/<%= department._id %>/profiles/new"
-  >Agregar Perfil</a
->
+<div class="card col-6 offset-3">
+  <div class="card-body text-center">
+    <a href="#" class="btn btn-warning">Editar</a>
+    <a href="#" class="btn btn-danger">Eliminar</a>
+  </div>
+</div>
