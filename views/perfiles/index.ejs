@@ -2,7 +2,7 @@
 
 <h1 class="mb-3 text-center text-info"><%= department %> Profiles</h1>
 
-<div class="row justify-content-center row-cols-1 row-cols-md-3 g-4">
+<div class="row row-cols-1 row-cols-md-5 g-4">
   <% for(perfil of perfiles) { %>
   <div class="col">
     <div class="card h-100">
@@ -11,13 +11,12 @@
         <h6 class="card-subtitle mb-2 text-body-secondary">
           Grado: <%= perfil.grade %>
         </h6>
-        <p class="card-text"><%= perfil.description %></p>
         <a
           class="card-link"
           href="/api/v1/profiles?department=<%= perfil.area._id %>"
           ><%= perfil.area.name %>
         </a>
-        <br />
+        <p class="card-text mb-3"><%= perfil.description %></p>
         <a
           class="btn btn-info mt-auto"
           href="/api/v1/profiles/<%= perfil._id %>/edit"
