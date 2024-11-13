@@ -60,7 +60,7 @@ npm run dev
 
 - TODO: Add radio buttons for areas
   - TODO: Depending on selected radio buttons, display profiles for associated area
-  - TODO: Remove old implementation of profiles with array
+  - [x]: Remove old implementation of profiles with array
 - [x]: Improve Profile views
 - [x]: Improve Department views
 - TODO: Implement error handling for geoUtils

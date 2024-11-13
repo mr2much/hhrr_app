@@ -1,5 +1,6 @@
 const mongoose = require('../../mongo/db');
 const Candidato = require('../candidato');
+const Profile = require('../profiles/profile');
 const { firstNames, surnames } = require('../../../../constants/names');
 const {
   colors,
@@ -8,7 +9,6 @@ const {
 } = require('../../../../constants/companyHelper');
 const { geodata } = require('../../../../constants/geojson_chart_data');
 const { countryNames } = require('../../../../constants/countrynames');
-const perfiles = require('../../../../constants/perfiles');
 const nivelesAcademicos = require('../../../../constants/nivelesAcademicos');
 
 function generateRandomID() {
@@ -54,6 +54,12 @@ function getRandomSalary() {
   return Math.floor(Math.random() * 400000);
 }
 
+async function getRandomProfile() {
+  const [randomProfile] = await Profile.aggregate([{ $sample: { size: 1 } }]);
+
+  return randomProfile;
+}
+
 function getRandomCountryRegion() {
   const { geodatasource_country: countryCode, geodatasource_region: region } =
     sample(geodata);
@@ -80,8 +86,8 @@ async function execute() {
       candidateExp: getRandomBoolean() ? 'Con experiencia' : 'Sin experiencia',
       currentlyWorking: getRandomBoolean(),
       exp_salario: getRandomSalary(),
-      perfilCandidato: sample(perfiles).text,
-      nivelAcademico: sample(nivelesAcademicos).text,
+      candidateProfile: await getRandomProfile(),
+      nivelAcademico: sample(nivelesAcademicos),
       countryRegionData: getRandomCountryRegion(),
     };
 
@@ -97,5 +103,14 @@ async function execute() {
   // await Candidato.insertMany(candidatos);
   await mongoose.disconnect();
 }
+
+async function show() {
+  const [randomProfile] = await Profile.aggregate([{ $sample: { size: 1 } }]);
+  console.log(randomProfile);
+
+  return randomProfile;
+}
+
+// show().then((profile) => console.log(profile._id));
 
 execute();

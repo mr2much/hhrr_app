@@ -128,13 +128,8 @@
               <% if (candidato.candidateProfile) { %>
                 <option value="<%= profile._id %>" <%= candidato.candidateProfile.name === profile.name ? 'selected' : '' %> >
                   <%= profile.name %>
-                </option>
-                
-              <% } else {%>
-                <option value="<%= profile._id %>">
-                  <%= profile.name %>
-                </option>
-              <% } %>               
+                </option>                
+              <% } %>
             <% } %>
           </select>
           <div class="invalid-feedback">Es necesario especificar el perfil al que aplica!</div>
