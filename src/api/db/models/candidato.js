@@ -110,6 +110,18 @@ candidatoSchema.post('findOneAndDelete', async (doc, next) => {
   }
 });
 
+candidatoSchema.post('deleteMany', async (doc, next) => {
+  console.log(doc);
+
+  try {
+    if (doc.imgUrl !== '/res/img/user.png') {
+      imgUtils.deleteImageFile(doc.imgUrl);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 const Candidato = mongoose.model('Candidato', candidatoSchema);
 
 module.exports = Candidato;

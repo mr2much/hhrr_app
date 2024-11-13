@@ -104,13 +104,4 @@ async function execute() {
   await mongoose.disconnect();
 }
 
-async function show() {
-  const [randomProfile] = await Profile.aggregate([{ $sample: { size: 1 } }]);
-  console.log(randomProfile);
-
-  return randomProfile;
-}
-
-// show().then((profile) => console.log(profile._id));
-
 execute();
