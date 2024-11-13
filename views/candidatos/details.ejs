@@ -69,14 +69,16 @@
                 <li class="list-group-item">
                   Expectativa Salarial: <%= candidato.salaryDOP %>
                 </li>
+                <% if (candidato.candidateProfile) { %>
                 <li class="list-group-item">
                   Perfil del Candidato: <%=candidato.candidateProfile.name ?
                   candidato.candidateProfile.name : 'No definido' %>
                 </li>
+                <% } else { %>
                 <li class="list-group-item">
-                  Perfil del Candidato: <%=candidato.perfilCandidato ?
-                  candidato.perfilCandidato : 'No definido' %>
+                  Perfil del Candidato: No definido
                 </li>
+                <% } %>
               </ul>
             </div>
           </div>

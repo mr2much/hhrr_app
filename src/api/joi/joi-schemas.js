@@ -10,7 +10,7 @@ module.exports.candidatoValidationSchema = Joi.object({
       .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
       .required(),
     dob: Joi.date().required(),
-    perfilCandidato: Joi.string().required(),
+    candidateProfile: Joi.string().required(),
     nivelAcademico: Joi.string().required(),
     countryRegionData: Joi.object({
       country: Joi.string().required(),

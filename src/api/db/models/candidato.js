@@ -3,7 +3,6 @@ const { Schema } = mongoose;
 const dataUtils = require('../../../lib/dataUtils');
 const geoUtils = require('../../../lib/geoUtils');
 const imgUtils = require('../../../lib/imgUtils');
-const perfiles = require('../../../constants/perfiles');
 const nivelesAcademicos = require('../../../constants/nivelesAcademicos');
 
 const candidatoSchema = new Schema(
@@ -21,8 +20,12 @@ const candidatoSchema = new Schema(
     currentlyWorking: { type: Boolean, default: false },
     job_actual: { type: String },
     exp_salario: { type: Number, default: 0 },
-    candidateProfile: { type: Schema.Types.ObjectId, ref: 'Profile' },
-    perfilCandidato: { type: String, required: true, enum: perfiles },
+    candidateProfile: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Profile',
+    },
+
     imgUrl: { type: String, default: '/res/img/user.png' },
     nivelAcademico: { type: String, required: true, enum: nivelesAcademicos },
     countryRegionData: {

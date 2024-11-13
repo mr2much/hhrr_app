@@ -9,8 +9,10 @@ findOneById = (id) => Candidato.findById(id);
 
 findByIdAndUpdate = (id, oldImgUrl, newCandidato) => {
   try {
-    if (oldImgUrl && oldImgUrl !== 'user.png') {
-      imgUtils.replaceImageFile(oldImgUrl);
+    if (newCandidato.imgUrl) {
+      if (oldImgUrl && oldImgUrl !== 'user.png') {
+        imgUtils.replaceImageFile(oldImgUrl);
+      }
     }
 
     return Candidato.findByIdAndUpdate(id, newCandidato, {

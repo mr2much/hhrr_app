@@ -61,8 +61,8 @@ npm run dev
 - TODO: Add radio buttons for areas
   - TODO: Depending on selected radio buttons, display profiles for associated area
   - TODO: Remove old implementation of profiles with array
-- TODO: Improve Profile views
-- TODO: Improve Department views
+- [x]: Improve Profile views
+- [x]: Improve Department views
 - TODO: Implement error handling for geoUtils
 - TODO: Implement error handling for imgUtils
 - [x]: Fix image updating when Image is changed for Candidato
