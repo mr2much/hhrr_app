@@ -58,26 +58,15 @@ npm run dev
 
 ## TODOs
 
-- TODO: Add radio buttons for areas
-  - TODO: Depending on selected radio buttons, display profiles for associated area
-  - [x]: Remove old implementation of profiles with array
-- [x]: Improve Profile views
-- [x]: Improve Department views
-- TODO: Implement error handling for geoUtils
-- TODO: Implement error handling for imgUtils
+#### Candidatos
+
+- TODO: Improve Candidato index page with cards
 - [x]: Fix image updating when Image is changed for Candidato
   - [x]: Change implementation in imgUtils
   - [x]: Change implementation in findOneAndUpdate
-- [x]: Handle image upload without using `P5`
-  - [x]: Add multi-part form
-  - [x]: Install multer
-  - [x]: Remove fetch requests from Client-Side
-- TODO: Ensure that only the countries in the `countrynames` file can be stored in Mongo
-- TODO: Ensure that only the regions found in `geojson_chart_data` can be stored in Mongo
 - TODO: Ensure that only images can be selected when creating or editing a Candidato's image
 - TODO: Implement sending emails to a Candidato if he gets selected for a position.
   - TODO: Implement sending a confirmation email when Candidato registers.
-- TODO: Fix folder organization for the project
 - [x]: Group Candidato data in NEW Form and EDIT Form
   - ~~TODO: Route handlers should destructure Candidato from `req.body`~~ Candidato data is send to the server from the client with a `fetch`
 - [x]: Implement error handling
@@ -94,6 +83,33 @@ npm run dev
 - TODO: Implement functionality to allow Candidato to apply for a specific position.
   - TODO: Recruiter should be able to see the Candidates that applied for a specific job posting.
 - TODO: Add functionality to display which columns I want to see on Index page.
+
+#### Profiles
+
+#### Departments
+
+#### Niveles Academicos
+
+#### Map
+
+#### General
+
+- TODO: Add expand functionality to Department profiles in detail view
+- TODO: Add expand functionality to Profile view
+- TODO: Add radio buttons for areas
+  - TODO: Depending on selected radio buttons, display profiles for associated area
+  - [x]: Remove old implementation of profiles with array
+- [x]: Improve Profile views
+- [x]: Improve Department views
+- TODO: Implement error handling for geoUtils
+- TODO: Implement error handling for imgUtils
+- [x]: Handle image upload without using `P5`
+  - [x]: Add multi-part form
+  - [x]: Install multer
+  - [x]: Remove fetch requests from Client-Side
+- TODO: Ensure that only the countries in the `countrynames` file can be stored in Mongo
+- TODO: Ensure that only the regions found in `geojson_chart_data` can be stored in Mongo
+- TODO: Fix folder organization for the project
 - TODO: Fix mobile first display
 - TODO: Fix validar cedula, account for other types of ID's
   - TODO: Add checkbox with different types of ID's. ex: Cedula, Passport
