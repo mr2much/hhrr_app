@@ -1,8 +1,10 @@
-<% layout('layouts/boilerplate') %> <% block('head').append('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>') %>
-
+<% layout('layouts/boilerplate') %> 
 <% const {document, previousDocument, nextDocument} = docs %>
-<div class="row swiper">
-  <div class="col-10 offset-1 d-flex align-items-center justify-content-center vh-100" id="candidato">
+<div class="row navigation-container">
+  <div
+    class="col-10 offset-1 d-flex align-items-center justify-content-center vh-100"
+    id="candidato"
+  >
     <div class="card">
       <div class="row g-0">
         <div class="col-md-4">
@@ -65,8 +67,8 @@
                   'Si' : 'No' %>
                 </li>
                 <li class="list-group-item">
-                  Empleo Actual: <%= document.job_actual ? document.job_actual
-                  : 'Ninguno' %>
+                  Empleo Actual: <%= document.job_actual ? document.job_actual :
+                  'Ninguno' %>
                 </li>
                 <li class="list-group-item">
                   Expectativa Salarial: <%= document.salaryDOP %>
@@ -124,12 +126,9 @@
     </div>
   </div>
   <% if (previousDocument) { %>
-  <a class="swiper-button-prev text-decoration-none" href="/api/v1/candidatos/<%= previousDocument._id %>"></a>  
-  <% } %>
+  <a class="pagination-button-prev" href="/api/v1/candidatos/<%= previousDocument._id %>"><i class="fas fa-angle-double-left"></i></a>
+  <% } %> 
   <% if (nextDocument) { %>
-  <a class="swiper-button-next text-decoration-none" href="/api/v1/candidatos/<%= nextDocument._id %>"></a>
+  <a class="pagination-button-next" href="/api/v1/candidatos/<%= nextDocument._id %>"><i class="fas fa-angle-double-right"></i></a>
   <% } %>
 </div>
-
-<% block('scripts').append('<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" charset="utf-8"></script>') %>
-<% block('scripts').append('<script src="/js/pagination.js" charset="utf-8"></script>') %>

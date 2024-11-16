@@ -68,3 +68,47 @@ input[type='text']:disabled {
   height: 48px;
   max-height: 48px;
 }
+
+.navigation-container {
+  position: relative;
+}
+
+.pagination-button-prev,
+.pagination-button-next {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.pagination-button-prev {
+  justify-content: start;
+}
+.pagination-button-next {
+  justify-content: end;
+}
+
+.pagination-button-prev i,
+.pagination-button-next i {
+  font-size: 96px;
+  transition: 0.5s;
+}
+
+.navigation-container::after,
+.pagination-button-prev i {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 0;
+}
+
+.navigation-container::after,
+.pagination-button-next i {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 0;
+}

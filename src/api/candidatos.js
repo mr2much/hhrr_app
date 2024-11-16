@@ -78,34 +78,34 @@ router.get(
   })
 );
 
-getPaginatedResults = async (id, Model, collection) => {
-  const document = await Model.findOneById(id).populate(collection);
-  const nextDocument = await Model.findOne({ _id: { $gt: id } }).sort({
-    _id: 1,
-  });
+getPaginatedResults = (Model, collection) => {
+  return async (req, res, next) => {
+    const { id } = req.params;
+    const document = await Model.findOneById(id).populate(collection);
+    const nextDocument = await Model.findOne({ _id: { $gt: id } }).sort({
+      _id: 1,
+    });
 
-  const previousDocument = await Model.findOne({ _id: { $lt: id } }).sort({
-    _id: -1,
-  });
+    const previousDocument = await Model.findOne({ _id: { $lt: id } }).sort({
+      _id: -1,
+    });
 
-  const results = { document, nextDocument, previousDocument };
+    const results = { document, nextDocument, previousDocument };
 
-  return results;
+    res.docs = results;
+
+    next();
+  };
 };
 
 // Lee un candidato con ID
 router.get(
   '/:id',
+  getPaginatedResults(db, 'candidateProfile'),
   catchAsyncErrors(async (req, res, next) => {
-    const { id } = req.params;
-
-    const docs = await getPaginatedResults(id, db, 'candidateProfile');
-
-    // const candidato = await db.findOneById(id).populate('candidateProfile');
-
     res.render('candidatos/details', {
-      docs,
-      title: `Detalles de ${docs.document.fullName}`,
+      docs: res.docs,
+      title: `Detalles de ${res.docs.document.fullName}`,
     });
   })
 );

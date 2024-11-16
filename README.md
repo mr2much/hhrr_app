@@ -60,6 +60,7 @@ npm run dev
 
 #### Candidatos
 
+- TODO: Bug: Card should be more vertically centerd on Candidato details view
 - TODO: Improve Candidato index page with cards
 - [x]: Fix image updating when Image is changed for Candidato
   - [x]: Change implementation in imgUtils
