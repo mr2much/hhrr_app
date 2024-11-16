@@ -78,17 +78,34 @@ router.get(
   })
 );
 
+getPaginatedResults = async (id, Model, collection) => {
+  const document = await Model.findOneById(id).populate(collection);
+  const nextDocument = await Model.findOne({ _id: { $gt: id } }).sort({
+    _id: 1,
+  });
+
+  const previousDocument = await Model.findOne({ _id: { $lt: id } }).sort({
+    _id: -1,
+  });
+
+  const results = { document, nextDocument, previousDocument };
+
+  return results;
+};
+
 // Lee un candidato con ID
 router.get(
   '/:id',
   catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
 
-    const candidato = await db.findOneById(id).populate('candidateProfile');
+    const docs = await getPaginatedResults(id, db, 'candidateProfile');
+
+    // const candidato = await db.findOneById(id).populate('candidateProfile');
 
     res.render('candidatos/details', {
-      candidato,
-      title: `Detalles de ${candidato.fullName}`,
+      docs,
+      title: `Detalles de ${docs.document.fullName}`,
     });
   })
 );

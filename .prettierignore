@@ -1,5 +1,6 @@
 **/head.ejs
 **/new.ejs
+**/details.ejs
 **/geoscripts.ejs
 **/map.ejs
 **/leaflet.ejs

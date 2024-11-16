@@ -302,4 +302,9 @@ module.exports.surnames = [
   'Ross',
   'Foster',
   'Jimenez',
+  'Clooney',
+  'Codus',
+  'Hopkins',
+  'Frederiksen',
+  'Fedor',
 ];

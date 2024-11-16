@@ -92,8 +92,11 @@ npm run dev
 
 #### Map
 
+- TODO: Add cluster behavior to the Markers
+
 #### General
 
+- TODO: Implement multi-language to the app
 - TODO: Add expand functionality to Department profiles in detail view
 - TODO: Add expand functionality to Profile view
 - TODO: Add radio buttons for areas
