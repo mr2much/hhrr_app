@@ -96,6 +96,19 @@ npm run dev
 
 #### General
 
+- TODO: Implement Pagination
+  - [x]: Add Swiper.js
+    - [x]: Add swiper css
+    - [x]: Add Swiper JS
+    - [x]: Implement pagination to Candidato details view
+      - [x]: Implement paginated query results on the server
+      - [x]: Add swiper on client side.
+    - TODO: Implement pagination to Profile details view
+      - TODO: Implement paginated query results on the server
+      - TODO: Add swiper on client side.
+    - TODO: Implement pagination to Department details view.
+      - TODO: Implement paginated query results on the server
+      - TODO: Add swiper on client side.
 - TODO: Implement multi-language to the app
 - TODO: Add expand functionality to Department profiles in detail view
 - TODO: Add expand functionality to Profile view
