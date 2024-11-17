@@ -1,11 +1,11 @@
 const mongoose = require('../mongo/db');
+const { Schema } = mongoose;
 const dataUtils = require('../../../lib/dataUtils');
 const geoUtils = require('../../../lib/geoUtils');
 const imgUtils = require('../../../lib/imgUtils');
-const perfiles = require('../../../constants/perfiles');
 const nivelesAcademicos = require('../../../constants/nivelesAcademicos');
 
-const candidatoSchema = new mongoose.Schema(
+const candidatoSchema = new Schema(
   {
     cedula: {
       type: String,
@@ -20,7 +20,12 @@ const candidatoSchema = new mongoose.Schema(
     currentlyWorking: { type: Boolean, default: false },
     job_actual: { type: String },
     exp_salario: { type: Number, default: 0 },
-    perfilCandidato: { type: String, required: true, enum: perfiles },
+    candidateProfile: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Profile',
+    },
+
     imgUrl: { type: String, default: '/res/img/user.png' },
     nivelAcademico: { type: String, required: true, enum: nivelesAcademicos },
     countryRegionData: {
@@ -100,6 +105,18 @@ candidatoSchema.post('findOneAndDelete', async (doc, next) => {
       imgUtils.deleteImageFile(doc.imgUrl);
     }
     next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+candidatoSchema.post('deleteMany', async (doc, next) => {
+  console.log(doc);
+
+  try {
+    if (doc.imgUrl !== '/res/img/user.png') {
+      imgUtils.deleteImageFile(doc.imgUrl);
+    }
   } catch (error) {
     next(error);
   }

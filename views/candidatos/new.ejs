@@ -130,16 +130,16 @@
           <select
             class="form-select"
             id="perfil-candidato"
-            name="candidato[perfilCandidato]"
+            name="candidato[candidateProfile]"
             required
           >
             <option value="">--Seleccionar Perfil--</option>
-            <% for(perfil of perfiles) { %>
-            <option value="<%= perfil %>"><%= perfil %></option>
+            <% for(profile of profiles) { %>
+            <option value="<%= profile._id %>"><%= profile.name %></option>
             <% } %>
           </select>
           <div class="invalid-feedback">Es necesario especificar el perfil al que aplica!</div>
-      </div>
+      </div>      
 
       <div class="mb-3">
         <label class="form-label" for="foto-perfil">Agregar foto de perfil:</label>

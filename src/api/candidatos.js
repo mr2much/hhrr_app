@@ -4,42 +4,19 @@ const multer = require('multer');
 const _dir = '/res/img';
 
 const db = require('./db/models/candidatos_db');
+const { candidatoValidationSchema } = require('./joi/joi-schemas');
+const profileDB = require('./db/models/profiles/profile_db');
 const perfiles = require('../constants/perfiles');
 const nivelesAcademicos = require('../constants/nivelesAcademicos');
-const imgUtils = require('../lib/imgUtils');
+const experiencia = require('../constants/experiencia');
+// const imgUtils = require('../lib/imgUtils');
 const geoJsonUtils = require('../lib/geoUtils');
 const AppError = require('../lib/AppError');
-const Joi = require('joi');
+const catchAsyncErrors = require('../lib/catchAsyncErrors');
 
 const router = express.Router();
 
 const upload = multer({ dest: 'public/res/img' });
-
-const experiencia = [
-  { id: 'experienced', value: 'Con experiencia' },
-  { id: 'inexperienced', value: 'Sin experiencia' },
-];
-
-const candidatoValidationSchema = Joi.object({
-  candidato: Joi.object({
-    cedula: Joi.string().required(),
-    nombres: Joi.string().required(),
-    apellidos: Joi.string().required(),
-    email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-      .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-      .required(),
-    dob: Joi.date().required(),
-    perfilCandidato: Joi.string().required(),
-    nivelAcademico: Joi.string().required(),
-    countryRegionData: Joi.object({
-      country: Joi.string().required(),
-      region: Joi.string().required(),
-    }).required(),
-  })
-    .required()
-    .options({ allowUnknown: true }),
-});
 
 const validateCandidato = (req, res, next) => {
   const { error } = candidatoValidationSchema.validate(req.body);
@@ -58,20 +35,19 @@ const validateCandidato = (req, res, next) => {
 };
 
 // redirect to new form
-router.get('/new', (req, res, next) => {
-  res.render('candidatos/new', {
-    experiencia,
-    perfiles,
-    nivelesAcademicos,
-    title: 'New Candidato',
-  });
-});
-
-const catchAsyncErrors = (fn) => {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-};
+router.get(
+  '/new',
+  catchAsyncErrors(async (req, res, next) => {
+    const profiles = await profileDB.findAll();
+    res.render('candidatos/new', {
+      experiencia,
+      profiles,
+      perfiles,
+      nivelesAcademicos,
+      title: 'New Candidato',
+    });
+  })
+);
 
 // redirect to map
 router.get('/map', (req, res, next) => {
@@ -95,21 +71,41 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     const candidatos = await db.findAll();
 
-    res.render('candidatos/home', { candidatos, title: 'HHRR Manager Home' });
+    res.render('candidatos/home', {
+      candidatos,
+      title: 'Candidate Managemenet Home',
+    });
   })
 );
+
+getPaginatedResults = (Model, collection) => {
+  return async (req, res, next) => {
+    const { id } = req.params;
+    const document = await Model.findOneById(id).populate(collection);
+    const nextDocument = await Model.findOne({ _id: { $gt: id } }).sort({
+      _id: 1,
+    });
+
+    const previousDocument = await Model.findOne({ _id: { $lt: id } }).sort({
+      _id: -1,
+    });
+
+    const results = { document, nextDocument, previousDocument };
+
+    res.docs = results;
+
+    next();
+  };
+};
 
 // Lee un candidato con ID
 router.get(
   '/:id',
+  getPaginatedResults(db, 'candidateProfile'),
   catchAsyncErrors(async (req, res, next) => {
-    const { id } = req.params;
-
-    const candidato = await db.findOneById(id);
-
     res.render('candidatos/details', {
-      candidato,
-      title: `Detalles de ${candidato.fullName}`,
+      docs: res.docs,
+      title: `Detalles de ${res.docs.document.fullName}`,
     });
   })
 );
@@ -120,10 +116,13 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
 
-    const candidato = await db.findOneById(id);
+    const profiles = await profileDB.findAll();
+
+    const candidato = await db.findOneById(id).populate('candidateProfile');
     res.render('candidatos/edit', {
       candidato,
       experiencia,
+      profiles,
       perfiles,
       nivelesAcademicos,
       title: `Editar información de ${candidato.fullName}`,
@@ -131,7 +130,7 @@ router.get(
   })
 );
 
-// // Actualizar un candidato
+// Actualizar un candidato
 router.patch(
   '/:id',
   upload.single('candidato[imgUrl]'),
@@ -192,27 +191,6 @@ router.delete(
   })
 );
 
-// router.post('/', candidatoValidator, (req, res, next) => {
-//   const candidato = getCandidatoFromBody(req.body);
-
-//   if (candidato) {
-//     candidatos
-//       .insert(candidato)
-//       .then((createdCandidato) => {
-//         res.status(200);
-//         res.json(createdCandidato);
-//       })
-//       .catch(async (err) => {
-//         const idxs = await candidatos.indexes();
-//         console.log(idxs);
-//         next(err);
-//       });
-//   } else {
-//     const error = new Error(`Error when inserting candidato: ${candidato}`);
-//     next(error);
-//   }
-// });
-
 // function validaCedula(cedula) {
 //   return (
 //     typeof cedula === 'string' &&
@@ -220,27 +198,6 @@ router.delete(
 //     cedula.length === 13 &&
 //     cedula.match('^[0-9]{3}-?[0-9]{7}-?[0-9]{1}$') !== null
 //   );
-// }
-
-// function validCandidato(candidato) {
-//   return (
-//     typeof candidato.nombres === 'string' &&
-//     typeof candidato.apellidos === 'string' &&
-//     validaCedula(candidato.cedula) &&
-//     typeof candidato.dob === 'string' &&
-//     candidato.dob.match('^[0-9]{4}-?[0-9]{2}-?[0-9]{2}$') &&
-//     !Number.isNaN(candidato.exp_salario)
-//   );
-// }
-
-// // Middleware that sends the appropriate response if the Candidato is valid
-// function candidatoValidator(req, res, next) {
-//   if (validCandidato(req.body)) {
-//     next();
-//   } else {
-//     const error = new Error(`Candidato invalido! ${JSON.stringify(candidato)}`);
-//     next(error);
-//   }
 // }
 
 // function imageBase64ToImageFile(imagePath, image) {
@@ -259,54 +216,6 @@ router.delete(
 //   imageBase64ToImageFile(path.join(`public/${_dir}/${image.imgName}`), image);
 
 //   return `${_dir}/${image.imgName}`;
-// }
-
-// function getCandidatoFromBody(body) {
-//   const {
-//     cedula,
-//     nombres,
-//     apellidos,
-//     email,
-//     dob,
-//     age,
-//     candidateExp,
-//     currentlyWorking,
-//     job_actual,
-//     exp_salario,
-//     perfilCandidato,
-//     image,
-//     nivelAcademico,
-//     country,
-//     region,
-//     notas,
-//   } = body;
-
-//   let { imgUrl } = body;
-
-//   if (image) {
-//     imgUrl = handleImageData(image);
-//   }
-
-//   const candidato = {
-//     cedula,
-//     nombres,
-//     apellidos,
-//     email,
-//     dob,
-//     age,
-//     candidateExp,
-//     currentlyWorking,
-//     job_actual,
-//     exp_salario,
-//     perfilCandidato,
-//     imgUrl,
-//     nivelAcademico,
-//     country,
-//     region,
-//     notas,
-//   };
-
-//   return candidato;
 // }
 
 module.exports = router;

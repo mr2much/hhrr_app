@@ -1,15 +1,19 @@
-<% layout('layouts/boilerplate') %>
+<% layout('layouts/boilerplate') %> 
+<% const {document, previousDocument, nextDocument} = docs %>
 <div class="row">
-  <div class="col-10 offset-1" id="candidato">
-    <div class="card mb-3">
-      <div class="d-flex row g-0">
+  <div
+    class="d-flex justify-content-center vh-100 align-items-center navigation-container"
+    id="candidato"
+  >
+    <div class="card">
+      <div class="row g-0">
         <div class="col-md-4">
           <img
             id="image-candidato"
             style="width: 512px; object-fit: cover"
-            src="<%= candidato.imgUrl %>"
+            src="<%= document.imgUrl %>"
             class="img-fluid rounded-start"
-            alt="Imagen candidato <%= candidato.fullName %>"
+            alt="Imagen candidato <%= document.fullName %>"
           />
         </div>
         <div class="col-md-8 flex-grow-2">
@@ -44,14 +48,14 @@
           </div>
           <div class="card-body tab-content col-md-10 mx-auto">
             <div class="tab-pane active" id="datos-personales">
-              <h5 class="cart-title"><%= candidato.fullName %></h5>
+              <h5 class="cart-title"><%= document.fullName %></h5>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cedula: <%= candidato.cedula %></li>
-                <li class="list-group-item">Email: <%= candidato.email %></li>
+                <li class="list-group-item">Cedula: <%= document.cedula %></li>
+                <li class="list-group-item">Email: <%= document.email %></li>
                 <li class="list-group-item">
-                  Fecha de Nacimiento: <%= candidato.localDate %>
+                  Fecha de Nacimiento: <%= document.localDate %>
                 </li>
-                <li class="list-group-item">Edad: <%= candidato.age %></li>
+                <li class="list-group-item">Edad: <%= document.age %></li>
               </ul>
             </div>
           </div>
@@ -59,20 +63,22 @@
             <div class="tab-pane" id="datos-laborales">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  Candidato labora actualmente? <%= candidato.currentlyWorking ?
+                  Candidato labora actualmente? <%= document.currentlyWorking ?
                   'Si' : 'No' %>
                 </li>
                 <li class="list-group-item">
-                  Empleo Actual: <%= candidato.job_actual ? candidato.job_actual
-                  : 'Ninguno' %>
+                  Empleo Actual: <%= document.job_actual ? document.job_actual :
+                  'Ninguno' %>
                 </li>
                 <li class="list-group-item">
-                  Expectativa Salarial: <%= candidato.salaryDOP %>
+                  Expectativa Salarial: <%= document.salaryDOP %>
                 </li>
+                <% if (document.candidateProfile) { %>
                 <li class="list-group-item">
-                  Perfil del Candidato: <%=candidato.perfilCandidato ?
-                  candidato.perfilCandidato : 'No definido' %>
+                  Perfil del Candidato: <%=document.candidateProfile.name ?
+                  document.candidateProfile.name : 'No definido' %>
                 </li>
+                <% } %>
               </ul>
             </div>
           </div>
@@ -80,12 +86,12 @@
             <div class="tab-pane" id="informacion-adicional">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  Nivel Academico: <%= candidato.nivelAcademico ?
-                  candidato.nivelAcademico : 'No definido' %>
+                  Nivel Academico: <%= document.nivelAcademico ?
+                  document.nivelAcademico : 'No definido' %>
                 </li>
-                <li class="list-group-item">País: <%= candidato.country %></li>
-                <li class="list-group-item">Región: <%= candidato.region %></li>
-                <li class="list-group-item">Nota: <%= candidato.notas %></li>
+                <li class="list-group-item">País: <%= document.country %></li>
+                <li class="list-group-item">Región: <%= document.region %></li>
+                <li class="list-group-item">Nota: <%= document.notas %></li>
               </ul>
             </div>
           </div>
@@ -94,7 +100,7 @@
 
       <div class="col-auto">
         <form
-          action="/api/v1/candidatos/<%= candidato._id  %>?_method=DELETE"
+          action="/api/v1/candidatos/<%= document._id  %>?_method=DELETE"
           method="POST"
         >
           <div
@@ -103,7 +109,7 @@
             aria-label="Controles de Candidato"
           >
             <a
-              href="/api/v1/candidatos/<%= candidato._id %>/edit"
+              href="/api/v1/candidatos/<%= document._id %>/edit"
               class="btn btn-success mt-2 col-md-4"
               ><span class="pe-2"><i class="fas fa-user-edit"></i></span
               >Editar</a
@@ -118,5 +124,15 @@
         </form>
       </div>
     </div>
-  </div>
+    <% if (previousDocument) { %>
+    <div class="pag-button-container prev">
+      <a class="pagination-button-prev" href="/api/v1/candidatos/<%= previousDocument._id %>"><span></span></a>
+    </div>
+    <% } %> 
+    <% if (nextDocument) { %>
+    <div class="pag-button-container next">
+      <a class="pagination-button-next" href="/api/v1/candidatos/<%= nextDocument._id %>"><span></span></a>
+    </div>
+    <% } %>
+  </div>  
 </div>

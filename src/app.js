@@ -39,6 +39,8 @@ app
           "'self'",
           "'self' data:",
           'https://unpkg.com',
+          'https://picsum.photos',
+          'https://fastly.picsum.photos/',
           '*.openstreetmap.org',
         ],
       },

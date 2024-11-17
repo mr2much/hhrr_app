@@ -116,21 +116,24 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label" for="perfil-candidato">Perfil del candidato:</label>
-        <select
-          id="perfil-candidato"
-          class="form-select"
-          name="candidato[perfilCandidato]"
-          required
-        >
-          <% for(perfil of perfiles) { %>
-          <option value="<%= perfil %>" <%= candidato.perfilCandidato === perfil ? 'selected' : '' %> >
-            <%= perfil %>
-          </option>
-          <% } %>                
-        </select>
-        <div class="invalid-feedback">Es necesario especificar el perfil al que aplica!</div>
-      </div>
+        <label class="form-label" for="perfil-candidato">Perfil del candidato: <span class="text-danger">*</span></label>
+          <select
+            class="form-select"
+            id="perfil-candidato"
+            name="candidato[candidateProfile]"
+            required
+          >
+            <option value="">--Seleccionar Perfil--</option>
+            <% for(profile of profiles) { %>
+              <% if (candidato.candidateProfile) { %>
+                <option value="<%= profile._id %>" <%= candidato.candidateProfile.name === profile.name ? 'selected' : '' %> >
+                  <%= profile.name %>
+                </option>                
+              <% } %>
+            <% } %>
+          </select>
+          <div class="invalid-feedback">Es necesario especificar el perfil al que aplica!</div>
+      </div>      
 
       <div class="mb-3">
         <label class="form-label" for="foto-perfil">Agregar foto de perfil:</label>

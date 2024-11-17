@@ -1,45 +1,3 @@
-body {
-  margin: 0;
-  margin-top: 100px;
-  width: 100%;
-  height: 100vh;
-}
-
-/* form {
-  width: 60vw;
-  max-width: 500px;
-  min-width: 300px;
-  padding-bottom: 2em;
-}
-
-fieldset {
-  border: none;
-  padding: 2rem 0;
-  border-bottom: 3px solid #3b3b4f;
-}
-
-fieldset:last-of-type {
-  border-bottom: none;
-}
-
-label {
-  display: block;
-  margin: 0.5rem 0;
-}
-
-input,
-textarea,
-select {
-  margin: 10px 0 0 0;
-  width: 100%;
-  min-height: 2em;
-}
-
-input,
-textarea {
-  border: 1px solid #0a0a23;
-} */
-
 .inline {
   width: unset;
   margin: 0 0.5em 0 0;
@@ -67,4 +25,96 @@ input[type='text']:disabled {
 .img-small {
   height: 48px;
   max-height: 48px;
+}
+
+.pag-button-container {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 96px;
+  height: 96px;
+  margin: 0;
+  padding: 0;
+  background: #262626;
+  border-radius: 50%;
+  display: flex;
+  transition: 0.5s;
+}
+
+.pag-button-container:hover {
+  background: #0070ff;
+}
+
+.pag-button-container a span {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 8px solid #fff;
+  transition: 0.5s;
+}
+
+/* Pagination arrow next styles */
+
+.pag-button-container.next {
+  right: 11%;
+}
+
+.pag-button-container .pagination-button-next span {
+  top: 50%;
+  right: 40%;
+  transform: translateY(-50%) rotate(-45deg);
+  border-left: none;
+  border-top: none;
+}
+
+.pagination-button-next:hover span {
+  right: 26%;
+}
+
+.pagination-button-next span::before {
+  content: '';
+  position: absolute;
+  width: 48px;
+  height: 8px;
+  transform-origin: right;
+  transform: rotate(45deg) translate(5px, 31px) scaleX(0);
+  background: #fff;
+  transition: 0.5s;
+}
+
+.pagination-button-next:hover span::before {
+  transform: rotate(45deg) translate(5px, 31px) scaleX(1);
+}
+
+/* Pagination arrow prev styles */
+
+.pag-button-container.prev {
+  left: 16%;
+}
+
+.pag-button-container .pagination-button-prev span {
+  top: 50%;
+  left: 40%;
+  transform: translateY(-50%) rotate(-45deg);
+  border-right: none;
+  border-bottom: none;
+}
+
+.pagination-button-prev:hover span {
+  left: 26%;
+}
+
+.pagination-button-prev span::before {
+  content: '';
+  position: absolute;
+  width: 48px;
+  height: 8px;
+  transform-origin: left;
+  transform: rotate(45deg) translate(-5px, -2px) scaleX(0);
+  background: #fff;
+  transition: 0.5s;
+}
+
+.pagination-button-prev:hover span::before {
+  transform: rotate(45deg) translate(-5px, -2px) scaleX(1);
 }

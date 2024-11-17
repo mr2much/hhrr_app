@@ -1,0 +1,78 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+  <h1 class="text-center">Editar <%= profile.name %></h1>
+
+  <div class="col-6 offset-3">
+    <form
+      class="row validate-form"
+      action="/api/v1/profiles/<%= profile._id %>?_method=PUT"
+      method="POST"
+      novalidate
+    >
+      <div class="mb-3">
+        <label class="form-label" for="name"
+          >Nombre del Perfil: <span class="text-danger">*</span></label
+        >
+        <input
+          id="name"
+          class="form-control"
+          name="profile[name]"
+          type="text"
+          value="<%= profile.name %>"
+          required
+        />
+        <div class="invalid-feedback">
+          Es necesario proveer un nombre de perfil!
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="grade"
+          >Grado: <span class="text-danger">*</span></label
+        >
+        <select class="form-select" id="grade" name="profile[grade]">
+          <option value="">--Elegir opcion--</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+        <div class="invalid-feedback">
+          Es necesario indicar su nivel académico!
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="description">Descripcion:</label>
+        <textarea
+          class="form-control"
+          id="description"
+          cols="30"
+          rows="5"
+          name="profile[description]"
+          placeholder=""
+        ></textarea>
+      </div>
+
+      <div
+        class="btn-group col-12"
+        role="group"
+        aria-label="Controles de Formulario Perfil Nuevo"
+      >
+        <button class="btn btn-lg btn-success" type="submit">
+          <span class="pe-2"><i class="far fa-save"></i></span>Guardar
+        </button>
+        <a
+          href="/api/v1/profiles/"
+          class="btn btn-lg btn-warning"
+          type="button"
+        >
+          <span class="pe-2"><i class="fas fa-ban"></i></span>Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
