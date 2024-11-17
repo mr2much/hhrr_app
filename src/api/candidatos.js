@@ -13,6 +13,7 @@ const experiencia = require('../constants/experiencia');
 const geoJsonUtils = require('../lib/geoUtils');
 const AppError = require('../lib/AppError');
 const catchAsyncErrors = require('../lib/catchAsyncErrors');
+const paginateResults = require('../lib/paginateResults');
 
 const router = express.Router();
 
@@ -78,30 +79,10 @@ router.get(
   })
 );
 
-getPaginatedResults = (Model, collection) => {
-  return async (req, res, next) => {
-    const { id } = req.params;
-    const document = await Model.findOneById(id).populate(collection);
-    const nextDocument = await Model.findOne({ _id: { $gt: id } }).sort({
-      _id: 1,
-    });
-
-    const previousDocument = await Model.findOne({ _id: { $lt: id } }).sort({
-      _id: -1,
-    });
-
-    const results = { document, nextDocument, previousDocument };
-
-    res.docs = results;
-
-    next();
-  };
-};
-
 // Lee un candidato con ID
 router.get(
   '/:id',
-  getPaginatedResults(db, 'candidateProfile'),
+  paginateResults(db, 'candidateProfile'),
   catchAsyncErrors(async (req, res, next) => {
     res.render('candidatos/details', {
       docs: res.docs,
