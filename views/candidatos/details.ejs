@@ -1,8 +1,8 @@
 <% layout('layouts/boilerplate') %> 
 <% const {document, previousDocument, nextDocument} = docs %>
-<div class="row navigation-container">
+<div class="row">
   <div
-    class="col-10 offset-1 d-flex align-items-center justify-content-center vh-100"
+    class="d-flex justify-content-center vh-100 align-items-center navigation-container"
     id="candidato"
   >
     <div class="card">
@@ -124,11 +124,15 @@
         </form>
       </div>
     </div>
-  </div>
-  <% if (previousDocument) { %>
-  <a class="pagination-button-prev" href="/api/v1/candidatos/<%= previousDocument._id %>"><i class="fas fa-angle-double-left"></i></a>
-  <% } %> 
-  <% if (nextDocument) { %>
-  <a class="pagination-button-next" href="/api/v1/candidatos/<%= nextDocument._id %>"><i class="fas fa-angle-double-right"></i></a>
-  <% } %>
+    <% if (previousDocument) { %>
+    <div class="pag-button-container prev">
+      <a class="pagination-button-prev" href="/api/v1/candidatos/<%= previousDocument._id %>"><span></span></a>
+    </div>
+    <% } %> 
+    <% if (nextDocument) { %>
+    <div class="pag-button-container next">
+      <a class="pagination-button-next" href="/api/v1/candidatos/<%= nextDocument._id %>"><span></span></a>
+    </div>
+    <% } %>
+  </div>  
 </div>
