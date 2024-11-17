@@ -60,7 +60,7 @@ npm run dev
 
 #### Candidatos
 
-- TODO: Bug: Card should be more vertically centerd on Candidato details view
+- TODO: Fix: Card tooltips when you click on a Candidato marker on the map
 - TODO: Improve Candidato index page with cards
 - [x]: Fix image updating when Image is changed for Candidato
   - [x]: Change implementation in imgUtils
@@ -87,7 +87,11 @@ npm run dev
 
 #### Profiles
 
+- TODO: Implement Seeding to Profiles collection
+
 #### Departments
+
+- TODO: Implement Seeding to Departments collection
 
 #### Niveles Academicos
 
@@ -95,8 +99,25 @@ npm run dev
 
 - TODO: Add cluster behavior to the Markers
 
+#### Bugs
+
+- TODO: Fix veritical centering on:
+  -TODO: Candidato index view.
+  - TODO: Candidato new form
+  - TODO: Perfiles index view
+  - TODO: Perfiles new form
+  - TODO: Departamentos index view
+  - TODO: Departamento new form.
+  - TODO: Mapa view
+- TODO: There is a style flickering when using pagination.
+- TODO: Flash of unstyled content
+- [x]: ~~Bug: Card should be more vertically centerd on Candidato details view~~
+- [x]: ~~Main content not being vertically centered correctly.~~ There was some unnecesary styling being applied to the body
+
 #### General
 
+- TODO: Fix stylings on smaller views
+- TODO: Implement mobile view
 - TODO: Implement Pagination
   - [x]: Add Swiper.js
     - [x]: Add swiper css
