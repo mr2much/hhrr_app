@@ -1,41 +1,96 @@
-<% layout('layouts/boilerplate') %>
+<% layout('layouts/boilerplate') %> <% block('head').append('<link rel="stylesheet" href="/res/css/home.css" />') %>
+
+<% const {docs, page, total} = response %>
+
 
 <h1 class="mb-3 text-center text-success">HHRR Manager</h1>
 
 <h2 class="text-info">Listado de Candidatos</h2>
 
-<table class="table table-dark table-striped table-hover">
-  <thead class="table-info">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Cedula</th>
-      <th scope="col">Nombres</th>
-      <th scope="col">Apellidos</th>
-      <th scope="col">Fecha de Nacimiento</th>
-      <th scope="col">Trabajo Actual</th>
-      <th scope="col">Expectativa Salarial</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <% let count = 1; %> <% for(candidato of candidatos ) { %>
-    <tr>
-      <th scope="row"><%= count %></th>
-      <td><%= candidato.cedula %></td>
-      <td><%= candidato.nombres %></td>
-      <td><%= candidato.apellidos %></td>
-      <td><%= candidato.localDate %></td>
-      <td><%= candidato.job_actual ? candidato.job_actual : 'Ninguno' %></td>
-      <td><%= candidato.salaryDOP %></td>
-      <td>
-        <div>
-          <a
-            style="color: inherit"
-            href="/api/v1/candidatos/<%= candidato._id %>"
-            ><i class="fas fa-eye"></i
-          ></a>
+<div class="row body bg-light rounded m-3 p-3 gap-3">
+  <main class="table_container bg-white rounded shadow">
+    <div
+      class="heading"
+    >
+      <p class="title_tab">Nombre</p>
+      <p class="email_tab">Email</p>
+      <p class="pais_tab">Pais</p>
+      <p class="profile_tab">Perfil</p>
+      <p class="department_tab">Departamento</p>
+    </div>
+
+    <% docs.forEach(candidato => { %>
+    <a href="/api/v1/candidatos/<%= candidato._id %>">
+      <div
+        class="candidato mb-2 d-flex gap-2 align-items-center rounded p-2 text-dark"
+      >
+        <div class="name_container gap-2">
+          <img
+            class="rounded candidate_img"
+            src="<%= candidato.imgUrl %>"
+            alt=""
+          />
+          <p class="full_name"><%= candidato.fullName %></p>
         </div>
-      </td>
-    </tr>
-    <% count++; %> <% } %>
-  </tbody>
-</table>
+        <div class="email_container">
+          <p class="email"><%= candidato.email %></p>
+        </div>
+        <div class="pais_container">
+          <p class="pais"><%= candidato.countryRegionData.country %></p>
+        </div>
+        <div class="profile_container">
+          <p class="profile"><%= candidato.candidateProfile.name %></p>
+        </div>
+        <div class="department_container">
+          <p class="department"><%= candidato.candidateProfile.area.name %></p>
+        </div>
+      </div>
+    </a>    
+    <% }) %>    
+    
+    <div class="pagination_container d-flex align-items-center justify-content-center gap-2 my-2">
+      <% if(total > 1) { %>
+        <% for (let i = 0; i < total; i++) { %>
+          <% if (i === 0) { %>
+            <a class="btn btn-info <%= page === i + 1 ? 'active' : '' %>" href="/api/v1/candidatos?page=1">First</a>
+          <% } else if (i === total - 1) { %>
+            <a class="btn btn-info <%= page === i + 1 ? 'active' : '' %>" href="/api/v1/candidatos?page=<%= total %>">Last</a>
+          <% } else { %>
+            <a class="btn btn-info round_button <%= page === i + 1 ? 'active' : '' %>" href="/api/v1/candidatos?page=<%= i + 1 %>"><%= i + 1 %></a>
+          <% } %>
+        <% } %>
+      <% } %>
+    </div>
+  </main>
+
+  <div class="d-flex flex-column align-items-center filter_container bg-white rounded text-dark shadow">
+    <div
+      class="col-12 d-flex p-3 m-3 gap-3 align-items-center justify-content-center p-4 rounded" style="background-color: var(--light); box-shadow: var(--box-shadow);"
+    >
+      <h4 class="m-0">Sort By:</h4>
+      <select class="form-select form-select-sm w-50" name="" id="">
+        <option value="">Profile</option>
+        <option value="">Department</option>
+        <option value="">Nivel Academico</option>
+        <option value="">Edad</option>
+        <option value="">Expectativa Salarial</option>
+      </select>
+      <button class="btn btn-info">
+        <span>&uarr;</span> <span>&darr;</span>
+      </button>
+    </div>
+    <div class="d-flex flex-column align-items-center p-3 rounded" style="background-color: var(--light); box-shadow: var(--box-shadow);">
+      <h4>Filter By Department</h4>
+      <form
+        action="/api/v1/candidatos"
+        method="GET"
+        class="col-12 d-flex flex-column justify-content-center gap-2" 
+      >
+        <div class="d-flex flex-wrap mb-2"><%- filterElement %></div>
+        <div>
+          <button type="submit" class="btn btn-info">Filter</button>
+        </div>
+      </form>
+    </div>
+  </div>  
+</div>

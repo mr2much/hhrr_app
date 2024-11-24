@@ -14,6 +14,7 @@ const geoJsonUtils = require('../lib/geoUtils');
 const AppError = require('../lib/AppError');
 const catchAsyncErrors = require('../lib/catchAsyncErrors');
 const paginateResults = require('../lib/paginateResults');
+const Department = require('./components/Department');
 
 const router = express.Router();
 
@@ -66,14 +67,62 @@ router.get(
   })
 );
 
+const paginate = (Model, collection) => {
+  return async (req, res, next) => {
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 6;
+    const search = req.query.search || '';
+    let sort = req.query.sort || 'area';
+    let profile = req.query.profile || 'All';
+
+    const docs = await Model.findAll()
+      .populate(collection)
+      .skip(page * limit)
+      .limit(limit);
+
+    const total = await Model.count();
+
+    const response = {
+      error: false,
+      total: Math.ceil(total / limit),
+      page: page + 1,
+      limit,
+      docs,
+    };
+
+    res.response = response;
+
+    next();
+  };
+};
+
 // Lee todos los candidatos
 router.get(
   '/',
+  paginate(db, {
+    path: 'candidateProfile',
+    populate: { path: 'area', model: 'Department' },
+  }),
   catchAsyncErrors(async (req, res, next) => {
-    const candidatos = await db.findAll();
+    const { departments } = req.query;
+
+    // const filters = departments
+    //   ? {
+    //       department: {
+    //         $in: Array.isArray(departments) ? departments : [departments],
+    //       },
+    //     }
+    //   : [];
+    // const candidatos = await db.findAll().populate({
+    //   path: 'candidateProfile',
+    //   populate: { path: 'area', model: 'Department' },
+    // });
+
+    const filterElement = await Department(departments);
 
     res.render('candidatos/home', {
-      candidatos,
+      response: res.response,
+      filterElement,
       title: 'Candidate Managemenet Home',
     });
   })

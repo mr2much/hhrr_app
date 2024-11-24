@@ -1,3 +1,11 @@
+:root {
+  --black: #282828;
+  --light: #ccc;
+  --blue: #0f6fde;
+  --box-shadow: 0px 3px 3px -2px rgb(0 0 0/20%),
+    0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+}
+
 .inline {
   width: unset;
   margin: 0 0.5em 0 0;
@@ -117,4 +125,12 @@ input[type='text']:disabled {
 
 .pagination-button-prev:hover span::before {
   transform: rotate(45deg) translate(-5px, -2px) scaleX(1);
+}
+
+.table_container {
+  flex: 3;
+}
+
+.filter_container {
+  flex: 1;
 }

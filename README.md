@@ -108,6 +108,7 @@ npm run dev
   - TODO: Perfiles new form
   - TODO: Departamentos index view
   - TODO: Departamento new form.
+  - [x]: Error EJS Template
   - TODO: Mapa view
 - TODO: There is a style flickering when using pagination.
 - TODO: Flash of unstyled content
@@ -116,6 +117,7 @@ npm run dev
 
 #### General
 
+- [x]: Create paginatedResults middleware in a separate file.
 - TODO: Fix stylings on smaller views
 - TODO: Implement mobile view
 - TODO: Implement Pagination
