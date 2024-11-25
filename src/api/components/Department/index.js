@@ -1,28 +1,22 @@
-const db = require('../../db/models/departments/department_db');
+const db = require('../../db/models/profiles/profile_db');
 
-const Department = async (selectedDepartments) => {
-  const departments = await db.findAll();
+const Profile = async (profiles = []) => {
+  const candidateProfiles = await db.findAll();
 
-  if (!selectedDepartments) {
-    selectedDepartments = [];
-  }
-
-  return departments
-    .map((department) => {
+  return candidateProfiles
+    .map((profile) => {
       return `
-        <div class="form-check d-flex align-items-center gap-2 mx-3 col-4">
+        <div class="form-check d-flex align-items-center gap-1 mx-1 col-5">
             <input
                 class="form-check-input"
                 type="checkbox"
-                value="${department.name}"
-                id="${department._id}"
-                name="departments"
-                ${
-                  selectedDepartments.includes(department.name) ? 'checked' : ''
-                }
+                value="${profile._id}"
+                id="${profile._id}"
+                name="profile"
+                ${profiles.includes(profile._id.toString()) ? 'checked' : ''}
             />
-            <label class="form-check-label" for="${department._id}">
-                ${department.name}
+            <label class="form-check-label" for="${profile._id}">
+                ${profile.name}
             </label>
         </div>
         `;
@@ -30,4 +24,4 @@ const Department = async (selectedDepartments) => {
     .join('');
 };
 
-module.exports = Department;
+module.exports = Profile;

@@ -5,7 +5,7 @@ const _dir = '/res/img';
 
 count = (query) => Candidato.countDocuments(query);
 findOne = (query) => Candidato.findOne(query);
-findAll = () => Candidato.find({});
+findAll = (query) => Candidato.find(query);
 
 findOneById = (id) => Candidato.findById(id);
 

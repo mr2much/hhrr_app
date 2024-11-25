@@ -72,21 +72,33 @@ const paginate = (Model, collection) => {
     const page = parseInt(req.query.page) - 1 || 0;
     const limit = parseInt(req.query.limit) || 6;
     const search = req.query.search || '';
-    let sort = req.query.sort || 'area';
+    let sort = req.query.sort || 'age';
     let profile = req.query.profile || 'All';
 
-    const docs = await Model.findAll()
+    // Converts profile to Array if it isn't one
+    profile = Array.isArray(profile) ? profile : [profile];
+
+    // Joins all values into a single string, then splits it
+    // when profile receives comma-separated strings
+    profile = profile.join(',').split(',');
+
+    query = profile.includes('All')
+      ? {}
+      : { candidateProfile: { $in: profile } };
+
+    const docs = await Model.findAll(query)
       .populate(collection)
       .skip(page * limit)
       .limit(limit);
 
-    const total = await Model.count();
+    const total = await Model.count(query);
 
     const response = {
       error: false,
-      total: Math.ceil(total / limit),
+      total,
       page: page + 1,
       limit,
+      profile,
       docs,
     };
 
@@ -104,7 +116,7 @@ router.get(
     populate: { path: 'area', model: 'Department' },
   }),
   catchAsyncErrors(async (req, res, next) => {
-    const { departments } = req.query;
+    const { profile } = req.query;
 
     // const filters = departments
     //   ? {
@@ -118,7 +130,7 @@ router.get(
     //   populate: { path: 'area', model: 'Department' },
     // });
 
-    const filterElement = await Department(departments);
+    const filterElement = await Department(profile);
 
     res.render('candidatos/home', {
       response: res.response,

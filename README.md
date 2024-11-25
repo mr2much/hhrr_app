@@ -121,9 +121,9 @@ npm run dev
 - TODO: Fix stylings on smaller views
 - TODO: Implement mobile view
 - TODO: Implement Pagination
-  - [x]: Add Swiper.js
-    - [x]: Add swiper css
-    - [x]: Add Swiper JS
+  - [x]: ~~Add Swiper.js~~ Removed
+    - [x]: ~~Add swiper css~~ Removed
+    - [x]: ~~Add Swiper JS~~ Removed
     - [x]: Implement pagination to Candidato details view
       - [x]: Implement paginated query results on the server
       - [x]: Add swiper on client side.
@@ -154,7 +154,7 @@ npm run dev
 - TODO: Fix validar cedula, account for other types of ID's
   - TODO: Add checkbox with different types of ID's. ex: Cedula, Passport
 - TODO: Marker should be centered on selected `country` (default `Dominican Republic`)
-- TODO: Add `next` and `previous` buttons on `view one` view, to traverse between Candidatos
+- [x]: Add `next` and `previous` buttons on `view one` view, to traverse between Candidatos
 - TODO: Add `next` and `previous` buttons on the `map` view, to traverse between displayed Markers.
   - TODO: Add panning effect when moving towards a Marker.
 - TODO: Add `region groups` when there are more than one Candidato in the same `region` (Might have to use a `for loop` when creating the HTML code for the popup). Might have to add an object where the key is the `region`
@@ -164,13 +164,13 @@ npm run dev
   - TODO: Add `zoom in` when a marker is clicked, `zoom out` when the same marker is clicked again.
 - [x]: Change Map library from amCharts to Leaflet
 - TODO: Add filters by criteria
-  - Add filter by `age`
-  - Add filter by `labora actualmente`
-  - Add filter by `perfil del candidato`
-  - Add filter by `expectativa salarial`
-  - Add filter by `Nivel academico`
-  - Add filter by `pais`
-  - Add filter by `region`
+  - ~~Add filter by `age`~~
+  - ~~Add filter by `labora actualmente`~~
+  - [x] Add filter by `perfil del candidato`
+  - ~~Add filter by `expectativa salarial`~~
+  - ~~Add filter by `Nivel academico`~~
+  - ~~Add filter by `pais`~~
+  - ~~Add filter by `region`~~
 - TODO: Add sort by criteria
   - Add sort by `age`
   - Add sort by `expectativa salarial`
