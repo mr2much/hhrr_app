@@ -115,6 +115,10 @@ npm run dev
 - [x]: ~~Bug: Card should be more vertically centerd on Candidato details view~~
 - [x]: ~~Main content not being vertically centered correctly.~~ There was some unnecesary styling being applied to the body
 
+#### Client-Side
+
+#### Server-Side
+
 #### General
 
 - TODO: Completely separate server side code from client-side code
@@ -156,10 +160,11 @@ npm run dev
 - TODO: Add effects similars to this example: https://leafletjs.com/examples/choropleth/
   - TODO: Add `zoom in` when a marker is clicked, `zoom out` when the same marker is clicked again.
 - TODO: Add filters by criteria
-  - ~~Add filter by `age`~~
-  - ~~Add filter by `labora actualmente`~~
-  - ~~Add filter by `expectativa salarial`~~
-  - ~~Add filter by `Nivel academico`~~
+  - TODO: Add filter by `age`
+  - TODO: Add filter by `labora actualmente`
+  - TODO: Add filter by `expectativa salarial`
+  - TODO: Add filter by `Nivel academico`
+  - TODO: Add filter by `Departamento`
   - ~~Add filter by `pais`~~
   - ~~Add filter by `region`~~
   - [x] Add filter by `perfil del candidato`
