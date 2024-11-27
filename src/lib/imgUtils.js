@@ -52,15 +52,17 @@ function replaceImageFile(imgPath) {
 }
 
 function deleteImageFile(imgPath) {
-  if (!imgPath.includes('public')) {
-    imgPath = path.join('public', imgPath);
-  }
-
-  fs.unlink(imgPath, (err) => {
-    if (err) {
-      return new Error('Error deleting file: ', err);
+  if (imgPath) {
+    if (!imgPath.includes('public')) {
+      imgPath = path.join('public', imgPath);
     }
-  });
+
+    fs.unlink(imgPath, (err) => {
+      if (err) {
+        return new Error('Error deleting file: ', err);
+      }
+    });
+  }
 }
 
 module.exports = {

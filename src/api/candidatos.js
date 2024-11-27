@@ -13,6 +13,8 @@ const experiencia = require('../constants/experiencia');
 const geoJsonUtils = require('../lib/geoUtils');
 const AppError = require('../lib/AppError');
 const catchAsyncErrors = require('../lib/catchAsyncErrors');
+const paginateResults = require('../lib/paginateResults');
+const Department = require('./components/Department');
 
 const router = express.Router();
 
@@ -65,43 +67,83 @@ router.get(
   })
 );
 
-// Lee todos los candidatos
-router.get(
-  '/',
-  catchAsyncErrors(async (req, res, next) => {
-    const candidatos = await db.findAll();
-
-    res.render('candidatos/home', {
-      candidatos,
-      title: 'Candidate Managemenet Home',
-    });
-  })
-);
-
-getPaginatedResults = (Model, collection) => {
+const paginate = (Model, collection) => {
   return async (req, res, next) => {
-    const { id } = req.params;
-    const document = await Model.findOneById(id).populate(collection);
-    const nextDocument = await Model.findOne({ _id: { $gt: id } }).sort({
-      _id: 1,
-    });
+    const page = parseInt(req.query.page) - 1 || 0;
+    const limit = parseInt(req.query.limit) || 6;
+    const search = req.query.search || '';
+    let sort = req.query.sort || 'age';
+    let profile = req.query.profile || 'All';
 
-    const previousDocument = await Model.findOne({ _id: { $lt: id } }).sort({
-      _id: -1,
-    });
+    // Converts profile to Array if it isn't one
+    profile = Array.isArray(profile) ? profile : [profile];
 
-    const results = { document, nextDocument, previousDocument };
+    // Joins all values into a single string, then splits it
+    // when profile receives comma-separated strings
+    profile = profile.join(',').split(',');
 
-    res.docs = results;
+    query = profile.includes('All')
+      ? {}
+      : { candidateProfile: { $in: profile } };
+
+    const docs = await Model.findAll(query)
+      .populate(collection)
+      .skip(page * limit)
+      .limit(limit);
+
+    const total = await Model.count(query);
+
+    const response = {
+      error: false,
+      total,
+      page: page + 1,
+      limit,
+      profile,
+      docs,
+    };
+
+    res.response = response;
 
     next();
   };
 };
 
+// Lee todos los candidatos
+router.get(
+  '/',
+  paginate(db, {
+    path: 'candidateProfile',
+    populate: { path: 'area', model: 'Department' },
+  }),
+  catchAsyncErrors(async (req, res, next) => {
+    const { profile } = req.query;
+
+    // const filters = departments
+    //   ? {
+    //       department: {
+    //         $in: Array.isArray(departments) ? departments : [departments],
+    //       },
+    //     }
+    //   : [];
+    // const candidatos = await db.findAll().populate({
+    //   path: 'candidateProfile',
+    //   populate: { path: 'area', model: 'Department' },
+    // });
+
+    const filterElement = await Department(profile);
+
+    res.render('candidatos/home', {
+      response: res.response,
+      filterElement,
+      title: 'Candidate Managemenet Home',
+    });
+  })
+);
+
 // Lee un candidato con ID
 router.get(
   '/:id',
-  getPaginatedResults(db, 'candidateProfile'),
+  paginateResults(db, 'candidateProfile'),
   catchAsyncErrors(async (req, res, next) => {
     res.render('candidatos/details', {
       docs: res.docs,

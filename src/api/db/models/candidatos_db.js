@@ -3,8 +3,9 @@ const imgUtils = require('../../../lib/imgUtils');
 
 const _dir = '/res/img';
 
+count = (query) => Candidato.countDocuments(query);
 findOne = (query) => Candidato.findOne(query);
-findAll = () => Candidato.find({});
+findAll = (query) => Candidato.find(query);
 
 findOneById = (id) => Candidato.findById(id);
 
@@ -30,6 +31,7 @@ insertOne = (newCandidato) => Candidato.create(newCandidato);
 findByIdAndDelete = (id) => Candidato.findByIdAndDelete(id);
 
 module.exports = {
+  count,
   findOne,
   findAll,
   findOneById,
