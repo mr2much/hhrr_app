@@ -117,6 +117,8 @@ npm run dev
 
 #### Client-Side
 
+- TODO: Add previous and next buttons on Candidato index view
+
 #### Server-Side
 
 #### General
