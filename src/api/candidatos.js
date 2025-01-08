@@ -132,7 +132,7 @@ router.get(
 
     const filterElement = await Department(profile);
 
-    res.render('candidatos/home', {
+    res.render('candidatos/index', {
       response: res.response,
       filterElement,
       title: 'Candidate Managemenet Home',
