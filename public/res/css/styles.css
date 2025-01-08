@@ -1,4 +1,5 @@
 :root {
+  --clr: #0ab3ff;
   --black: #282828;
   --light: #ccc;
   --blue: #0f6fde;
@@ -8,7 +9,13 @@
 }
 
 body {
-  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #1c2630;
+  padding-top: 36px;
 }
 
 .inline {

@@ -7,9 +7,9 @@
   background-position: center;
   display: flex;
   flex-direction: column;
-  gap: 15px;
   justify-content: center;
   align-items: center;
+  transition: 0.5s;
 }
 
 .banner::before {
@@ -42,6 +42,8 @@
 
 .banner .row {
   width: 70%;
+  margin: 0;
+  padding: 0;
 }
 
 .banner .card.candidate,
