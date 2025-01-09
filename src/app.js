@@ -12,6 +12,11 @@ const middlewares = require('./middlewares');
 const api = require('./api');
 
 const app = express();
+
+app.engine('ejs', engine);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views'));
+
 app
   .use(express.json({ limit: '1mb' }))
   .use(express.urlencoded({ extended: true }))
@@ -47,10 +52,6 @@ app
     })
   )
   .use(methodOverride('_method'));
-
-app.engine('ejs', engine);
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views'));
 
 app.get('/', (req, res) => {
   res.json({

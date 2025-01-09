@@ -7,6 +7,10 @@ router.get('/register', (req, res) => {
   res.render('recruiters/register', { title });
 });
 
+router.post('/register', (req, res) => {
+  res.send(req.body);
+});
+
 router.get('/login', (req, res) => {
   res.render('recruiters/login', { title });
 });

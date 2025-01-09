@@ -43,6 +43,7 @@
     background: transparent;
     border: none;
     border-bottom: 2px solid #999;
+    box-shadow: none;
     outline: none;
     color: #fff;
     font-size: 1em;
@@ -108,23 +109,34 @@
   }
 </style>
 
-<form class="col-4 validate-form" action="" novalidate>
+<form
+  class="form col-4 validate-form"
+  action="/api/v1/recruiters/register"
+  method="POST"
+  novalidate
+>
   <h2>New Recruiter Account</h2>
   <div class="mb-3 inputBox">
-    <input id="username" type="text" placeholder=" " required />
+    <input id="username" type="text" placeholder=" " name="username" required />
     <label for="username">Username</label>
   </div>
   <div class="mb-3 inputBox">
-    <input id="email" type="email" placeholder=" " required />
+    <input id="email" type="email" placeholder=" " name="email" required />
     <label class="form-label" for="email">Email</label>
   </div>
   <div class="mb-3 inputBox">
-    <input id="passowrd" type="password" placeholder=" " required />
-    <label class="form-label" for="passowrd">Password</label>
+    <input
+      id="passowrd"
+      type="password"
+      placeholder=" "
+      name="password"
+      required
+    />
+    <label class="form-label" for="password">Password</label>
   </div>
   <div class="mb-3 inputBox">
-    <input id="confirm-passowrd" type="password" placeholder=" " required />
-    <label class="form-label" for="confirm-passowrd"
+    <input id="confirm-password" type="password" placeholder=" " required />
+    <label class="form-label" for="confirm-password"
       >Confirm &nbsp Password</label
     >
   </div>

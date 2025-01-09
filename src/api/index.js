@@ -4,7 +4,7 @@ const emojis = require('./emojis');
 const candidatos = require('./candidatos');
 const profiles = require('./profiles');
 const departments = require('./departments');
-const recruiters = require('./recruiters');
+const recruiters = require('./routes/recruiters');
 
 const router = express.Router();
 
