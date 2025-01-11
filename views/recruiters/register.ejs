@@ -35,6 +35,27 @@
     margin-bottom: 40px;
   }
 
+  .inputBox input:-webkit-autofill:focus,
+  .inputBox input:-webkit-autofill:active,
+  .inputBox input:-webkit-autofill,
+  .inputBox input:-webkit-autofill::first-line,
+  .inputBox input:-webkit-autofill::selection {
+    position: relative;
+    width: 100%;
+    padding: 10px 0;
+    /* background: #29313c; */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    border: none;
+    border-bottom: 2px solid #999;
+    box-shadow: none;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+    letter-spacing: 0.15em;
+  }
+
   .inputBox input,
   .inputBox input:focus {
     position: relative;
@@ -117,11 +138,23 @@
 >
   <h2>New Recruiter Account</h2>
   <div class="mb-3 inputBox">
-    <input id="username" type="text" placeholder=" " name="username" required />
+    <input
+      id="username"
+      type="text"
+      placeholder=" "
+      name="recruiter[username]"
+      required
+    />
     <label for="username">Username</label>
   </div>
   <div class="mb-3 inputBox">
-    <input id="email" type="email" placeholder=" " name="email" required />
+    <input
+      id="email"
+      type="email"
+      placeholder=" "
+      name="recruiter[email]"
+      required
+    />
     <label class="form-label" for="email">Email</label>
   </div>
   <div class="mb-3 inputBox">
@@ -129,7 +162,7 @@
       id="passowrd"
       type="password"
       placeholder=" "
-      name="password"
+      name="recruiter[password]"
       required
     />
     <label class="form-label" for="password">Password</label>
