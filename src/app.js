@@ -2,9 +2,14 @@ const express = require('express');
 const engine = require('ejs-mate');
 const path = require('path');
 const methodOverride = require('method-override');
+const session = require('express-session');
+const flash = require('connect-flash');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+
+const passport = require('passport');
+const localStrategy = require('passport-local');
 
 require('dotenv').config();
 
@@ -52,6 +57,35 @@ app
     })
   )
   .use(methodOverride('_method'));
+
+const sessionConfig = {
+  secret: 'thisisnotagoodsecret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+
+app.use(session(sessionConfig));
+app.use(flash());
+
+const Recruiter = require('./api/db/models/recruiters/recruiter');
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(Recruiter.authenticate()));
+
+passport.serializeUser(Recruiter.serializeUser());
+passport.deserializeUser(Recruiter.deserializeUser());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 app.get('/', (req, res) => {
   res.json({

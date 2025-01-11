@@ -30,7 +30,7 @@ router.post('/register', async (req, res) => {
     });
   } catch (e) {
     req.flash('error', e.message);
-    res.redirect('/api/v1/recruiter/login');
+    res.redirect('/api/v1/recruiters/login');
   }
 });
 
