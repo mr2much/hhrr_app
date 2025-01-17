@@ -73,15 +73,50 @@ app.use(session(sessionConfig));
 app.use(flash());
 
 const Recruiter = require('./api/db/models/recruiters/recruiter');
+const AppError = require('./lib/AppError');
 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(Recruiter.authenticate()));
 
-passport.serializeUser(Recruiter.serializeUser());
-passport.deserializeUser(Recruiter.deserializeUser());
+passport.serializeUser((user, done) => {
+  const userType = user instanceof Recruiter ? 'recruiter' : 'candidate';
+
+  done(null, { _id: user._id, type: userType });
+});
+
+passport.deserializeUser(async (data, done) => {
+  try {
+    if (data.type === 'recruiter') {
+      const recruiter = await Recruiter.findById(data._id);
+      done(null, { user: recruiter, type: 'recruiter' });
+    } else if (data.type === 'candidate') {
+      const candidate = await Candidate.findById(data._id);
+      done(null, { user: candidate, type: 'candidate' });
+    } else {
+      done(new Error('invalid user'));
+    }
+  } catch (err) {
+    done(err);
+  }
+});
+
+// passport.serializeUser(Recruiter.serializeUser());
+// passport.deserializeUser(Recruiter.deserializeUser());
 
 app.use((req, res, next) => {
+  console.log(req.user);
+
+  if (req.user) {
+    if (req.user.type === 'recruiter') {
+      console.log('User is a recruiter');
+    } else {
+      console.log('User is a candidate');
+    }
+  }
+  res.locals.recruiterUser = req.user;
+  // console.log(req);
+  // console.log(res.locals);
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();

@@ -5,11 +5,20 @@ const passport = require('passport');
 
 const title = 'AristoCrew';
 
+const storeRecruiterUser = (req, res, next) => {
+  if (req.user) {
+    req.recruiter = req.user;
+    delete req.user;
+  }
+
+  next();
+};
+
 router.get('/register', (req, res) => {
   res.render('recruiters/register', { title });
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', storeRecruiterUser, async (req, res) => {
   try {
     const { recruiter } = req.body;
     const { email, username, password } = recruiter;
@@ -36,6 +45,30 @@ router.post('/register', async (req, res) => {
 
 router.get('/login', (req, res) => {
   res.render('recruiters/login', { title });
+});
+
+router.post(
+  '/login',
+  passport.authenticate('local', {
+    failureFlash: true,
+    failureRedirect: '/api/v1/recruiters/login',
+  }),
+  storeRecruiterUser,
+  (req, res) => {
+    req.flash('success', 'Welcome back!');
+    res.redirect('/api/v1/candidatos/');
+  }
+);
+
+router.get('/logout', (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+
+    req.flash('success', 'Goodbye!');
+    res.redirect('/api/v1/');
+  });
 });
 
 module.exports = router;

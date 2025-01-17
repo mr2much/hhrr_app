@@ -108,16 +108,27 @@
   }
 </style>
 
-<form class="col-4 validate-form" action="" novalidate>
+<form
+  class="col-4 validate-form"
+  action="/api/v1/recruiters/login"
+  method="POST"
+  novalidate
+>
   <h2>Recruiter Login</h2>
   <div class="mb-3 inputBox">
-    <input id="username" type="text" placeholder=" " required />
+    <input id="username" type="text" name="username" placeholder=" " required />
     <label for="username">Username</label>
   </div>
 
   <div class="mb-3 inputBox">
-    <input id="passowrd" type="password" placeholder=" " required />
-    <label class="form-label" for="passowrd">Password</label>
+    <input
+      id="password"
+      type="password"
+      name="password"
+      placeholder=" "
+      required
+    />
+    <label class="form-label" for="password">Password</label>
   </div>
 
   <div class="my-3 inputBox"><input type="submit" value="Login" /></div>
