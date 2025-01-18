@@ -79,25 +79,25 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(Recruiter.authenticate()));
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((user, cb) => {
   const userType = user instanceof Recruiter ? 'recruiter' : 'candidate';
 
-  done(null, { _id: user._id, type: userType });
+  cb(null, { _id: user._id, type: userType });
 });
 
-passport.deserializeUser(async (data, done) => {
+passport.deserializeUser(async (data, cb) => {
   try {
     if (data.type === 'recruiter') {
       const recruiter = await Recruiter.findById(data._id);
-      done(null, { user: recruiter, type: 'recruiter' });
+      cb(null, { user: recruiter, type: 'recruiter' });
     } else if (data.type === 'candidate') {
       const candidate = await Candidate.findById(data._id);
-      done(null, { user: candidate, type: 'candidate' });
+      cb(null, { user: candidate, type: 'candidate' });
     } else {
-      done(new Error('invalid user'));
+      cb(new Error('invalid user'));
     }
   } catch (err) {
-    done(err);
+    cb(err);
   }
 });
 
@@ -105,18 +105,15 @@ passport.deserializeUser(async (data, done) => {
 // passport.deserializeUser(Recruiter.deserializeUser());
 
 app.use((req, res, next) => {
-  console.log(req.user);
-
   if (req.user) {
     if (req.user.type === 'recruiter') {
-      console.log('User is a recruiter');
+      res.locals.recruiterUser = req.user;
     } else {
-      console.log('User is a candidate');
+      res.locals.candidateUser = req.user;
     }
   }
-  res.locals.recruiterUser = req.user;
-  // console.log(req);
-  // console.log(res.locals);
+
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();

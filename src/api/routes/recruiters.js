@@ -5,20 +5,11 @@ const passport = require('passport');
 
 const title = 'AristoCrew';
 
-const storeRecruiterUser = (req, res, next) => {
-  if (req.user) {
-    req.recruiter = req.user;
-    delete req.user;
-  }
-
-  next();
-};
-
 router.get('/register', (req, res) => {
   res.render('recruiters/register', { title });
 });
 
-router.post('/register', storeRecruiterUser, async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const { recruiter } = req.body;
     const { email, username, password } = recruiter;
@@ -53,7 +44,6 @@ router.post(
     failureFlash: true,
     failureRedirect: '/api/v1/recruiters/login',
   }),
-  storeRecruiterUser,
   (req, res) => {
     req.flash('success', 'Welcome back!');
     res.redirect('/api/v1/candidatos/');
