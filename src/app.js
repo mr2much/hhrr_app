@@ -2,9 +2,14 @@ const express = require('express');
 const engine = require('ejs-mate');
 const path = require('path');
 const methodOverride = require('method-override');
+const session = require('express-session');
+const flash = require('connect-flash');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
+
+const passport = require('passport');
+const localStrategy = require('passport-local');
 
 require('dotenv').config();
 
@@ -12,6 +17,11 @@ const middlewares = require('./middlewares');
 const api = require('./api');
 
 const app = express();
+
+app.engine('ejs', engine);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views'));
+
 app
   .use(express.json({ limit: '1mb' }))
   .use(express.urlencoded({ extended: true }))
@@ -48,9 +58,66 @@ app
   )
   .use(methodOverride('_method'));
 
-app.engine('ejs', engine);
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views'));
+const sessionConfig = {
+  secret: 'thisisnotagoodsecret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+
+app.use(session(sessionConfig));
+app.use(flash());
+
+const Recruiter = require('./api/db/models/recruiters/recruiter');
+const AppError = require('./lib/AppError');
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(Recruiter.authenticate()));
+
+passport.serializeUser((user, cb) => {
+  const userType = user instanceof Recruiter ? 'recruiter' : 'candidate';
+
+  cb(null, { _id: user._id, type: userType });
+});
+
+passport.deserializeUser(async (data, cb) => {
+  try {
+    if (data.type === 'recruiter') {
+      const recruiter = await Recruiter.findById(data._id);
+      cb(null, { user: recruiter, type: 'recruiter' });
+    } else if (data.type === 'candidate') {
+      const candidate = await Candidate.findById(data._id);
+      cb(null, { user: candidate, type: 'candidate' });
+    } else {
+      cb(new Error('invalid user'));
+    }
+  } catch (err) {
+    cb(err);
+  }
+});
+
+// passport.serializeUser(Recruiter.serializeUser());
+// passport.deserializeUser(Recruiter.deserializeUser());
+
+app.use((req, res, next) => {
+  if (req.user) {
+    if (req.user.type === 'recruiter') {
+      res.locals.recruiterUser = req.user;
+    } else {
+      res.locals.candidateUser = req.user;
+    }
+  }
+
+  res.locals.currentUser = req.user;
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 app.get('/', (req, res) => {
   res.json({

@@ -1,0 +1,192 @@
+<% layout('layouts/boilerplate') %>
+
+<style>
+  main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  form {
+    background: #29313c;
+    padding: 60px 80px 60px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    margin: 0 auto;
+  }
+
+  form h2 {
+    color: #fff;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 1.25em;
+    letter-spacing: 0.1em;
+    margin-bottom: 50px;
+  }
+
+  .inputBox {
+    position: relative;
+    width: 300px;
+    margin-bottom: 40px;
+  }
+
+  .inputBox input:-webkit-autofill:focus,
+  .inputBox input:-webkit-autofill:active,
+  .inputBox input:-webkit-autofill,
+  .inputBox input:-webkit-autofill::first-line,
+  .inputBox input:-webkit-autofill::selection {
+    position: relative;
+    width: 100%;
+    padding: 10px 0;
+    /* background: #29313c; */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    border: none;
+    border-bottom: 2px solid #999;
+    box-shadow: none;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+    letter-spacing: 0.15em;
+  }
+
+  .inputBox input,
+  .inputBox input:focus {
+    position: relative;
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #999;
+    box-shadow: none;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+    letter-spacing: 0.15em;
+  }
+
+  .inputBox input:focus,
+  .inputBox input:valid {
+    border-bottom: 2px solid var(--clr);
+  }
+
+  .inputBox label {
+    position: absolute;
+    left: 0;
+    padding: 10px 0;
+    pointer-events: none;
+    color: #999;
+    text-transform: uppercase;
+  }
+
+  .inputBox label span {
+    position: relative;
+    display: inline-flex;
+    letter-spacing: 0.05em;
+    transition: 0.2s ease-in-out;
+  }
+
+  .inputBox input:focus ~ label span,
+  .inputBox input:valid ~ label span,
+  .inputBox input:not(:placeholder-shown) ~ label span {
+    color: var(--clr);
+    letter-spacing: 0.15em;
+    transform: translateY(-25px);
+  }
+
+  .inputBox input[type='submit'] {
+    background: var(--clr);
+    border: none;
+    padding: 15px;
+    border-radius: 50px;
+    color: #1c2630;
+    font-weight: 600;
+    font-size: 1.15em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+
+  .inputBox input[type='submit']:hover {
+    letter-spacing: 0.35em;
+  }
+
+  form p {
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  form p a {
+    color: var(--clr);
+    font-weight: 500;
+    text-decoration: none;
+  }
+</style>
+
+<form
+  class="form col-4 validate-form"
+  action="/api/v1/recruiters/register"
+  method="POST"
+  novalidate
+>
+  <h2>New Recruiter Account</h2>
+  <div class="mb-3 inputBox">
+    <input
+      id="username"
+      type="text"
+      placeholder=" "
+      name="recruiter[username]"
+      required
+    />
+    <label for="username">Username</label>
+  </div>
+  <div class="mb-3 inputBox">
+    <input
+      id="email"
+      type="email"
+      placeholder=" "
+      name="recruiter[email]"
+      required
+    />
+    <label class="form-label" for="email">Email</label>
+  </div>
+  <div class="mb-3 inputBox">
+    <input
+      id="password"
+      type="password"
+      placeholder=" "
+      name="recruiter[password]"
+      required
+    />
+    <label class="form-label" for="password">Password</label>
+  </div>
+  <div class="mb-3 inputBox">
+    <input id="confirm-password" type="password" placeholder=" " required />
+    <label class="form-label" for="confirm-password"
+      >Confirm &nbsp Password</label
+    >
+  </div>
+  <div class="my-3 inputBox"><input type="submit" value="Join now" /></div>
+
+  <p>Already have an account? <a href="/api/v1/recruiters/login">Login</a></p>
+</form>
+
+<script>
+  document.querySelectorAll('label').forEach((label) => {
+    label.innerHTML = label.innerText
+      .split('')
+      .map(
+        (letters, i) =>
+          `<span style="transition-delay: ${i * 50}ms">${letters}</span>`
+      )
+      .join('');
+  });
+</script>

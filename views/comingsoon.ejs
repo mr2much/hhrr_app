@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate') %>
+
+<style>
+  body {
+    background: url('/res/img/bg/soon.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  div.row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    width: 70%;
+    height: 70%;
+    box-shadow: 0 0 45px rgba(255, 255, 255, 0.35);
+    border-radius: 15px;
+  }
+
+  .container h1 {
+    text-align: center;
+    font-weight: 900;
+    font-size: 96px;
+    text-transform: uppercase;
+    text-shadow: 0 5px 45px rgba(0, 0, 0, 0.65);
+  }
+</style>
+<div class="row">
+  <div class="container">
+    <h1>Coming Soon</h1>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<% layout('layouts/boilerplate') %>
+<% block('head').append('<link rel="stylesheet" href="/res/css/home.css" />') %>
+
+<!-- Banner -->
+ <section class="banner" id="home">
+    <h2>Welcome to <span>AristoCrew</span></h2>
+    <p>Find the job that fits your skills and needs</p>
+
+    <div class="row mt-5">
+        <div class="col-sm-6">
+          <div class="card candidate">
+            <div class="card-body">
+              <h5>For Candidates</h5>
+              <p class="card-text">Browse our available jobs and start your career with us today.</p>
+              <a href="/api/v1/comingsoon" class="btn btn-primary">Browse Jobs</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card recruiter">
+            <div class="card-body">
+              <h5>For Recruiters</h5>
+              <p class="card-text">List your job to find the perfect candidate for the role</p>
+              <a href="/api/v1/recruiters/login" class="btn btn-primary">Add Job</a>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+<!-- About -->
+<!-- Services -->
+<!-- Stats -->
+<!-- Portfolio -->
+<!-- Team -->
+<!-- Contact -->
