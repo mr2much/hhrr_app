@@ -20,6 +20,10 @@ router.get('/', (req, res) => {
   res.render('home', { title: 'Home' });
 });
 
+router.get('/comingsoon', (req, res) => {
+  res.render('comingsoon', { title: 'Coming Soon' });
+});
+
 router.use('/emojis', emojis);
 router.use('/candidatos', isRecruiterLoggedIn, candidatos);
 router.use('/profiles', isRecruiterLoggedIn, profiles);
